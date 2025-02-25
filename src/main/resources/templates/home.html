@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kushi</title>
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+
+    <!-- Header Section -->
+	<header class="header">
+	    <div class="logo">
+	        <img src="https://kushiservices.com/wp-content/uploads/2024/01/cropped-Crimson-1.png" alt="Logo" />
+	    </div>
+		
+
+		
+	    <div class="dropdown">
+	        <!-- Hidden checkbox to toggle visibility -->
+	        <input type="checkbox" class="toggle" id="dropdown-toggle">
+	        
+	        <!-- Dropdown button (hamburger) -->
+	        <label for="dropdown-toggle" class="dropbtn">
+	            <div><i class="fa-solid fa-bars"></i></div>
+	        </label>
+	        
+	        <!-- Main dropdown content -->
+	        <div class="dropdown-content">
+	            <a href="/home2"><i class="fas fa-home"></i> Home</a>
+	            <a href="#"><i class="fas fa-cogs"></i> Item 1</a>
+	            <a href="#"><i class="fas fa-warehouse"></i> Item 2</a>
+	            <a href="#" class="sub-dropdown-btn">
+	                <i class="fas fa-broom"></i> Residential Clean 
+	              
+	            </a>
+	            
+	          
+	    </div>
+	</header><hr>
+	
+	
+	
+
+
+
+
+	<!-- Main Content -->
+	<main>
+	    <!-- Image Slider Section -->
+	    <div class="devi">
+	        
+			<div class="likki">
+			    <img id="dynamicImage" alt="Dynamic Image" class="slider-image">
+			
+
+			<script>
+			    // Assuming you fetch data from an API
+			    fetch('http://localhost:1235/offer-images')  // Your API URL
+			        .then(response => response.json())
+			        .then(data => {
+			            // Assuming your API returns an array of images with a property 'offerImageUrl'
+			            const firstImageUrl = data[0]?.offerImageUrl;  // Fetch the URL of the first image
+
+			            if (firstImageUrl) {
+			                // Set the src attribute of the img tag dynamically
+			                document.getElementById('dynamicImage').src = firstImageUrl;
+			            }
+			        })
+			        .catch(error => console.error('Error fetching images:', error));
+			</script>
+			</div>
+
+
+
+	<div class="slider">
+	    <div class="slider-container">
+	        <!-- Slider Images wrapped in anchor tags -->
+	        <div class="slider-images">
+	            <a href="#" target="_blank" class="slide" id="slide1">
+	                <img src="https://kushiservices.com/wp-content/uploads/2024/08/13.png" alt="Image 1">
+	            </a>
+	            <a href="#" target="_blank" class="slide" id="slide2">
+	                <img src="https://kushiservices.com/wp-content/uploads/2024/08/11.png" alt="Image 2">
+	            </a>
+	            <a href="#" target="_blank" class="slide" id="slide3">
+	                <img src="https://kushiservices.com/wp-content/uploads/2024/08/9.png" alt="Image 3">
+	            </a>
+	        </div>
+
+	        <!-- Radio Buttons for Image Navigation -->
+	        <div class="slider-radio-buttons">
+	            <input type="radio" id="radio1" name="slider" checked>
+	            <label for="radio1"></label>
+
+	            <input type="radio" id="radio2" name="slider">
+	            <label for="radio2"></label>
+
+	            <input type="radio" id="radio3" name="slider">
+	            <label for="radio3"></label>
+	        </div>
+	    </div>
+		
+	</div>
+	</main>	
+	
+	<section class="service-section">
+	    <h2>My  Services</h2>
+	    <div class="service-grid" id="service-grid">
+	        <!-- Service items will be dynamically added here -->
+	    </div>
+	
+
+	<script>
+	    // Fetch the list of services from the backend
+	    fetch('/service')
+	        .then(response => {
+	            if (response.ok) {
+	                return response.json(); // Parse the JSON response
+	            } else {
+	                throw new Error('Failed to load services');
+	            }
+	        })
+	        .then(services => {
+	            const serviceGrid = document.getElementById('service-grid');
+
+	            // Loop through the services and create the HTML dynamically
+	            services.forEach(service => {
+	                const serviceItem = document.createElement('a');
+	                serviceItem.href = '/Service_Booking';
+
+	                const serviceCard = document.createElement('div');
+	                serviceCard.classList.add('service-item');
+
+	                const serviceImage = document.createElement('img');
+	                serviceImage.src = service.serviceImageUrl;
+	                serviceImage.alt = service.serviceName;
+
+	                const serviceTitle = document.createElement('div');
+	                serviceTitle.classList.add('title');
+	                serviceTitle.textContent = service.serviceName;
+
+	                const serviceDiscount = document.createElement('div');
+	                serviceDiscount.classList.add('discount');
+	                serviceDiscount.textContent = service.serviceDescription || 'No discount'; // Optional description
+
+	                serviceCard.appendChild(serviceImage);
+	                serviceCard.appendChild(serviceTitle);
+	                serviceCard.appendChild(serviceDiscount);
+
+	                serviceItem.appendChild(serviceCard);
+	                serviceGrid.appendChild(serviceItem);
+	            });
+	        })
+	        .catch(error => {
+	            console.error('Error fetching services:', error);
+	        });
+	</script>
+
+	</section>
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+
+    <!-- Footer Section -->
+    <footer class="footer">
+        <div class="footer-item">
+			<a href="/">
+            <button class="icon home-btn">
+                <i class="fa-solid fa-house"></i>
+            </button>
+            <p>Home</p>
+			</a>
+        </div>
+		<div class="footer-item">
+		    <a href="tel:6303550463">
+		        <button class="icon call-us-btn">
+		            <i class="fa-sharp fa-solid fa-phone-volume"></i>
+		        </button>
+		        <p>Call Us</p>
+		    </a>
+		</div>
+
+		<div class="footer-item">
+		    <a href="https://wa.me/916303550463" target="_blank">
+		        <button class="icon whatsapp-btn">
+		            <i class="fab fa-whatsapp"></i>
+		        </button>
+		        <p>WhatsApp</p>
+		    </a>
+		</div>
+
+        <div class="footer-item">
+            <button class="icon services-btn">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            <p>Services</p>
+        </div>
+    </footer>
+
+</body>
+</html>

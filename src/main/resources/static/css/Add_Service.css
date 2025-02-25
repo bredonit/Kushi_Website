@@ -1,0 +1,100 @@
+/* General body styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+}
+
+/* Main content container (for both form and table) */
+.container {
+    margin-left: 270px; /* Space for sidebar */
+    padding: 20px;
+    max-width: 600px; /* Adjusted for smaller width */
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 20px; /* Adjusted for smaller padding */
+    padding-right: 20px; /* Adjusted for smaller padding */
+}
+
+/* Centering the <h2> heading */
+.main-content h2 {
+    text-align: center;
+    width: 100%;
+}
+
+/* Add Service Form */
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    max-width: 500px; /* Adjusted max width */
+    margin: 0 auto;
+}
+
+/* Form groups */
+.form-group {
+    width: 100%;
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+/* Labels */
+form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+}
+
+/* Required field indicator */
+.required::after {
+    content: " *";
+    color: red;
+    font-weight: bold;
+}
+
+/* Input and textarea styling */
+form input,
+form textarea,
+form select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+}
+
+/* Button styling */
+form button {
+    width: 100%;
+    padding: 12px;
+    background-color: #007BFF;
+    border: none;
+    color: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+/* Button hover effect */
+form button:hover {
+    background-color: #0056b3;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .container {
+        margin-left: 0;
+        margin-right: 0;
+        padding: 10px;
+        max-width: 100%;
+    }
+
+    .main-content,
+    .main-content-1 {
+        width: 100%;
+        padding: 20px 20px;
+    }
+}

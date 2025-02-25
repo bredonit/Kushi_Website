@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	    <meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <title>register</title>
+	    <link rel="stylesheet" type="text/css" href="css/styles.css">
+	    <link rel="preconnect" href="https://fonts.googleapis.com">
+	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	</head>
+<body>
+	<header class="header">
+		    <div class="logo">
+		        <img src="images/banner.png" alt="Logo" />
+		    </div>
+		    <div class="dropdown">
+		        <!-- Hidden checkbox to toggle visibility -->
+		        <input type="checkbox" class="toggle" id="dropdown-toggle">
+		        
+		        <!-- Dropdown button (hamburger) -->
+		        <label for="dropdown-toggle" class="dropbtn">
+		            <div><i class="fa-solid fa-bars"></i></div>
+		        </label>
+		        
+		        <!-- Main dropdown content -->
+		        <div class="dropdown-content">
+		            <a href="/home2"><i class="fas fa-home"></i> Home</a>
+		            <a href="#"><i class="fas fa-cogs"></i> Item 1</a>
+		            <a href="#"><i class="fas fa-warehouse"></i> Item 2</a>
+		            <a href="#" class="sub-dropdown-btn">
+		                <i class="fas fa-broom"></i> Residential Clean 
+		              
+		            </a>
+		            
+		            <!-- Sub-dropdown -->
+		            <div class="sub-dropdown">
+		                <a href="#"><i class="fas fa-check"></i> Item 1</a>
+		                <a href="#"><i class="fas fa-check"></i> Item 2</a>
+		                <a href="#"><i class="fas fa-check"></i> Item 3</a>
+		            </div>
+		            <a href="#"><i class="fas fa-users"></i> Item 3</a>
+		        </div>
+		    </div>
+		</header>
+    <h1>User Registration</h1>
+    <form action="/register" method="post">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required><br><br>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required><br><br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required><br><br>
+
+        <button type="submit">Register</button>
+    </form>
+	
+	<footer class="footer">
+	        <div class="footer-item">
+	            <button class="icon home-btn">
+	              <a href="/">  <i class="fa-solid fa-house"></i>
+	            </button></a>
+	           <a href="/">  <p>Home</p></a>
+	        </div>
+	        <div class="footer-item">
+	            <button class="icon call-us-btn">
+	                <i class="fa-sharp fa-solid fa-phone-volume"></i>
+	            </button>
+	            <p>Call Us</p>
+	        </div>
+	        <div class="footer-item">
+	            <button class="icon whatsapp-btn">
+	                <i class="fab fa-whatsapp"></i>
+	            </button>
+	            <p>WhatsApp</p>
+	        </div>
+	        <div class="footer-item">
+	            <button class="icon services-btn">
+	                <i class="fa-solid fa-bars"></i>
+	            </button>
+	            <p>Services</p>
+	        </div>
+	    </footer>
+
+</body>
+</html>

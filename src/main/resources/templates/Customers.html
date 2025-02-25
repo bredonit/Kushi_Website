@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User List</title>
+    <link rel="stylesheet" type="text/css" href="css/admin.css">
+    <link rel="stylesheet" type="text/css" href="css/customer.css">
+    
+    <script>
+        async function fetchUsers() {
+            try {
+                const response = await fetch('/all');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch users');
+                }
+                const users = await response.json();
+                renderUsers(users);
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        function renderUsers(users) {
+            const tableBody = document.getElementById('userTableBody');
+            tableBody.innerHTML = '';
+
+            users.forEach(user => {
+                // Check if profilePicture is a full URL or a relative path
+                let imagePath = user.profilePicture.startsWith('http') 
+                    ? user.profilePicture 
+                    : `http://localhost:8080/images/${user.profilePicture}`;
+
+                const row = `<tr>
+                    <td>${user.userId}</td>
+                    <td>${highlightText(user.firstName + ' ' + user.lastName)}</td>
+                    <td>${highlightText(user.phoneNumber)}</td>
+                    <td>${highlightText(user.email)}</td>
+                    <td>${highlightText(user.gender)}</td>
+                    <td>${highlightText(new Date(user.lastLogin).toLocaleString())}</td>
+                    <td><img src="${imagePath}" onerror="this.onerror=null; this.src='default.jpg';" alt="Profile"></td>
+                </tr>`;
+                
+                tableBody.innerHTML += row;
+            });
+        }
+
+        function highlightText(text) {
+            const searchValue = document.getElementById('searchInput').value.trim();
+            if (!searchValue) return text;
+
+            // Highlight only the exact word, avoiding marking everything
+            const regex = new RegExp(`(${searchValue})`, 'gi');
+            return text.replace(regex, '<span class="highlight">$1</span>');
+        }
+
+        function searchUsers() {
+            fetchUsers();
+        }
+        
+        window.onload = fetchUsers;
+    </script>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            <img src="https://kushiservices.com/wp-content/uploads/2024/01/cropped-Crimson-1.png" alt="Kushi Hygiene Services">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="/guru">Dashboard</a></li>
+                <li><a href="/1">Customers</a></li>
+                <li><a href="/Bookingss">Bookings</a></li>
+                <li><a href="/Invoices">Invoices</a></li>
+                <li><a href="/addservice">Add New Service</a></li>
+                <li><a href="/financialmanagement">Financial Management</a></li>
+                <li><a href="#">Reports & Analytics</a></li>
+                <li><a href="#">Settings</a></li><br><hr>
+                <li><a href="#">Sign Out</a></li>
+                <li><a href="#">Help</a></li>
+            </ul>
+        </nav>
+    </div>
+    
+    <div class="content">
+        <h1>User Management Dashboard</h1>
+        <h2>User List</h2>
+        <div class="search-container">
+            <input type="text" id="searchInput" onkeyup="searchUsers()" placeholder="Search for users...">
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                    <th>Gender</th>
+                    <th>Last Login</th>
+                    <th>Profile Picture</th>
+                </tr>
+            </thead>
+            <tbody id="userTableBody">
+                <!-- Data will be inserted here -->
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

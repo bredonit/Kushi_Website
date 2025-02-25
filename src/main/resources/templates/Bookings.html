@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kushi Dashboard</title>
+    <link rel="stylesheet" type="text/css" href="css/admin.css">
+    <link rel="stylesheet" type="text/css" href="css/bookings.css">
+    
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            <img src="https://kushiservices.com/wp-content/uploads/2024/01/cropped-Crimson-1.png" alt="Kushi Hygiene Services">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="/guru">Dashboard</a></li>
+                <li><a href="/1">Customers</a></li>
+                <li><a href="/Bookingss">Bookings</a></li>
+                <li><a href="/Invoices">Invoices</a></li>
+                <li><a href="/addservice">Add New Service</a></li>
+                <li><a href="/financialmanagement">Financial Management</a></li>
+                <li><a href="#">Reports & Analytics</a></li>
+                <li><a href="#">Settings</a></li><br><hr>
+                <li><a href="#">Sign Out</a></li>
+                <li><a href="#">Help</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="main-content">
+        <h1>Dashboard</h1>
+
+        <div class="bookings-overview">
+            <button class="card total-bookings" onclick="showBookingsTable()">
+                <h2>Total Bookings</h2>
+                <p id="totalBookings">0</p>
+            </button>
+            <button class="card pending-bookings" onclick="showBookingsTable('Pending')">
+                <h2>Pending</h2>
+                <p id="pendingBookings">0</p>
+            </button>
+            <button class="card confirmed-bookings" onclick="showBookingsTable('Confirmed')">
+                <h2>Confirmed</h2>
+                <p id="confirmedBookings">0</p>
+            </button>
+            <button class="card completed-bookings" onclick="showBookingsTable('Completed')">
+                <h2>Completed</h2>
+                <p id="completedBookings">0</p>
+            </button>
+           
+
+        <div id="bookingsTableContainer" style="display: none;">
+            <h2>All Bookings</h2>
+            <table>
+                <thead>
+					<tr>
+					            <th>Booking ID</th>
+					            <th>Customer Name</th>
+					            <th>Customer ID</th>
+					            <th>Service</th>
+					            <th>Booking Date</th>
+					            <th>Confirmation Date</th>
+					            <th>Booking Time</th>
+					            <th>Address</th>
+					            <th>City</th>
+					            <th>ZIP Code</th>
+					            <th>Status</th>
+					            <th>Payment Status</th>
+					            <th>Booking Amount</th>
+					            <th>Total Amount</th>
+					            <th>Reference Name</th>
+					            <th>Reference Details</th>
+					            <th>Remarks</th>
+					            <th>Created By</th>
+					            <th>Updated By</th>
+					            <th>Created Date</th>
+					            <th>Updated Date</th>
+					            <th>Customer Number</th>
+					        </tr>
+
+                </thead>
+                <tbody id="bookingsTableBody"></tbody>
+            </table>
+        </div>
+    </div>
+
+	<script>
+		async function fetchBookingData() {
+		    try {
+		        const response = await fetch("/api/bookings");
+		        if (!response.ok) throw new Error("Failed to fetch bookings");
+
+		        const bookings = await response.json();
+		        console.log("Bookings Data:", bookings); // ✅ Log API data
+
+		        document.getElementById("totalBookings").textContent = bookings.length;
+		        document.getElementById("pendingBookings").textContent = bookings.filter(b => b.booking_STATUS === "Pending").length;
+		        document.getElementById("confirmedBookings").textContent = bookings.filter(b => b.booking_STATUS === "Confirmed").length;
+		        document.getElementById("completedBookings").textContent = bookings.filter(b => b.booking_STATUS === "Completed").length;
+
+		        renderBookingTable(bookings);
+		    } catch (error) {
+		        console.error("Error fetching bookings:", error);
+		    }
+		}
+
+	    async function showBookingsTable(statusFilter = "", dateFilter = "") {
+	        document.getElementById("bookingsTableContainer").style.display = "block";
+	        try {
+	            const response = await fetch("/api/bookings");
+	            if (!response.ok) throw new Error("Failed to fetch bookings");
+
+	            let bookings = await response.json();
+	            if (statusFilter) bookings = bookings.filter(b => b.booking_STATUS === statusFilter);
+	            if (dateFilter) {
+	                bookings = bookings.filter(b => new Date(b.booking_DATE).toISOString().split('T')[0] === dateFilter);
+	            }
+	            renderBookingTable(bookings);
+	        } catch (error) {
+	            console.error("Error fetching booking table data:", error);
+	        }
+	    }
+
+		function renderBookingTable(bookings) {
+		    const tableBody = document.getElementById("bookingsTableBody");
+		    tableBody.innerHTML = "";
+
+		    bookings.forEach(user => {
+		        const row = document.createElement("tr");
+		        row.setAttribute("data-status", user.booking_STATUS);
+		        row.setAttribute("data-id", user.booking_ID);
+
+		        row.innerHTML = `
+		            <td>${user.booking_ID || '-'}</td>
+		            <td>${user.customer_NAME || '-'}</td>
+		            <td>${user.customer_ID || '-'}</td>
+		            <td>${user.booking_SERVICE_NAME || '-'}</td>
+		            <td>${user.booking_DATE || '-'}</td>
+		            <td>${user.confirmation_DATE || '-'}</td>
+		            <td>${user.booking_TIME || '-'}</td>
+		            <td>${user.address_LINE_1 || '-'}, ${user.address_LINE_2 || '-'}, ${user.address_LINE_3 || '-'}</td>
+		            <td>${user.city || '-'}</td>
+		            <td>${user.zip_CODE || '-'}</td>
+		            
+		            <td>
+		                <select onchange="updateBookingStatus('${user.booking_ID}', this.value)">
+		                    <option value="Pending" ${user.booking_STATUS === 'Pending' ? 'selected' : ''}>Pending</option>
+		                    <option value="Confirmed" ${user.booking_STATUS === 'Confirmed' ? 'selected' : ''}>Confirmed</option>
+		                    <option value="Completed" ${user.booking_STATUS === 'Completed' ? 'selected' : ''}>Completed</option>
+		                </select>
+		            </td>
+		            <td>${user.payment_STATUS || '-'}</td>
+		            <td>${user.booking_AMOUNT || '-'}</td>
+		            <td>${user.total_AMOUNT || '-'}</td>
+		            <td>${user.reference_NAME || '-'}</td>
+		            <td>${user.reference_DETAILS || '-'}</td>
+		            <td>${user.remarks || '-'}</td>
+		            <td>${user.created_BY || '-'}</td>
+		            <td>${user.updated_BY || '-'}</td>
+		            <td>${user.created_DATE || '-'}</td>
+		            <td>${user.updated_DATE || '-'}</td>
+		            <td>${user.customer_NUMBER || '-'}</td>
+		        `;
+
+		        tableBody.appendChild(row);
+		    });
+		}
+
+
+		async function updateBookingStatus(bookingId, newStatus) {
+		    try {
+		        console.log(`🚀 Updating Booking ID: ${bookingId} with Status: ${newStatus}`);
+
+		        if (!newStatus || !bookingId) {
+		            console.error("❌ Invalid booking ID or status:", { bookingId, newStatus });
+		            alert("Invalid booking ID or status.");
+		            return;
+		        }
+
+		        const payload = { booking_STATUS: newStatus }; // ✅ Use correct key
+		        console.log("📦 Payload being sent:", JSON.stringify(payload));
+
+		        const response = await fetch(`/api/bookings/${encodeURIComponent(bookingId)}`, {
+		            method: "PUT",
+		            headers: { "Content-Type": "application/json" },
+		            body: JSON.stringify(payload),
+		        });
+
+		        const result = await response.json();
+		        console.log("🖥️ Server Response:", result);
+
+		        if (!response.ok) {
+		            throw new Error(`❌ Error: ${response.status} - ${JSON.stringify(result)}`);
+		        }
+
+		        alert("✅ Booking status updated successfully!");
+
+		        // ✅ Update only the changed row
+		        const row = document.querySelector(`tr[data-id="${bookingId}"]`);
+		        if (row) {
+		            row.setAttribute("data-status", newStatus);
+		            row.style.backgroundColor =
+		                newStatus.toLowerCase() === "pending" ? "yellow" :
+		                newStatus.toLowerCase() === "confirmed" ? "green" :
+		                newStatus.toLowerCase() === "completed" ? "blue" : "white";
+		            row.style.color = newStatus.toLowerCase() === "pending" ? "black" : "white";
+		        }
+		    } catch (error) {
+		        console.error("❌ Error updating booking status:", error);
+		        alert("Failed to update booking status. " + error.message);
+		    }
+		}
+
+	    fetchBookingData();
+	</script>
+
+</body>
+</html>

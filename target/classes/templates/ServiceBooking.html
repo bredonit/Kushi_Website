@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+    <link rel="stylesheet" type="text/css" href="css/BookingService.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+	<header class="header">
+		    <div class="logo">
+		        <img src="https://kushiservices.com/wp-content/uploads/2024/01/cropped-Crimson-1.png" alt="Logo" />
+		    </div>
+			
+
+			
+		    <div class="dropdown">
+		        <!-- Hidden checkbox to toggle visibility -->
+		        <input type="checkbox" class="toggle" id="dropdown-toggle">
+		        
+		        <!-- Dropdown button (hamburger) -->
+		        <label for="dropdown-toggle" class="dropbtn">
+		            <div><i class="fa-solid fa-bars"></i></div>
+		        </label>
+		        
+		        <!-- Main dropdown content -->
+		        <div class="dropdown-content">
+		            <a href="/home2"><i class="fas fa-home"></i> Home</a>
+		            <a href="#"><i class="fas fa-cogs"></i> Item 1</a>
+		            <a href="#"><i class="fas fa-warehouse"></i> Item 2</a>
+		            <a href="#" class="sub-dropdown-btn">
+		                <i class="fas fa-broom"></i> Residential Clean 
+		              
+		            </a>
+		            
+		          
+		        </div>
+		    </div>
+		</header><hr>
+		
+    <section class="service-section-2">
+        <div class="form-container">
+            <h2>Booking Form</h2>
+            <form th:action="@{/add}" th:object="${user}" method="post">
+                <div class="form-group">
+                    <label for="username" class="required">User Name</label>
+                    <input type="text" th:field="*{username}" id="username" placeholder="Enter your name" required>
+                </div>
+				<div class="form-group">
+				    <label for="servicename" class="required">Booking Service Name</label>
+				    <select id="servicename" th:field="*{servicename}" required>
+				        <option value="" disabled>Select a service</option> <!-- Add selected to force it to be the default unselected option -->
+				        <option value="service1" th:selected="${servicename == 'service1'}">Service 1</option>
+				        <option value="service2" th:selected="${servicename == 'service2'}">Service 2</option>
+				        <option value="service3" th:selected="${servicename == 'service3'}">Service 3</option>
+				    </select>
+				</div>
+
+
+
+
+                <div class="form-group">
+                    <label for="email" class="required">Email Address</label>
+                    <input type="email" th:field="*{email}" id="email" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label for="phonenumber" class="required">Contact Number</label>
+                    <input type="tel" th:field="*{phonenumber}" id="phonenumber" placeholder="Enter your phone number" required>
+                </div>
+                <div class="form-group">
+                    <label for="bookingDate" class="required">Booking Date</label>
+                    <input type="date" th:field="*{bookingDate}" id="bookingDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="slatetime" class="required">Slate Time</label>
+                    <input type="time" th:field="*{slatetime}" id="slatetime" required>
+                </div>
+                <div class="form-group">
+                    <label for="address" class="required">Customer Address</label>
+                    <textarea id="address" th:field="*{address}" rows="3" placeholder="Enter your address" required ></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="pincode" class="required">ZIP/Postal Code</label>
+                    <input type="text" th:field="*{pincode}" id="pincode" placeholder="Enter ZIP/Postal code" required>
+                </div>
+                <div class="form-group">
+                    <label for="referenceid" class="required">Reference ID</label>
+                    <input type="text" th:field="*{referenceid}" id="referenceid" placeholder="Enter reference ID">
+                </div>
+                <div class="form-group">
+                    <label for="referencename" class="required">Reference Name</label>
+                    <input type="text" th:field="*{referencename}" id="referencename" placeholder="Enter reference name" >
+                </div>
+                <div class="form-submit">
+                    <button type="submit">Submit</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-item">
+            <button class="icon home-btn">
+                <a href="/"><i class="fa-solid fa-house"></i></a>
+            </button>
+            <a href="/"><p>Home</p></a>
+        </div>
+        <div class="footer-item">
+            <button class="icon call-us-btn">
+                <i class="fa-sharp fa-solid fa-phone-volume"></i>
+            </button>
+            <p>Call Us</p>
+        </div>
+        <div class="footer-item">
+            <button class="icon whatsapp-btn">
+                <i class="fab fa-whatsapp"></i>
+            </button>
+            <p>WhatsApp</p>
+        </div>
+        <div class="footer-item">
+            <button class="icon services-btn">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            <p>Services</p>
+        </div>
+    </footer>
+</body>
+</html>
