@@ -155,13 +155,13 @@
 
 	        let y = 50;
 	        doc.setFontSize(12);
-	        doc.text(Invoice ID: ${id}, 20, y);
-	        doc.text(Invoice Number: ${invoiceNumber}, 20, y + 10);
-	        doc.text(Customer Name: ${customerName}, 20, y + 20);
-	        doc.text(Total Amount: ₹${totalAmount}, 20, y + 30);
-	        doc.text(Discount: ${discount}%, 20, y + 40);
-	        doc.text(Tax: ${tax}%, 20, y + 50);
-	        doc.text(Booking ID: ${bookingId}, 20, y + 60);
+	        doc.text(`Invoice ID: ${id}, 20, y`);
+	        doc.text(`Invoice Number: ${invoiceNumber}, 20, y + 10`);
+	        doc.text(`Customer Name: ${customerName}, 20, y + 20`);
+	        doc.text(`Total Amount: ₹${totalAmount}, 20, y + 30`);
+	        doc.text(`Discount: ${discount}%, 20, y + 40`);
+	        doc.text(`Tax: ${tax}%, 20, y + 50`);
+	        doc.text(`Booking ID: ${bookingId}, 20, y + 60`);
 
 	        // Footer
 	        doc.setFontSize(10);
@@ -170,7 +170,7 @@
 	        doc.text("Email: support@kushiservices.com", 20, 280);
 	        doc.text("Instagram: @kushi_services", 20, 285);
 
-	        doc.save(invoice_${invoiceNumber}.pdf);
+	        doc.save(`invoice_${invoiceNumber}.pdf`);
 	    }
 
 	    document.addEventListener("DOMContentLoaded", fetchInvoices);
