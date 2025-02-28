@@ -9,6 +9,19 @@ body {
     padding: 20px;
 }
 
+/* Keep the tabs fixed at the top */
+.tabs-container {
+    position: sticky;
+    top: 0;
+    background: #808080; /* Updated to gray */
+    z-index: 1000;
+    padding: 10px;
+    display: flex;
+    gap: 10px;
+    border-bottom: 2px solid #ddd;
+}
+
+/* Ensure filters remain at the top */
 .filters {
     margin-bottom: 20px;
 }
@@ -17,16 +30,55 @@ body {
     padding: 10px 15px;
     margin: 5px;
     border: none;
-    background: #007bff;
+    background: #28a745; /* Green */
     color: white;
     border-radius: 5px;
     cursor: pointer;
 }
 
 .filters button:hover {
-    background: #0056b3;
+    background: #218838; /* Darker Green */
 }
 
+/* Container to enable horizontal scrolling for the booking table */
+.bookings-table-wrapper {
+    overflow-x: auto;
+    width: 100%;
+    max-width: 100%;
+    white-space: nowrap;
+}
+
+/* Table styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: center;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.search-container input {
+    width: 300px;
+    padding: 10px;
+    font-size: 16px;
+    padding-left: 10px;
+}
+
+.no-data {
+    text-align: center;
+    font-size: 18px;
+    color: red;
+    display: none;
+}
+
+/* Cards and overview section */
 .bookings-overview {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -35,7 +87,7 @@ body {
 }
 
 .card {
-    background: #f4f4f4;
+    background: #c0c0c0;
     padding: 20px;
     border-radius: 8px;
     text-align: center;
@@ -57,40 +109,49 @@ body {
     font-weight: bold;
     margin: 0;
 }
-table {
-           width: 100%;
-           border-collapse: collapse;
-       }
-       th, td {
-           border: 1px solid black;
-           padding: 8px;
-           text-align: center;
-       }
-       tr:nth-child(even) {
-           background-color: #f2f2f2;
-       }
-       select {
-           padding: 5px;
-           font-size: 14px;
-       }
-       button {
-           padding: 5px 10px;
-           background-color: #007bff;
-           color: red;
-           border: none;
-           cursor: pointer;
-       }
-       button:hover {
-           background-color: #0056b3;
-       }
-       tr[data-status="Pending"] {
-           background-color: yellow;
-       }
-       tr[data-status="Confirmed"] {
-           background-color: green;
-           color: white;
-       }
-       tr[data-status="Completed"] {
-           background-color: blue;
-           color: white;
-       }
+
+/* Select dropdown and button styling */
+select {
+    padding: 5px;
+    font-size: 14px;
+}
+
+button {
+    padding: 5px 10px;
+    background-color: #28a745; /* Green */
+    color: black;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #218838; /* Darker Green */
+}
+
+/* Row color based on status */
+tr[data-status="Pending"] {
+    background-color: #84C5C0;
+    color: white;
+}
+
+tr[data-status="Confirmed"] {
+    background-color: #759EB8;
+    color: white;
+}
+
+tr[data-status="Completed"] {
+    background-color: #76B29A; 
+    color: white;
+}
+
+/* Active tab styling */
+.active-tab {
+    background-color: #606060 !important; /* Dark Gray */
+    color: white !important;
+}
+
+.bookings-container {
+    max-height: 400px; /* Adjust the height as needed */
+    overflow-y: auto;  /* Enables vertical scrolling */
+    border: 1px solid #ccc; /* Optional: Adds a border to distinguish the table */
+}
