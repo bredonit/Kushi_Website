@@ -564,34 +564,33 @@ public class UserController {
     }
 
     
-  //Invoice Management 
+ // Invoice Management  
 
-@GetMapping("/api/invoices")
-public ResponseEntity<List<Map<String, Object>>> getAllBooking() {
-    try {
-        List<User> bookings = userRepo.findAll();  // Fetch bookings
-
-        if (bookings.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-        }
-
-        // Map bookings to relevant invoice data
+    @GetMapping("/api/invoices")
+    public ResponseEntity<List<Map<String, Object>>> getInvoices() {
         List<Map<String, Object>> invoiceData = new ArrayList<>();
-        for (User booking : bookings) {
-            Map<String, Object> bookingInfo = new HashMap<>();
-            bookingInfo.put("id", booking.getBOOKING_ID());  // ✅ Use correct getter
-            bookingInfo.put("customerName", booking.getCUSTOMER_NAME());
-            bookingInfo.put("customerEmail", booking.getCUSTOMER_EMAIL());
-            bookingInfo.put("customerPhone", booking.getCUSTOMER_NUMBER());
-            bookingInfo.put("totalAmount", booking.getTOTAL_AMOUNT());
+        try {
+            List<User> bookings = userRepo.findAll();
+            System.out.println("Fetched bookings: " + bookings);
 
-            invoiceData.add(bookingInfo);  // ✅ Add data to the list
+            if (!bookings.isEmpty()) {
+                for (User booking : bookings) {
+                    Map<String, Object> bookingInfo = new HashMap<>();
+                    bookingInfo.put("id", booking.getBOOKING_ID());  
+                    bookingInfo.put("customerName", booking.getCUSTOMER_NAME());
+                    bookingInfo.put("customerEmail", booking.getCUSTOMER_EMAIL());
+                    bookingInfo.put("customerPhone", booking.getCUSTOMER_NUMBER());
+                    bookingInfo.put("totalAmount", booking.getTOTAL_AMOUNT());
+
+                    invoiceData.add(bookingInfo);
+                }
+            } else {
+                System.out.println("No bookings found.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();  // Logs the error for debugging
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
-
-        return ResponseEntity.ok(invoiceData);  // ✅ Return the full list
-    } catch (Exception e) {
-        e.printStackTrace();  // Print error for debugging
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        return ResponseEntity.ok(invoiceData);
     }
-}
 }
