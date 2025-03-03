@@ -562,6 +562,35 @@ public class UserController {
                                  .body("Error while deleting user: " + e.getMessage());
         }
     }
+
     
-    
+ // Invoice Management  
+
+    @GetMapping("/api/invoices")
+    public ResponseEntity<List<Map<String, Object>>> getInvoices() {
+        List<Map<String, Object>> invoiceData = new ArrayList<>();
+        try {
+            List<User> bookings = userRepo.findAll();
+            System.out.println("Fetched bookings: " + bookings);
+
+            if (!bookings.isEmpty()) {
+                for (User booking : bookings) {
+                    Map<String, Object> bookingInfo = new HashMap<>();
+                    bookingInfo.put("id", booking.getBOOKING_ID());  
+                    bookingInfo.put("customerName", booking.getCUSTOMER_NAME());
+                    bookingInfo.put("customerEmail", booking.getCUSTOMER_EMAIL());
+                    bookingInfo.put("customerPhone", booking.getCUSTOMER_NUMBER());
+                    bookingInfo.put("totalAmount", booking.getTOTAL_AMOUNT());
+
+                    invoiceData.add(bookingInfo);
+                }
+            } else {
+                System.out.println("No bookings found.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();  // Logs the error for debugging
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+        return ResponseEntity.ok(invoiceData);
+    }
 }

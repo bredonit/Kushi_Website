@@ -36,10 +36,21 @@ import jakarta.persistence.Column;
 		    @Column(name = "CUSTOMER_NAME") 
 		    private String CUSTOMER_NAME;
 		 
-		
+		 @NotNull(message = "Email is required")
+		    @Column(name = "CUSTOMER_EMAIL") 
+		    private String CUSTOMER_EMAIL;
+		 
 	
 		 
-		 @NotNull(message = "Phone number is required")
+		 public String getCUSTOMER_EMAIL() {
+			return CUSTOMER_EMAIL;
+		}
+
+		public void setCUSTOMER_EMAIL(String cUSTOMER_EMAIL) {
+			CUSTOMER_EMAIL = cUSTOMER_EMAIL;
+		}
+
+		@NotNull(message = "Phone number is required")
 		    @Column(name = " CUSTOMER_NUMBER") 
 		    private String CUSTOMER_NUMBER;
 		 
