@@ -38,7 +38,11 @@
                     <td>${highlightText(user.email)}</td>
                     <td>${highlightText(user.gender)}</td>
                     <td>${highlightText(new Date(user.lastLogin).toLocaleString())}</td>
+
+
                     <td><img src="${imagePath}" onerror="this.onerror=null; this.src='default.jpg';" alt="Profile"></td>
+
+
                 </tr>`;
                 
                 tableBody.innerHTML += row;
@@ -59,25 +63,45 @@
         }
         
         window.onload = fetchUsers;
+
     </script>
 </head>
 <body>
     <div class="sidebar">
         <div class="logo">
-            <img src="https://kushiservices.com/wp-content/uploads/2024/01/cropped-Crimson-1.png" alt="Kushi Hygiene Services">
+
+
+            <img   src="https://kushiservices.com/wp-content/uploads/2024/01/cropped-Crimson-1.png" alt="Kushi Hygiene Services">
         </div>
+        
+        
+
         <nav>
             <ul>
                 <li><a href="/guru">Dashboard</a></li>
-                <li><a href="/1">Customers</a></li>
+                <li><a href="/1" class="active">Customers</a></li>
                 <li><a href="/Bookingss">Bookings</a></li>
                 <li><a href="/Invoices">Invoices</a></li>
                 <li><a href="/addservice">Add New Service</a></li>
                 <li><a href="/financialmanagement">Financial Management</a></li>
-                <li><a href="#">Reports & Analytics</a></li>
-                <li><a href="#">Settings</a></li><br><hr>
-                <li><a href="#">Sign Out</a></li>
-                <li><a href="#">Help</a></li>
+
+
+
+
+
+
+                <li><a href="/settings">Settings</a></li>
+				<li><a href="/viset">Viset List</a></li>
+<br><hr>
+                <li><a href="/Logout">Sign Out</a></li>
+
+                
+
+
+
+
+                
+
             </ul>
         </nav>
     </div>
@@ -105,5 +129,33 @@
             </tbody>
         </table>
     </div>
+
+
+
+
+    
+    <script>
+    // Function to apply dark mode on Customers  page
+    function applyDarkMode() {
+        if (localStorage.getItem("darkMode") === "enabled") {
+            document.body.classList.add("dark-mode");
+        } else {
+            document.body.classList.remove("dark-mode");
+        }
+    }
+
+    // Apply dark mode on page load
+    applyDarkMode();
+
+    // Listen for changes from the settings page
+    window.addEventListener("storage", function(event) {
+        if (event.key === "darkModeUpdated") {
+            applyDarkMode(); // Apply change immediately
+        }
+    });
+    </script>
+
+
+
 </body>
 </html>

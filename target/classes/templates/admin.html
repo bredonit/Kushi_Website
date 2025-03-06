@@ -19,10 +19,12 @@
                 <li><a href="/Invoices">Invoices</a></li>
                 <li><a href="/addservice">Add New Service</a></li>
                 <li><a href="/financialmanagement">Financial Management</a></li>
-                <li><a href="#">Reports & Analytics</a></li>
-                <li><a href="#">Settings</a></li><br><hr>
-				<li><a href="#">Sign Out</a></li>
-				 <li><a href="#">Help</a></li>
+             
+                <li><a href="/settings">Settings</a></li>
+				<li><a href="/viset">Viset List</a></li><br><hr>
+				
+				<li><a href="/Logout">Sign Out</a></li>
+				 
             </ul>
         </nav>
         
@@ -543,7 +545,33 @@
 
 									// Update customer list when the time period changes
 									document.getElementById("timePeriod").addEventListener("change", updateOverview);
-					</script>
+					
+								
+									// Function to apply dark mode on profile page
+									    function applyDarkMode() {
+									        if (localStorage.getItem("darkMode") === "enabled") {
+									            document.body.classList.add("dark-mode");
+									        } else {
+									            document.body.classList.remove("dark-mode");
+									        }
+									    }
+
+									    // Apply dark mode on page load
+									    applyDarkMode();
+
+									    // Listen for changes from the settings page
+									    window.addEventListener("storage", function(event) {
+									        if (event.key === "darkModeUpdated") {
+									            applyDarkMode(); // Apply change immediately
+									        }
+									    });	
+								
+								
+								
+								
+								
+								
+								</script>
 					
 					<br>
 

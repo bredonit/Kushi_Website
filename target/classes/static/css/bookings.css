@@ -17,14 +17,16 @@ body {
     padding: 10px 15px;
     margin: 5px;
     border: none;
-    background: #007bff;
+
+    background: #28a745; /* Green */
     color: white;
     border-radius: 5px;
     cursor: pointer;
 }
 
 .filters button:hover {
-    background: #0056b3;
+
+    background: #218838; /* Darker Green */
 }
 
 .bookings-overview {
@@ -57,6 +59,7 @@ body {
     font-weight: bold;
     margin: 0;
 }
+
 table {
            width: 100%;
            border-collapse: collapse;
@@ -93,4 +96,119 @@ table {
        tr[data-status="Completed"] {
            background-color: blue;
            color: white;
+
+
+
        }
+       /* Dark Mode - Global Styles */
+.dark-mode {
+    background-color: #121212;
+    color: white;
+}
+
+/* Dark mode for all containers */
+
+.dark-mode .bookings-container {
+    background: #333;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+/* Dark mode for sidebar */
+.dark-mode .left-side {
+    background: #222;
+    color: white;
+}
+
+/* Dark mode for sidebar links */
+.dark-mode .sidebar ul li a {
+    color: #ddd;
+}
+
+/* Dark mode for settings items */
+.dark-mode .setting {
+    background: #444;
+}
+
+/* Default sidebar styles */
+.sidebar ul li a {
+    color: black; /* Default color in light mode */
+    transition: color 0.3s ease; /* Smooth transition */
+}
+
+/* Dark mode sidebar background */
+.dark-mode .sidebar {
+    background: #222; /* Dark background */
+}
+
+/* Dark mode sidebar text (Make it clearly visible) */
+.dark-mode .sidebar ul li a {
+    color: white; /* Change text to white */
+    font-weight: bold; /* Make it stand out */
+}
+
+/* Optional: Improve visibility of active link in dark mode */
+.dark-mode .sidebar ul li a.active {
+    color: #4caf50; /* Light green for active link */
+}
+
+
+
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: center;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+select {
+    padding: 5px;
+    font-size: 14px;
+}
+
+button {
+    padding: 5px 10px;
+    background-color: #28a745; /* Green */
+    color: Black;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #218838; /* Darker Green */
+}
+
+tr[data-status="Pending"] {
+    background-color: yellow;
+}
+
+tr[data-status="Confirmed"] {
+    background-color: green;
+    color: white;
+}
+
+tr[data-status="Completed"] {
+    background-color: blue; /* Changed from blue to green */
+    color: white;
+}
+
+.card.active {
+	background-color : green !important; color:white;
+}
+
+
+/* Optional: Keep active link slightly different but NOT green */
+.dark-mode .sidebar ul li a.active {
+    color: #f1f1f1; /* Light grey instead of green */
+    font-weight: bold;
+}

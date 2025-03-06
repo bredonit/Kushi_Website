@@ -1,8 +1,17 @@
+
 body {
     display: flex;
     margin: 0;
     font-family: Arial, sans-serif;
-    background-color: #f5f5f5;
+
+
+
+
+    background-color: #f5f5f5; /* Default background for light mode */
+    color: black; /* Default text color for light mode */
+
+
+
 }
 
 .sidebar {
@@ -15,6 +24,7 @@ body {
     height: 100vh;
     position: fixed;
     overflow-y: auto;
+
 	scrollbar-width: none;
 }
 
@@ -24,7 +34,21 @@ body {
     max-width: 100%;
     height: 150px;
     margin-bottom: 0px;
+
+
 	padding-left: 45px;
+
+
+    scrollbar-width: thin; /* Fixed issue for cross-browser support */
+}
+
+.sidebar .logo img {
+    max-width: 100%;
+    height: 150px;
+    margin-bottom: 0;
+    padding-left: 45px;
+
+
 }
 
 nav ul {
@@ -34,7 +58,9 @@ nav ul {
 
 nav ul li a {
     text-decoration: none;
+
     color: black;
+
     display: block;
     padding: 10px;
     margin: 10px 0;
@@ -51,7 +77,7 @@ nav ul li a.active, nav ul li a:hover {
     margin-left: 270px;
     padding: 20px;
     width: calc(100% - 270px);
-	
+
 }
 
 header {
@@ -78,31 +104,55 @@ header input[type="text"] {
 .card {
     background-color: white;
     padding: 29px;
-	
+
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+
 .overview {
 	
+
     display: flex;
     flex-direction: column; /* Stack content vertically */
     justify-content: flex-start;
     align-items: flex-start;
+
+
+
 	
 }
+
+
+
+
+.overview {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+
+
+
 .overview-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
+
     position: relative; /* Ensures proper positioning of the dropdown */
 }
 
-.time-dropdown {
+
+
+.time-dropdown, .time-dropdown-1 {
     position: absolute;
     top: -10px;
-    right: -383px; /* Aligns the dropdown to the top-right */
+    right: -390px;
+
+
     padding: 5px 1px;
     font-size: 12px;
     border: 1px solid #bdc3c7;
@@ -110,22 +160,14 @@ header input[type="text"] {
     background-color: white;
     cursor: pointer;
 }
-.time-dropdown-1{
-	position: absolute;
-	   top: -10px;
-	   right: -14px; /* Aligns the dropdown to the top-right */
-	   padding: 5px 1px;
-	   font-size: 12px;
-	   border: 1px solid #bdc3c7;
-	   border-radius: 4px;
-	   background-color: white;
-	   cursor: pointer;
-}
+
+
 
 .time-dropdown:focus {
     outline: none;
     border-color: #1abc9c;
 }
+
 
 
 
@@ -138,12 +180,33 @@ header input[type="text"] {
     gap: 5px; /* Add space between the boxes */
     justify-content: space-between; /* Ensure equal spacing */
     width: 100%;
+
+
+
 	height: 80px; /* Make it responsive */
+
+
+
+
+.overview h3 {
+    margin-bottom: 10px;
+}
+
+.overview-container {
+    display: flex;
+    gap: 5px;
+    justify-content: space-between;
+    width: 100%;
+    height: 80px;
+
+
+
 }
 
 .overview-box {
     background-color: #27ae60;
     color: white;
+
     padding: -5px;
     border-radius: 8px;
     text-align: center;
@@ -152,11 +215,23 @@ header input[type="text"] {
 }
 
 
+
+
+
+
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+    flex: 1;
+    box-sizing: border-box;
+}
+
 .overview-box .positive {
     color: lightgreen;
 }
 
 .overview-box .negative {
+
     color: red;
 }
 
@@ -183,16 +258,23 @@ header input[type="text"] {
 }
 
 
+
 .popular-services ul {
     list-style: none;
     padding: 0;
     margin: 0;
-	
+
 }
 
 .popular-services li {
     display: flex;
-	height:30px;
+
+
+
+
+    height: 30px;
+
+
     align-items: center;
     justify-content: space-between;
     margin-bottom: 15px;
@@ -216,27 +298,49 @@ header input[type="text"] {
 
 .popular-services li div p {
     margin: 0;
+
 	padding-left: 20px;
+
     font-size: 14px;
 }
 
 .popular-services li .rating {
+
+
     color: #f1c40f; /* Gold color for stars */
     margin-top: 5px; /* Add some spacing above the stars */
     font-size: 14px; /* Adjust star size */
+
+
+
+    color: #f1c40f; /* Gold color for stars */
+    margin-top: 5px; /* Add some spacing above the stars */
+    font-size: 14px; /* Adjust star size */
+
 }
 
 .popular-services li span {
     font-weight: bold;
     color: #1abc9c;
+
     font-size: 16px; /* Adjust price size */
+
     margin-left: auto;
 }
 
 .new-bookings .booking {
     display: flex;
     gap: 70px;
+
+
+
+
 	height: 85px;
+
+
+
+
+
     align-items: center;
 }
 
@@ -245,16 +349,102 @@ header input[type="text"] {
     color: white;
     border: none;
     padding: 10px;
-	
+
     border-radius: 4px;
     cursor: pointer;
 }
 
 .card.statistics {
-        height: auto; /* Let the card height adjust dynamically */
-        padding: 23px;
-        box-sizing: border-box;
-    }
+
+
+
+    height: auto;
+
+
+    box-sizing: border-box;
+}
+
+.chart-placeholder {
+
+
+    height: 500px; /* Set the height of the chart */
+    width: 100%; /* Set the width of the chart */
+    margin: 0 auto; /* Center horizontally */
+    background-color: #fff; /* Optional: White background */
+    border-radius: 10px; /* Optional: Rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: Add shadow for style */
+}
+
+/* Dark Mode - Global Styles */
+.dark-mode {
+    background-color: #121212;
+    color: white;
+}
+
+/* Dark Mode Sidebar */
+.dark-mode .sidebar {
+    background: #222;
+    color: white;
+}
+
+/* Dark Mode for sidebar links */
+.dark-mode .sidebar ul li a {
+    color: white;
+}
+
+/* Dark Mode Active Link */
+.dark-mode .sidebar ul li a.active {
+    color: #4caf50;
+}
+
+/* Dark Mode for text elements like headings, paragraphs, and general content */
+.dark-mode .toggle-text {
+    color: white;
+}
+
+/* Dark Mode for specific elements like buttons or settings */
+.dark-mode .setting,
+.dark-mode .popular-services li {
+    color: white;
+}
+
+/* Dark Mode for input fields and buttons */
+.dark-mode input[type="text"], .dark-mode button {
+    background-color: #333;
+    color: white;
+    border: 1px solid #444;
+}
+
+/* Dark Mode for Overview and Card Sections */
+.dark-mode .overview, .dark-mode .card {
+    background-color: #333;
+    color: white;
+}
+
+/* Dark Mode for headers, text in the card sections */
+.dark-mode .overview h3, .dark-mode .card h3 {
+    color: white;
+}
+
+.customer p {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #555; /* Normal color for light mode */
+}
+
+.dark-mode .customer p {
+    color: white; /* White color for dark mode */
+}
+
+/* Optional: Keep active link slightly different but NOT green */
+.dark-mode .sidebar ul li a.active {
+    color: #f1f1f1; /* Light grey instead of green */
+    font-weight: bold;
+}
+
+      
+
+
 
     .chart-placeholder {
         height: 500px; /* Set the height of the chart */
@@ -265,4 +455,116 @@ header input[type="text"] {
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: Add shadow for style */
     }
 
+
+	
+	
+	
+	
+	.popup-container {
+	    position: fixed;
+	    top: 0;
+	    left: 0;
+	    width: 100%;
+	    height: 100%;
+	    background: rgba(0, 0, 0, 0.5);
+	    display: flex;
+	    justify-content: center;
+	    align-items: center;
+	}
+
+	.popup-content {
+	    background: white;
+	    padding: 20px;
+	    border-radius: 10px;
+	    text-align: center;
+	    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+	}
+
+	.popup-content input {
+	    display: block;
+	    width: 100%;
+	    margin: 10px 0;
+	    padding: 8px;
+	}
+
+	.popup-content button {
+	    background: #007BFF;
+	    color: white;
+	    padding: 10px;
+	    border: none;
+	    cursor: pointer;
+	    width: 100%;
+	}
+
+
+
+	/* Media Query for mobile and smaller screens */
+	@media (max-width: 768px) {
+	  .service-grid {
+	    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Adjust grid for smaller screens */
+	  }
+
+	  .service-item .title {
+	    font-size: 14px; /* Adjust title font size */
+	  }
+
+	  .service-item .discount {
+	    font-size: 12px; /* Adjust discount font size */
+	    padding: 4px 8px; /* Adjust padding */
+	  }
+
+	  h2 {
+	    margin-top: -80px; /* Adjust header position for smaller screens */
+	  }
+	}
+
+<<<<<<< HEAD
+	/* Dark Mode - Global Styles */
+	.dark-mode {
+	    background-color: #121212;
+	    color: white;
+	}
+
+	/* Dark mode for settings box */
+	.dark-mode .settings-container {
+	    background: #333;
+	    color: white;
+	}
+
+	/* Dark mode for profile page */
+	.dark-mode .profile-container {
+	    background: #333;
+	    color: white;
+	    padding: 20px;
+	    border-radius: 10px;
+	}
+
+	/* Dark mode for sidebar */
+	.dark-mode .left-side {
+	    background: #222;
+	    color: white;
+	}
+
+	/* Dark mode for sidebar links */
+	.dark-mode .sidebar ul li a {
+	    color: #ddd;
+	}
+
+	/* Dark mode for settings items */
+	.dark-mode .setting {
+	    background: #444;
+	}
+	/* Keep sidebar links white in dark mode */
+	.dark-mode .sidebar ul li a {
+	    color: white; /* Ensures all links remain white */
+	}
+
+	/* Optional: Keep active link slightly different but NOT green */
+	.dark-mode .sidebar ul li a.active {
+	    color: #f1f1f1; /* Light grey instead of green */
+	    font-weight: bold;
+	}
+
+=======
+>>>>>>> 782c6e4 (all updated code)
 

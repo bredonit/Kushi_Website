@@ -17,6 +17,26 @@ body {
     padding-right: 20px; /* Adjusted for smaller padding */
 }
 
+
+
+
+
+
+/* Add Service Form */
+/* Center <h2> elements */
+h2 {
+    text-align: center; /* Center text horizontally */
+    margin: 0 auto; /* Automatically adjusts left and right margins */
+    font-size: 24px; /* Adjust the font size as needed */
+    width: fit-content; /* Ensures the width of the element adjusts to content */
+}
+
+
+
+
+
+
+
 /* Centering the <h2> heading */
 .main-content h2 {
     text-align: center;
@@ -24,6 +44,7 @@ body {
 }
 
 /* Add Service Form */
+
 form {
     display: flex;
     flex-direction: column;
@@ -33,19 +54,38 @@ form {
     margin: 0 auto;
 }
 
-/* Form groups */
+
 .form-group {
     width: 100%;
     margin-bottom: 15px;
     text-align: left;
+
+
+
+
+
+
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+
+
+
+
+
+
 }
 
 /* Labels */
+
 form label {
     display: block;
     margin-bottom: 5px;
     font-weight: bold;
-    color: #555;
+  color: #555;
 }
 
 /* Required field indicator */
@@ -54,6 +94,7 @@ form label {
     color: red;
     font-weight: bold;
 }
+
 
 /* Input and textarea styling */
 form input,
@@ -64,6 +105,9 @@ form select {
     border: 1px solid #ccc;
     border-radius: 6px;
     font-size: 16px;
+  margin-bottom: 15px; /* Adds space between input fields */
+
+
 }
 
 /* Button styling */
@@ -83,6 +127,43 @@ form button:hover {
     background-color: #0056b3;
 }
 
+
+
+/* Dark Mode - Global Styles */
+.dark-mode {
+    background-color: #121212;
+    color: white;
+}
+
+/* Dark mode for form inputs */
+.dark-mode form input,
+.dark-mode form textarea,
+.dark-mode form select {
+    background-color: #444; /* Dark background for form fields */
+    color: white; /* White text color */
+    border: 1px solid #555; /* Darker border for form fields */
+}
+
+/* Dark mode for labels (white in dark mode) */
+.dark-mode form label {
+    color: white; /* White text for labels */
+}
+
+/* Dark mode for button */
+.dark-mode form button {
+    background-color: #007BFF;
+    color: white;
+}
+
+.dark-mode form button:hover {
+    background-color: #0056b3;
+
+
+
+
+
+
+
 /* Responsive design */
 @media (max-width: 768px) {
     .container {
@@ -97,4 +178,5 @@ form button:hover {
         width: 100%;
         padding: 20px 20px;
     }
+
 }

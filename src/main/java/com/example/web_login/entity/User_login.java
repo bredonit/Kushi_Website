@@ -13,7 +13,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity     @Table(name = "USER_LOGIN_INFO")
+
+@Entity
+@Table(name = "USER_LOGIN_INFO")
+
 public class User_login {
 
     @Id
@@ -49,6 +52,7 @@ public class User_login {
 				+ ", profilePicture=" + profilePicture + ", getUserId()=" + getUserId() + ", getFirstName()="
 				+ getFirstName() + ", getLastName()=" + getLastName() + ", getPhoneNumber()=" + getPhoneNumber()
 				+ ", getEmail()=" + getEmail() + ", getGender()=" + getGender() + ", getLastLogin()=" + getLastLogin()
+
 				+ ", getProfilePicture()=" + getProfilePicture() + ", getClass()=" + getClass() + ", hashCode()="
 				+ hashCode() + ", toString()=" + super.toString() + "]";
 	}

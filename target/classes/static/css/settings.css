@@ -1,0 +1,182 @@
+/* General body styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+/* Left side container (White Background) */
+.left-side {
+    width: 250px;
+    height: 100vh;
+    background: white;
+    padding: 20px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Settings Text outside the box */
+.settings-text {
+    position: absolute;
+    top: 20px;  /* Distance from the top of the screen */
+    left: 300px;  /* Position to the right of the sidebar */
+    font-size: 24px;  /* Make the text larger for visibility */
+    font-weight: bold;  /* Bold text */
+    color: #333;  /* Default color for light mode */
+}
+
+/* Dark mode settings text */
+.dark-mode .settings-text {
+    color: white;  /* Change the color to white in dark mode */
+}
+
+
+/* Settings container (box for settings) */
+.settings-container {
+    background: white;
+    padding: 5px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    width: 350px;
+    text-align: left;
+    margin: 20px;
+    position: fixed;
+    top: 80px;  /* Adjusted top to avoid overlapping the Settings text */
+    left: 270px;
+    transition: left 0.3s ease;
+}
+/* Remove the underline and any border for the profile link */
+.setting-link {
+    text-decoration: none;  /* Removes underline */
+    color: black;  /* Default color */
+    border: none;  /* Ensures no border */
+}
+
+/* Dark mode profile link */
+.dark-mode .setting-link {
+    color: white;  /* White text in dark mode */
+}
+
+
+/* Dark mode for settings box */
+.dark-mode .settings-container {
+    background: #333;
+    color: white;
+}
+
+/* Dark mode styles for profile link */
+.dark-mode .setting-link {
+    color: white;  /* Change to white in dark mode */
+}
+
+/* Profile & Dark Mode Boxes */
+.setting {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f9f9f9;
+    padding: 15px;
+    border-radius: 8px;
+    margin: 10px 0;
+    font-size: 18px;
+}
+
+/* Toggle switch styling */
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 20px;
+}
+
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    border-radius: 20px;
+    transition: 0.4s;
+}
+
+.slider:before {
+    content: "";
+    position: absolute;
+    height: 14px;
+    width: 14px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    border-radius: 50%;
+    transition: 0.4s;
+}
+
+input:checked + .slider {
+    background-color: #4caf50;
+}
+
+input:checked + .slider:before {
+    transform: translateX(20px);
+}
+
+/* Dark Mode - Global Styles */
+.dark-mode {
+    background-color: #121212;
+    color: white;
+}
+
+/* Dark mode for settings box */
+.dark-mode .settings-container {
+    background: #333;
+    color: white;
+}
+
+/* Dark mode for profile page */
+.dark-mode .profile-container {
+    background: #333;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+/* Dark mode for sidebar */
+.dark-mode .left-side {
+    background: #222;
+    color: white;
+}
+
+/* Dark mode for sidebar links */
+.dark-mode .sidebar ul li a {
+    color: #ddd;
+}
+
+/* Dark mode for settings items */
+.dark-mode .setting {
+    background: #444;
+}
+/* Keep sidebar links white in dark mode */
+.dark-mode .sidebar ul li a {
+    color: white; /* Ensures all links remain white */
+}
+
+/* Optional: Keep active link slightly different but NOT green */
+.dark-mode .sidebar ul li a.active {
+    color: #f1f1f1; /* Light grey instead of green */
+    font-weight: bold;
+}
+
+
+
+

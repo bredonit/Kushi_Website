@@ -1,4 +1,11 @@
-   package com.example.web_login.controller;
+package com.example.web_login.controller;
+
+
+
+
+import java.io.PrintWriter;
+
+
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -12,13 +19,28 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+
 import java.util.stream.Collectors;
+
+
+
+import com.example.web_login.entity.Login;
+import com.example.web_login.service.LoginService;
+
+import jakarta.servlet.http.HttpSession;
+
+import java.util.UUID;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+
+
 import org.springframework.ui.Model;
+
+
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,23 +62,37 @@ import com.example.web_login.repo.Userrepo;
 import com.example.web_login.service.UserService;
 import com.example.web_login.service.Userimp;
 
+
+
+
 import jakarta.validation.Valid;
+
+
+
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
+
+
 
 @Controller
 
 public class UserController {
-
+	
+	
     @Autowired
     private Userrepo userRepo;
 
     @Autowired
     private Userimp userimp ;
-    
+
     @Autowired
     private  Admin_repo admoin_repo ;
 
     @Autowired
     private UserLoginRepository userLoginRepository;
+
     
     @GetMapping("/")
     public String home() {
@@ -65,47 +101,119 @@ public class UserController {
        
     }
     
+
     @GetMapping("/Bookingss")
     public String Bookings() {
         return "Bookings";  
     }
+
+
+
     
+    @GetMapping("/CustomerHelpDesk")
+    public String CustomerHelpDesk() {
+        return "CustomerHelpDesk";  
+    }
+    
+    
+  
+
     @GetMapping("/financialmanagement")
     public String financialmanagement() {
         return "financialmanagement";  
     }
 
     @GetMapping("/1")
+
     public String Costomers1() {
         return "Customers";  
     }
     
+
     @GetMapping("/addservice")
     public String AddService() {
         return "Add_Service";  
     }
     
+
+    @GetMapping("/viset")
+    public String Viset() {
+        return "Viset_services";  
+    }
+
     @GetMapping("/Invoices")
     public String Invoices() {
         return "Invoices";  
     }
+
+
+
     
+    @GetMapping("/Admin_help_desk")
+    public String Help() {
+        return "Admin_help_desk";  
+    }
+    
+
+    @GetMapping("/123")
+    public String about1() {
+        return "index";  
+    }
+
+
+
     @GetMapping("/home2")
     public String about() {
         return "home2";  
     }
+
     @GetMapping("/guru")
     public String admin() {
         return "admin";  
     }
-    
+
+  
     @GetMapping("/settings")
-    public String adminn() {
+    public String settings() {
         return "settings";  
     }
+
+    @GetMapping("/profile")
+    public String Profile() {
+        return "profile";  
+    }
+
+    @GetMapping("/Login")
+    public String Login() {
+        return "Login";
+    }
+    
+    @GetMapping("/kushi-login")
+    public String loginn() {
+        return "set";  // Should return set.html
+    }
+
+    @GetMapping("/Logout")
+    public String Logout() {
+        return "Logout";
+    }
+
+
+
+    // service add data api
+    
+
+
+
     
     // service add data api
     
+
+
+
+    // service add data api
+
+
     @GetMapping("/Service_Booking/api")
     public ResponseEntity<List<Serevice_add>> getAllServicesAsApi() {
         try {
@@ -120,6 +228,9 @@ public class UserController {
     }
 
 
+    
+    
+    
     @PostMapping("/add")
     public ResponseEntity<String> addUser(@ModelAttribute @Valid User user, BindingResult bindingResult) {
         // Validate required fields
@@ -139,7 +250,7 @@ public class UserController {
     }
     
     // papular service data api
-    
+
     @GetMapping("/api/services-details")
     public ResponseEntity<List<Map<String, Object>>> getServiceDetails() {
         try {
@@ -157,7 +268,16 @@ public class UserController {
             for (Serevice_add service : services) {
                 Map<String, Object> serviceData = new HashMap<>();
                 serviceData.put("serviceName", service.getServiceName());
+
+
+
+
+
                 serviceData.put("rating", service.getRating() != null ? service.getRating() : "0"); 
+
+
+
+
                 serviceData.put("image", service.getServiceImageUrl() != null ? service.getServiceImageUrl() : "default-image.jpg");
                 serviceData.put("amount", service.getServiceCost() != null ? service.getServiceCost() : 0.0);
 
@@ -177,7 +297,7 @@ public class UserController {
     }
 
     // statistics table data displey api
-    
+
     @GetMapping("/statistics")
     public ResponseEntity<Map<String, Object>> getStatistics(
             @RequestParam(value = "timePeriod", required = false, defaultValue = "all-time") String timePeriod) {
@@ -188,18 +308,23 @@ public class UserController {
             // Filter users based on the timePeriod
             if ("one-week".equalsIgnoreCase(timePeriod)) {
                 users = users.stream()
+
                              .filter(user -> user.getBOOKING_DATE() != null && 
-                                             user.getBOOKING_DATE().isAfter(today.minusWeeks(1)))
+
+
+
+
+                                           user.getBOOKING_DATE().isAfter(today.minusWeeks(1)))
                              .collect(Collectors.toList());
             } else if ("two-weeks".equalsIgnoreCase(timePeriod)) {
                 users = users.stream()
                              .filter(user -> user.getBOOKING_DATE() != null && 
-                                             user.getBOOKING_DATE().isAfter(today.minusWeeks(2)))
+                                       user.getBOOKING_DATE().isAfter(today.minusWeeks(2)))
                              .collect(Collectors.toList());
             } else if ("one-month".equalsIgnoreCase(timePeriod)) {
                 users = users.stream()
                              .filter(user -> user.getBOOKING_DATE() != null && 
-                                             user.getBOOKING_DATE().isAfter(today.minusMonths(1)))
+                                           user.getBOOKING_DATE().isAfter(today.minusMonths(1)))
                              .collect(Collectors.toList());
             }
 
@@ -251,8 +376,10 @@ public class UserController {
         }
     }
 
+
     // overwive contant displaying data api
    
+
     @GetMapping("/users")
     public ResponseEntity<Map<String, Object>> getAllUsers(@RequestParam(required = false) String timePeriod) {
         try {
@@ -327,9 +454,10 @@ public class UserController {
         }
     }
 
-    // all bookings
     
-    @GetMapping("/api/bookings")
+    
+    // all bookings
+  @GetMapping("/api/bookings")
     public ResponseEntity<List<User>> getAllBookings() {
         try {
             // Fetch all bookings from the database
@@ -348,10 +476,11 @@ public class UserController {
         }
     }
 
-    
+
         
     // fancial managenent api 
-    @GetMapping("/service-report")
+
+  @GetMapping("/service-report")
     public ResponseEntity<List<Map<String, Object>>> getServiceReport() {
         try {
             List<Map<String, Object>> reportData = userimp.getServiceReport();
@@ -365,11 +494,37 @@ public class UserController {
             return ResponseEntity.internalServerError().body(null);
         }
         }
-    
-    
 
-    
-    @PutMapping("/api/bookings/{id}")
+
+
+
+
+
+    @PostMapping("/login")
+    public ResponseEntity<Map<String, String>> login(@RequestBody Login login, HttpSession session) {
+        Map<String, String> response = new HashMap<>();
+        LoginService loginService = new LoginService();
+        boolean isValidUser = loginService.validateLoginByEmail(login);
+
+        if (isValidUser) {
+            session.setAttribute("adminEmail", login.getEmail()); // Store email in session
+            response.put("message", "Login Successful");
+            return ResponseEntity.ok(response); // Return success with 200 OK
+        } else {
+            response.put("message", "Your credentials are wrong"); // Custom error message
+            return ResponseEntity.status(200).body(response); // Return 200 OK but with the error message
+        }
+    }
+
+    // Logout endpointd
+    @PostMapping("/logout")
+    public ResponseEntity<String> logout(HttpSession session) {
+        session.invalidate(); // Invalidate the session
+        return ResponseEntity.ok("Logout Successful");
+    }
+
+
+ @PutMapping("/api/bookings/{id}")
     public ResponseEntity<User> updateBooking(@PathVariable Long id, @RequestBody User updatedBooking) {
         try {
             Optional<User> existingBooking = userRepo.findById(id);
@@ -393,8 +548,7 @@ public class UserController {
     }
 
     // top - booking customer data in booking table api data
-   
-    @GetMapping("/top-booked-customers")
+   @GetMapping("/top-booked-customers")
     public ResponseEntity<Map<String, Object>> getTopBookedCustomers() {
         try {
             // Fetch bookings
@@ -435,8 +589,8 @@ public class UserController {
     }
 
     // this is top-customer data displaying
-    
-    @GetMapping("/api/getTopCustomers")
+   
+   @GetMapping("/api/getTopCustomers")
     public ResponseEntity<?> getTopCustomers(@RequestParam(required = false) String timePeriod) {
         try {
             LocalDate startDate = null;
@@ -473,12 +627,12 @@ public class UserController {
     }
 
     // new booking customr data
-    
-    @GetMapping("/api/getTopCustomers-2")
+
+   @GetMapping("/api/getTopCustomers-2")
     public ResponseEntity<?> getTopCustomers1(@RequestParam(required = false) String timePeriod) {
         try {
             LocalDate startDate = null;
-            
+
             // Handling timePeriod filtering
             if (timePeriod != null) {
                 switch (timePeriod) {
@@ -509,10 +663,8 @@ public class UserController {
         }
     }
 
-    
 
-    // 
-    @PostMapping("/api/register")
+   @PostMapping("/api/register")
     public ResponseEntity<String> registerUser(@RequestBody User user) {
         try {
             // Call the register method from UserService to save the user
@@ -525,9 +677,9 @@ public class UserController {
         }
     }
 
-   
 
-    @PutMapping("/update/{id}")
+   
+   @PutMapping("/update/{id}")
     public ResponseEntity<String> updateUser(@PathVariable Long id, @RequestBody User user) {
         try {
             // Find the existing user
@@ -535,7 +687,8 @@ public class UserController {
             if (existingUser == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
             }
-          
+
+            
             // Update the fields of the existing user
            
                 
@@ -548,8 +701,9 @@ public class UserController {
         }
     }
 
-    
-    @DeleteMapping("/delete/{id}")
+
+   
+   @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteUser(@PathVariable Long id) {
         try {
             if (!userRepo.existsById(id)) {
@@ -561,7 +715,38 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                                  .body("Error while deleting user: " + e.getMessage());
         }
+   }
+
+//Invoice Management 
+
+    @GetMapping("/api/invoices")
+    public ResponseEntity<List<Map<String, Object>>> getAllBooking() {
+        try {
+            List<User> bookings = userRepo.findAll(); // Fetch bookings from the database
+
+            if (bookings.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+            }
+
+            // Map bookings to relevant invoice data (customize as needed)
+            List<Map<String, Object>> invoiceData = bookings.stream().map(booking -> {
+                Map<String, Object> bookingInfo = new HashMap<>();
+                bookingInfo.put("id", booking.getBOOKING_ID());
+                bookingInfo.put("customerName", booking.getCUSTOMER_NAME());
+                bookingInfo.put("customerEmail", booking.getCUSTOMER_EMAIL());
+                bookingInfo.put("customerPhone", booking.getCUSTOMER_NUMBER());
+                bookingInfo.put("totalAmount", booking.getTOTAL_AMOUNT());
+                bookingInfo.put("serviceName", booking.getBOOKING_SERVICE_NAME());
+
+                // No invoiceId generation here
+                // Simply return the data without invoiceId
+                return bookingInfo;
+            }).collect(Collectors.toList());
+
+            return ResponseEntity.ok(invoiceData);  // Return invoice data as JSON
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
-    
-    
 }
+
