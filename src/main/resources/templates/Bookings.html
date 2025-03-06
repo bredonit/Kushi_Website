@@ -80,7 +80,6 @@
                         <th>Address</th>
                         <th>City</th>
                         <th>ZIP Code</th>
-                        <th>Status</th>
                         <th>Booking Status</th>
                         <th>Payment Status</th>
                         <th>Booking Amount</th>
@@ -93,6 +92,7 @@
                         <th>Created Date</th>
                         <th>Updated Date</th>
                         <th>Customer Number</th>
+                        <th>Status</th>
                     </tr>
                 </thead>
                 <tbody id="bookingsTableBody"></tbody>
@@ -263,7 +263,7 @@
                 <td>${user.address_LINE_1 || '-'}, ${user.address_LINE_2 || '-'}, ${user.address_LINE_3 || '-'}</td>
                 <td>${user.city || '-'}</td>
                 <td>${user.zip_CODE || '-'}</td>
-                <td>${statusDropdown}</td>
+                <td>${user.booking_STATUS || '-'}</td>
                 <td>${user.payment_STATUS || '-'}</td>
                 <td>${user.booking_AMOUNT || '-'}</td>
                 <td>${user.total_AMOUNT || '-'}</td>
@@ -275,6 +275,7 @@
                 <td>${user.created_DATE || '-'}</td>
                 <td>${user.updated_DATE || '-'}</td>
                 <td>${user.customer_NUMBER || '-'}</td>
+                <td>${statusDropdown}</td>
             `;
 
             tableBody.appendChild(row);
