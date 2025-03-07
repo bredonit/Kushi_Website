@@ -1,0 +1,343 @@
+body {
+    display: flex;
+    font-family: Arial, sans-serif;
+    margin: 0;
+}
+
+.main-content {
+    flex: 1;
+    padding: 20px;
+}
+
+/* Keep the tabs fixed at the top */
+.tabs-container {
+    position: sticky;
+    top: 0;
+    background: #808080; /* Updated to gray */
+    z-index: 1000;
+    padding: 10px;
+    display: flex;
+    gap: 10px;
+    border-bottom: 2px solid #ddd;
+}
+
+/* Ensure filters remain at the top */
+.filters {
+    margin-bottom: 20px;
+}
+
+.filters button {
+    padding: 10px 15px;
+    margin: 5px;
+    border: none;
+    background: #28a745; /* Green */
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.filters button:hover {
+    background: #218838; /* Darker Green */
+}
+
+/* Container to enable horizontal scrolling for the booking table */
+.bookings-table-wrapper {
+    overflow-x: auto;
+    width: 100%;
+    max-width: 100%;
+    white-space: nowrap;
+}
+
+/* Table styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: center;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.search-container input {
+    width: 300px;
+    padding: 10px;
+    font-size: 16px;
+    padding-left: 10px;
+}
+
+.no-data {
+    text-align: center;
+    font-size: 18px;
+    color: red;
+    display: none;
+}
+
+/* Cards and overview section */
+.bookings-overview {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    width: 100%;
+}
+
+.card {
+    background: #c0c0c0;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 150px;
+}
+
+.card h2 {
+    margin: 0 0 10px;
+    font-size: 18px;
+}
+
+.card p {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+}
+
+/* Select dropdown and button styling */
+select {
+    padding: 5px;
+    font-size: 14px;
+}
+
+button {
+    padding: 5px 10px;
+    background-color: #28a745; /* Green */
+    color: black;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #218838; /* Darker Green */
+}
+
+/* Row color based on status */
+tr[data-status="Pending"] {
+    background-color: #84C5C0;
+    color: white;
+}
+
+tr[data-status="Confirmed"] {
+    background-color: #759EB8;
+    color: white;
+}
+
+tr[data-status="Completed"] {
+    background-color: #76B29A; 
+    color: white;
+}
+
+/* Active tab styling */
+.active-tab {
+    background-color: #606060 !important; /* Dark Gray */
+    color: white !important;
+}
+
+.bookings-container {
+    max-height: 400px; /* Adjust the height as needed */
+    overflow-y: auto;  /* Enables vertical scrolling */
+    border: 1px solid #ccc; /* Optional: Adds a border to distinguish the table */
+}
+
+/* ✅ Enhanced Media Query for Small Screens (max-width: 768px) */
+@media (max-width: 768px) {
+    /* Adjust sidebar */
+    .sidebar {
+        width: 180px; /* Slightly smaller for better fit */
+        height: 100%;
+        position: fixed;
+        padding: 10px;
+        z-index: 1000; /* Ensure it stays above other elements */
+    }
+
+    /* Adjust main content */
+    .main-content {
+        margin-left: 190px; /* Adjusted to fit smaller sidebar */
+        width: calc(100% - 190px);
+        padding: 15px;
+    }
+
+    /* Improve header alignment */
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    header input[type="text"] {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    /* Responsive grid layout */
+    .grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    /* Improve card layout */
+    .card {
+        padding: 20px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+        border-radius: 10px;
+    }
+
+    /* Make overview section more readable */
+    .overview-container {
+        flex-direction: column;
+        height: auto;
+        gap: 15px;
+    }
+
+    .overview-box {
+        padding: 15px;
+        border-radius: 8px;
+        text-align: center;
+        width: 100%; /* Ensure full width */
+    }
+
+    /* Improve customer section */
+    .customers {
+        flex-direction: column;
+        gap: 15px;
+        align-items: center;
+    }
+
+    .customers img {
+        width: 50px;
+        height: 50px;
+    }
+
+    /* Fix new bookings layout */
+    .new-bookings .booking {
+        flex-direction: column;
+        gap: 15px;
+        height: auto;
+        align-items: center;
+    }
+
+    /* Improve service list */
+    .popular-services li {
+        flex-direction: column;
+        align-items: flex-start;
+        height: auto;
+        padding: 15px;
+        text-align: center;
+    }
+
+    .popular-services li img {
+        width: 50px;
+        height: 50px;
+        margin-bottom: 5px;
+    }
+
+    .popular-services li span {
+        margin-top: 8px;
+        font-size: 16px;
+    }
+
+    /* Adjust popup modal */
+    .popup-container {
+        padding: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .popup-content {
+        width: 85%;
+        max-width: 350px;
+        padding: 20px;
+        text-align: center;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Responsive buttons */
+    .popup-content button,
+    .new-bookings button {
+        width: 100%;
+        padding: 12px;
+        font-size: 16px;
+    }
+}
+/* ✅ Large Tablets & Small Laptops (max-width: 1024px) */
+@media (max-width: 1024px) {
+    .sidebar .logo img {
+        height: 130px; /* Slightly smaller */
+        padding-left: 30px;
+    }
+    
+    .main-content h2.raju {
+        padding-top: 100px; /* Adjust padding-top for h2 */
+    }
+}
+
+/* ✅ Tablets & Large Phones (max-width: 768px) */
+@media (max-width: 768px) {
+    .sidebar .logo img {
+        height: 110px; /* Reduce height */
+        padding-left: 20px;
+    }
+
+    .main-content h2.raju {
+        padding-top: 100px; /* Adjust padding-top for h2 */
+    }
+
+    .main-content {
+        gap: 15px; /* Reduced gap between sections */
+    }
+
+    .bookings-overview {
+        grid-template-columns: 1fr; /* Stack cards vertically */
+    }
+
+    .bookings-container {
+        max-height: 300px;
+        padding-top: 40px; /* Adjust height for smaller screens */
+    }
+
+    .search-container {
+        margin: 0 auto 10px; /* Center search bar with smaller margin */
+    }
+
+    .search-container input {
+        width: 100%; /* Full width for small screens */
+    }
+}
+
+/* ✅ Mobile Screens (max-width: 480px) */
+@media (max-width: 480px) {
+    .main-content h2.raju {
+        padding-top: 100px; /* Adjust padding-top for h2 */
+    }
+
+    .main-content {
+        gap: 10px; /* Even smaller gap for very small screens */
+    }
+
+    .bookings-overview {
+        grid-template-columns: 1fr; /* Stack cards vertically */
+    }
+
+    .search-container input {
+        width: 100%; /* Full width for smaller screens */
+    }
+}

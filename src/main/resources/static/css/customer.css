@@ -1,0 +1,318 @@
+body {
+
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.content {
+    margin-left: 300px;
+    padding: 20px;
+    width: 100%;
+}
+
+h2 {
+    text-align: center;
+}
+
+/* Table Styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+    color: #333;
+}
+
+img {
+    display: block;
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.sidebar .logo img {
+    width: 120px;
+    height: 150px;
+    margin-bottom: 0px;
+    padding-left: 60px;
+    border-radius: 0%;
+}
+
+.search-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.search-container input {
+    padding: 8px;
+    width: 300px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.highlight {
+    background-color: yellow;
+}
+
+/* Dark Mode Styles */
+.dark-mode {
+    background-color: #121212;
+    color: white;
+}
+
+/* Dark mode table */
+.dark-mode table th {
+    background-color: #333;
+    color: #fff;
+}
+
+.dark-mode table td {
+    background-color: #444;
+    color: #fff;
+}
+
+.dark-mode table, .dark-mode th, .dark-mode td {
+    border-color: #555;
+}
+
+/* Dark mode sidebar */
+.dark-mode .left-side {
+    background: #222;
+    color: white;
+}
+
+/* Dark mode sidebar links */
+.dark-mode .sidebar ul li a {
+    color: #ddd;
+}
+
+/* Dark mode settings */
+.dark-mode .setting {
+    background: #444;
+}
+
+/* Default sidebar styles */
+.sidebar ul li a {
+    color: black;
+    transition: color 0.3s ease;
+}
+
+/* Dark mode sidebar background */
+.dark-mode .sidebar {
+    background: #222;
+}
+
+/* Dark mode sidebar text */
+.dark-mode .sidebar ul li a {
+    color: white;
+    font-weight: bold;
+}
+
+/* Highlight active link in dark mode */
+.dark-mode .sidebar ul li a.active {
+    color: #4caf50;
+}
+
+
+       .content {
+           margin-left: 300px;
+           padding: 20px;
+           width: 100%;
+       }
+       h2 {
+           text-align: center;
+       }
+       table {
+           width: 100%;
+           border-collapse: collapse;
+           margin-top: 20px;
+       }
+       th, td {
+           border: 1px solid #ddd;
+           padding: 10px;
+           text-align: left;
+       }
+       th {
+           background-color: #f2f2f2;
+       }
+       img {
+           display: block;
+           width: 50px;
+           height: 50px;
+           object-fit: cover;
+           border-radius: 50%;
+       }
+       .search-container {
+           text-align: center;
+           margin-bottom: 20px;
+       }
+       .search-container input {
+           padding: 8px;
+           width: 300px;
+           border: 1px solid #ddd;
+           border-radius: 4px;
+       }
+       .highlight {
+           background-color: yellow;
+
+       }
+	   
+	   /* Optional: Keep active link slightly different but NOT green */
+	   .dark-mode .sidebar ul li a.active {
+	       color: #f1f1f1; /* Light grey instead of green */
+	       font-weight: bold;
+	   }
+	   
+	   
+	   
+	   
+	   /* ✅ Medium Screens (Tablets) - max-width: 1024px */
+	   @media (max-width: 1024px) {
+	       .sidebar {
+	           width: 250px;
+	       }
+
+	       .content {
+	           margin-left: 260px;
+	           width: calc(100% - 260px);
+	           padding: 15px;
+	       }
+
+	       h1 {
+	           font-size: 26px;
+			   padding-bottom: -30px;
+			  }
+
+	       h2 {
+	           font-size: 22px;
+			   padding-bottom: 50px;
+	       }
+
+	       .search-container input {
+	           width: 80%;
+	           font-size: 14px;
+			   
+	       }
+
+	       table {
+	           font-size: 14px;
+			   
+			  
+	       }
+	   }
+
+	   /* ✅ Small Screens (Tablets & Large Phones) - max-width: 768px */
+	   @media (max-width: 768px) {
+	       .sidebar {
+	           width: 180px;
+	           padding: 10px;
+	       }
+
+	       .content {
+	           margin-left: 190px;
+	           width: calc(100% - 210px);
+	           padding: 15px;
+	       }
+
+	       h1 {
+	           font-size: 22px;
+	           margin-bottom: 15px;
+	       }
+
+	       h2 {
+	           font-size: 18px;
+	           margin-bottom: 12px;
+	       }
+
+	       .search-container input {
+	           width: 100%;
+	           font-size: 14px;
+	           padding: 8px;
+	       }
+
+	       table {
+	           font-size: 12px;
+	       }
+
+	       th, td {
+	           padding: 8px;
+	       }
+	   }
+
+	   /* ✅ Extra Small Screens (Phones) - max-width: 480px */
+	   @media (max-width: 480px) {
+	       .sidebar {
+	           width: 100%;
+	           height: auto;
+	           text-align: center;
+	           padding: 8px;
+	       }
+
+	       .content {
+	           margin-left: 0;
+	           width: 100%;
+	           padding: 10px;
+	       }
+
+	       h1 {
+	           font-size: 20px;
+	           margin-bottom: 12px;
+	       }
+
+	       h2 {
+	           font-size: 16px;
+	           margin-bottom: 10px;
+	       }
+
+	       .search-container input {
+	           width: 90%;
+	           font-size: 12px;
+			   
+	       }
+
+	       table {
+	           font-size: 10px;
+	       }
+
+	       th, td {
+	           padding: 6px;
+	       }
+	   }
+
+	   
+
+	   /* ✅ Large Tablets & Small Laptops (max-width: 1024px) */
+	   @media (max-width: 1024px) {
+	       .sidebar .logo img {
+	           height: 130px; /* Slightly smaller */
+	           padding-left: 30px;
+	       }
+	   }
+
+	   /* ✅ Tablets & Large Phones (max-width: 768px) */
+	   @media (max-width: 768px) {
+	       .sidebar .logo img {
+	           height: 110px; /* Reduce height */
+	           padding-left: 20px;
+	       }
+	   }
+
+	   /* ✅ Mobile Screens (max-width: 480px) */
+	   @media (max-width: 480px) {
+	       .sidebar .logo img {
+	           height: 90px; /* Further reduce height */
+	           padding-left: 10px;
+	       }
+	   }

@@ -1,0 +1,164 @@
+/* General Page Styling */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    background-color: #f4f4f4;
+
+
+    transition: background-color 0.3s, color 0.3s; /* Smooth transition for color changes */
+
+
+}
+
+/* Sidebar Styling */
+
+/* Main Content Styling */
+.main-content {
+    margin-left: 270px;
+    padding: 20px;
+    width: calc(100% - 270px);
+    background-color: white;
+    min-height: 100vh;
+
+
+
+    transition: background-color 0.3s, color 0.3s;
+
+
+}
+
+h2 {
+    color: #333;
+    text-align: center;
+}
+
+/* Button Styling */
+div button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    margin: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+div button:hover {
+    background-color: #2980b9;
+}
+
+
+
+
+/* Dark mode for the page header */
+.dark-mode h2 {
+    color: white; /* Make the heading white in dark mode */
+}
+
+
+
+/* Table Styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+
+
+
+    transition: background-color 0.3s;
+
+
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+    text-align: center;
+
+
+
+    transition: border 0.3s;
+
+
+}
+
+th, td {
+    padding: 10px;
+}
+
+th {
+    background-color: #34495e;
+    color: white;
+}
+
+td {
+    background-color: #ecf0f1;
+}
+
+tr:hover td {
+    background-color: #d5dbdb;
+}
+
+
+
+
+/* Dark Mode - Global Styles */
+.dark-mode {
+    background-color: #121212;
+    color: white;
+}
+
+/* Dark mode for all containers */
+.dark-mode .financialmanagement-container {
+    background: #333;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+/* Dark mode for sidebar */
+.dark-mode .left-side {
+    background: #222;
+    color: white;
+}
+
+/* Dark mode for sidebar links */
+.dark-mode .sidebar ul li a {
+    color: #ddd;
+}
+
+/* Dark mode for settings items */
+.dark-mode .setting {
+    background: #444;
+}
+
+/* Dark mode for table headers */
+.dark-mode table th {
+    background-color: #555;
+    color: white;
+}
+
+/* Dark mode for table rows */
+.dark-mode table td {
+    background-color: #333;
+    color: white;
+}
+
+.dark-mode table tr:hover td {
+    background-color: #444;
+}
+
+/* Dark mode for body content */
+.dark-mode .main-content {
+    background-color: #1e1e1e;
+    color: white;
+}
+/* Optional: Keep active link slightly different but NOT green */
+.dark-mode .sidebar ul li a.active {
+    color: #f1f1f1; /* Light grey instead of green */
+    font-weight: bold;
+}
+

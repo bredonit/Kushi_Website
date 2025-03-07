@@ -1,0 +1,89 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kushi Dashboard - Settings</title>
+    <link rel="stylesheet" type="text/css" href="css/admin.css">
+    <link rel="stylesheet" type="text/css" href="css/settings.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            <img src="https://kushiservices.com/wp-content/uploads/2024/01/cropped-Crimson-1.png" alt="Kushi Hygiene Services">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="/guru">Dashboard</a></li>
+                <li><a href="/1">Customers</a></li>
+                <li><a href="/Bookingss">Bookings</a></li>
+                <li><a href="/Invoices">Invoices</a></li>
+                <li><a href="/addservice">Add New Service</a></li>
+                <li><a href="/financialmanagement">Financial Management</a></li>
+                <li><a href="/settings" class="active">Settings</a></li>
+				<li><a href="/viset">Viset List</a></li>
+
+				<hr>
+                <li><a href="/Logout">Sign Out</a></li>
+                
+            </ul>
+        </nav>
+    </div>
+    
+    <!-- Settings text outside the box -->
+    <h2 class="settings-text">Settings</h2>
+
+    <div class="settings-container">
+     
+        <div class="setting large">
+    <a href="/profile" class="setting-link">
+        👤 Profile
+    </a>
+</div>
+
+        <div class="setting large">
+            <span>🌙 Dark Mode</span>
+            <label class="toggle-switch">
+                <input type="checkbox" id="darkModeToggle">
+                <span class="slider"></span>
+            </label>
+        </div>
+    </div>
+
+    <script>
+    // Function to apply dark mode across all pages
+    function applyDarkMode() {
+        const isDarkMode = localStorage.getItem("darkMode") === "enabled";
+        if (isDarkMode) {
+            document.body.classList.add("dark-mode");
+        } else {
+            document.body.classList.remove("dark-mode");
+        }
+    }
+
+    // Apply dark mode when settings page loads
+    applyDarkMode();
+
+    // Dark mode toggle logic (only on settings page)
+    const toggle = document.getElementById("darkModeToggle");
+    if (toggle) {
+        toggle.checked = localStorage.getItem("darkMode") === "enabled";
+
+        toggle.addEventListener("change", function () {
+            if (toggle.checked) {
+                localStorage.setItem("darkMode", "enabled");
+            } else {
+                localStorage.setItem("darkMode", "disabled");
+            }
+            applyDarkMode(); // Apply change immediately
+
+            // Notify profile page to apply dark mode instantly
+            localStorage.setItem("darkModeUpdated", "true");
+        });
+    }
+</script>
+
+</body>
+</html>
+

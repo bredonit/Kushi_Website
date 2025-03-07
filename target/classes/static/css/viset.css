@@ -1,0 +1,417 @@
+/* ✅ General Page Setup */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+    overflow: hidden;
+}
+
+/* ✅ Main Content Container */
+.content {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    padding-left: 20px; /* Adjust as needed */
+    overflow: auto; /* Ensures scrollability */
+}
+
+
+/* ✅ Left-Aligned Header Section */
+.header-section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 10px;
+}
+
+/* ✅ Title Styling */
+h1, h2 {
+    margin: 0;
+    text-align: left;
+}
+
+/* ✅ Search Box */
+.search-container {
+    width: 100%;
+    max-width: 300px;
+    margin-top: 10px;
+}
+
+.search-container input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+/* ✅ Summary Box Section */
+.summary {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+
+.summary-box {
+    padding: 10px;
+    border-radius: 8px;
+    background: #f4f4f4;
+    font-weight: bold;
+    text-align: center;
+    width: 120px;
+}
+
+/* ✅ Filter Buttons (Aligned to Left) */
+.filter-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+/* ✅ Button Styling */
+.filter-buttons button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+/* ✅ Different Colors for Each Button */
+.filter-buttons button:nth-child(1) { background-color: #28a745; } /* Green */
+.filter-buttons button:nth-child(1):hover { background-color: #218838; }
+
+.filter-buttons button:nth-child(2) { background-color: #007bff; } /* Blue */
+.filter-buttons button:nth-child(2):hover { background-color: #0056b3; }
+
+.filter-buttons button:nth-child(3) { background-color: #ff9800; } /* Orange */
+filter-buttons button:nth-child(3):hover { background-color: #e68900; }
+
+/* ✅ Table Container */
+.table-container {
+    width: 100%;
+    overflow: auto;
+    position: relative;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ✅ Table Scrollable Area */
+.table-scroll {
+    max-height: 400px;
+    overflow-y: auto;
+    overflow-x: auto;
+    display: block;
+    position: relative;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+/* ✅ Table Styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 1200px;
+}
+
+/* ✅ Table Headers */
+thead th {
+    position: sticky;
+    top: 0;
+    background-color: #007bff;
+    color: white;
+    padding: 10px;
+    text-align: left;
+    border-bottom: 2px solid #0056b3;
+    z-index: 2;
+}
+
+/* ✅ Table Cells */
+th, td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+    white-space: nowrap;
+}
+
+/* ✅ Sticky First Column */
+th.sticky-col, td.sticky-col {
+    position: sticky;
+    left: 0;
+    background-color: inherit;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    z-index: 3;
+}
+
+/* ✅ Fix Sticky Column Background Color */
+tbody tr:nth-child(even) .sticky-col {
+    background-color: #f4f4f4;
+}
+tbody tr:nth-child(odd) .sticky-col {
+    background-color: #fff;
+}
+
+/* ✅ Alternating Row Colors */
+tbody tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+tbody tr:nth-child(odd) {
+    background-color: #ffffff;
+}
+
+/* ✅ Hover Effect */
+tbody tr:hover {
+    background-color: #e9ecef;
+}
+
+/* ✅ Scrollbar Customization */
+.table-scroll::-webkit-scrollbar {
+    height: 8px;
+    width: 8px;
+}
+
+.table-scroll::-webkit-scrollbar-thumb {
+    background-color: #007bff;
+    border-radius: 4px;
+}
+
+.table-scroll::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+}
+
+/* Dark Mode Styles */
+.dark-mode {
+    background-color: #121212;
+    color: white;
+}
+
+/* Dark mode table */
+.dark-mode table th {
+    background-color: #333;
+    color: #fff;
+}
+
+.dark-mode table td {
+    background-color: #444;
+    color: #fff;
+}
+
+.dark-mode table, .dark-mode th, .dark-mode td {
+    border-color: #555;
+}
+
+/* Dark mode sidebar */
+.dark-mode .left-side {
+    background: #222;
+    color: white;
+}
+
+/* Dark mode sidebar links */
+.dark-mode .sidebar ul li a {
+    color: #ddd;
+}
+
+/* Dark mode settings */
+.dark-mode .setting {
+    background: #444;
+}
+
+/* Default sidebar styles */
+.sidebar ul li a {
+    color: black;
+    transition: color 0.3s ease;
+}
+
+/* Dark mode sidebar background */
+.dark-mode .sidebar {
+    background: #222;
+}
+
+/* Dark mode sidebar text */
+.dark-mode .sidebar ul li a {
+    color: white;
+    font-weight: bold;
+}
+
+/* Highlight active link in dark mode */
+.dark-mode .sidebar ul li a.active {
+    color: #4caf50;
+}
+/* Optional: Keep active link slightly different but NOT green */
+.dark-mode .sidebar ul li a.active {
+    color: #f1f1f1; /* Light grey instead of green */
+    font-weight: bold;
+}
+
+
+/* ✅ Large Tablets & Small Laptops (max-width: 1024px) */
+@media (max-width: 1024px) {
+    .content {
+        padding-left: 15px; /* Reduce padding for better spacing */
+    }
+
+    .summary {
+        flex-wrap: wrap; /* Allow summary boxes to wrap on smaller screens */
+        justify-content: center;
+    }
+
+    .summary-box {
+        width: 100px; /* Reduce box size */
+        font-size: 14px;
+    }
+
+    .filter-buttons {
+        justify-content: center;
+    }
+
+    .filter-buttons button {
+        padding: 8px 12px;
+        font-size: 13px;
+    }
+
+    .table-scroll {
+        max-height: 450px;
+    }
+}
+
+/* ✅ Tablets & Large Phones (max-width: 768px) */
+@media (max-width: 768px) {
+    .content {
+        padding-left: 10px;
+    }
+
+    .header-section {
+        align-items: center; /* Center align headings */
+    }
+
+    h1 {
+        font-size: 22px;
+    }
+	h2 {
+	           font-size: 22px;
+			   padding-bottom: 10px;
+	       }
+
+    .summary-box {
+        width: 90px;
+        font-size: 13px;
+    }
+
+    .filter-buttons {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .filter-buttons button {
+        padding: 7px 10px;
+        font-size: 12px;
+    }
+
+    .table-container {
+        width: 100%;
+    }
+
+    .table-scroll {
+        max-height: 400px;
+    }
+
+    table {
+        font-size: 12px;
+        min-width: 800px;
+    }
+
+    th, td {
+        padding: 8px;
+    }
+}
+
+/* ✅ Mobile Screens (max-width: 480px) */
+@media (max-width: 480px) {
+    .content {
+        padding-left: 5px;
+    }
+
+    h1 {
+        font-size: 18px;
+        text-align: center;
+    }
+
+    h2 {
+        font-size: 16px;
+        text-align: center;
+    }
+
+    .search-container {
+        width: 100%;
+        max-width: none;
+    }
+
+    .summary {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .summary-box {
+        width: 80px;
+        font-size: 12px;
+    }
+
+    .filter-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .filter-buttons button {
+        width: 100%;
+        padding: 6px;
+        font-size: 12px;
+    }
+
+    .table-container {
+        width: 100%;
+    }
+
+    .table-scroll {
+        max-height: 250px;
+    }
+
+    table {
+        font-size: 11px;
+        min-width: 600px;
+    }
+
+    th, td {
+        padding: 6px;
+    }
+}
+
+
+
+/* ✅ Large Tablets & Small Laptops (max-width: 1024px) */
+@media (max-width: 1024px) {
+    .sidebar .logo img {
+        height: 130px; /* Slightly smaller */
+        padding-left: 30px;
+    }
+}
+
+/* ✅ Tablets & Large Phones (max-width: 768px) */
+@media (max-width: 768px) {
+    .sidebar .logo img {
+        height: 110px; /* Reduce height */
+        padding-left: 20px;
+    }
+}
+
+/* ✅ Mobile Screens (max-width: 480px) */
+@media (max-width: 480px) {
+    .sidebar .logo img {
+        height: 90px; /* Further reduce height */
+        padding-left: 10px;
+    }
+}

@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kushi Dashboard-1</title>
+    <link rel="stylesheet" type="text/css" href="css/admin.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            <img src="https://kushiservices.com/wp-content/uploads/2024/01/cropped-Crimson-1.png" alt="Kushi Hygiene Services">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="/guru">Dashboard</a></li>
+                <li><a href="/1">Customers</a></li>
+                <li><a href="/Bookingss">Bookings</a></li>
+                <li><a href="/Invoices">Invoices</a></li>
+                <li><a href="/addservice">Add New Service</a></li>
+                <li><a href="/financialmanagement">Financial Management</a></li>
+             
+                <li><a href="/settings">Settings</a></li>
+				<li><a href="/viset">Viset List</a></li><br><hr>
+				
+				<li><a href="/Logout">Sign Out</a></li>
+				 
+            </ul>
+        </nav>
+        
+    </div>
+
+    <div class="main-content">
+        <header>
+            <input type="text" placeholder="Search Here">
+            <div class="header-icons">
+                <span>🔔</span>
+                <span>💬</span>
+                <span>Jerome</span>
+            </div>
+        </header>
+        
+        <div class="grid">
+            <!-- Left Column -->
+            <div>
+				<div class="card overview">
+				    <div class="overview-header">
+				        <h3>Overview</h3>
+				        <select id="timePeriod" class="time-dropdown" onchange="updateOverview()">
+				            <option value="all-time">All Time</option>
+				            <option value="one-week">1 Week</option>
+				            <option value="two-weeks">2 Weeks</option>
+				            <option value="one-month">1 Month</option>
+				        </select>
+				    </div>
+				    <div class="overview-container">
+				        <div class="overview-box" id="income-box">
+				            <h4>Booking Amount Total</h4>
+				            <p id="income-value">Loading...</p> 
+				        </div>
+				        <div class="overview-box" id="customers-box">
+				            <h4>Customers</h4>
+				            <p id="customers-value">Loading...</p>
+				        </div>
+				    </div>
+				</div>
+
+				<script>
+					async function updateOverview() {
+					    const timePeriod = document.getElementById('timePeriod').value;
+
+					    try {
+					        // Fetch data from the backend with the selected time period
+					        const response = await fetch(`/users?timePeriod=${timePeriod}`);
+
+					        if (!response.ok) {
+					            throw new Error('Failed to fetch data');
+					        }
+
+					        const data = await response.json();
+
+					        // Update the booking amount total
+					        if (data.totalBookingAmount !== undefined) {
+					            document.getElementById('income-value').textContent = `₹${data.totalBookingAmount.toFixed(2)}`;
+					        } else {
+					            document.getElementById('income-value').textContent = 'Data not available';
+					        }
+
+					        // Update the number of customers
+					        if (data.totalCustomers !== undefined) {
+					            document.getElementById('customers-value').textContent = data.totalCustomers;
+					        } else {
+					            document.getElementById('customers-value').textContent = 'Data not available';
+					        }
+
+					    } catch (error) {
+					        console.error('Error:', error);
+					        document.getElementById('income-value').textContent = 'Error loading data';
+					        document.getElementById('customers-value').textContent = 'Error loading data';
+					    }
+					}
+
+					// Automatically load "all-time" data on page load
+					document.addEventListener('DOMContentLoaded', updateOverview);
+
+					// Update data when time period is changed
+					document.getElementById('timePeriod').addEventListener('change', updateOverview);
+
+				</script>
+
+
+                <br>
+				
+				<div class="card statistics">
+									<div class="overview-header">
+								    <h3>Statistic</h3>
+									
+																		    </div>
+								    <canvas id="myChart" class="chart-placeholder"></canvas>
+								</div>
+								<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+								<script>
+									let myChart;
+
+									// Define colors for services
+									const chartColors = [
+									    "rgba(75, 192, 192, 0.8)",  // Greenish
+									    "rgba(54, 162, 235, 0.8)",  // Blue
+									    "rgba(255, 206, 86, 0.8)",  // Yellow
+									    "rgba(255, 99, 132, 0.8)",  // Red
+									    "rgba(153, 102, 255, 0.8)", // Purple
+									    "rgba(255, 159, 64, 0.8)"   // Orange
+									];
+
+									const borderColors = chartColors.map(color => color.replace("0.8", "1")); // Darker border
+
+									// Function to update the overview based on the selected time period
+									async function updateOverview() {
+									    const timePeriod = document.getElementById('timePeriod').value; // Get selected time period
+
+									    try {
+									        const response = await fetch(`/statistics?timePeriod=${timePeriod}`);
+									        if (!response.ok) {
+									            throw new Error('Failed to fetch data');
+									        }
+									        const data = await response.json();
+
+									        console.log(data); // Log for debugging
+
+									        if (!data || !data.labels || !data.data) {
+									            console.error("Invalid data format", data);
+									            return;
+									        }
+
+									        const labels = data.labels;  // Service names
+									        const dataset = data.data;   // Revenue amounts
+
+									        // Update total booking amount
+									        if (data.totalBookingAmount !== undefined) {
+									            document.getElementById('income-value').textContent = `₹${data.totalBookingAmount.toFixed(2)}`;
+									        }
+
+									        // Update total customers
+									        if (data.totalCustomers !== undefined) {
+									            document.getElementById('customers-value').textContent = data.totalCustomers;
+									        }
+
+									        // No data check
+									        if (labels.length === 0 || dataset.length === 0) {
+									            console.warn("No data to display");
+									            return;
+									        }
+
+									        // Destroy old chart if exists
+									        if (myChart) {
+									            myChart.destroy();
+									        }
+
+									        // Assign colors dynamically based on the number of services
+									        const backgroundColors = labels.map((_, index) => chartColors[index % chartColors.length]);
+									        const borderColorsList = labels.map((_, index) => borderColors[index % borderColors.length]);
+
+									        // Create chart
+									        const ctx = document.getElementById("myChart").getContext("2d");
+									        myChart = new Chart(ctx, {
+									            type: "bar",
+									            data: {
+									                labels: labels, // Service names
+									                datasets: [
+									                    {
+									                        label: "Revenue (₹)",
+									                        data: dataset, // Revenue data
+									                        backgroundColor: backgroundColors, // Dynamic colors
+									                        borderColor: borderColorsList, // Dynamic border colors
+									                        borderWidth: 1,
+									                    },
+									                ],
+									            },
+									            options: {
+									                responsive: true,
+									                plugins: {
+									                    legend: {
+									                        display: false, // Hide legend inside chart
+									                    },
+									                },
+									                scales: {
+									                    x: {
+									                        display: false, // Hide x-axis labels
+									                    },
+									                    y: {
+									                        beginAtZero: true,
+									                    },
+									                },
+									            },
+									        });
+
+									        // **Update custom legend separately**
+									        updateCustomLegend(labels, backgroundColors);
+
+									    } catch (error) {
+									        console.error('Error:', error);
+									        document.getElementById('income-value').textContent = 'Error loading data';
+									        document.getElementById('customers-value').textContent = 'Error loading data';
+									    }
+									}
+
+									// Function to create a custom legend outside the chart
+									function updateCustomLegend(labels, colors) {
+									    const legendContainer = document.getElementById("custom-legend");
+									    legendContainer.innerHTML = ""; // Clear previous legend
+
+									    labels.forEach((label, index) => {
+									        const legendItem = document.createElement("div");
+									        legendItem.style.display = "flex";
+									        legendItem.style.alignItems = "center";
+									        legendItem.style.marginBottom = "5px";
+
+									        const colorBox = document.createElement("span");
+									        colorBox.style.width = "12px";
+									        colorBox.style.height = "12px";
+									        colorBox.style.backgroundColor = colors[index];
+									        colorBox.style.display = "inline-block";
+									        colorBox.style.marginRight = "8px";
+									        colorBox.style.borderRadius = "3px";
+
+									        const textLabel = document.createElement("span");
+									        textLabel.textContent = label;
+
+									        legendItem.appendChild(colorBox);
+									        legendItem.appendChild(textLabel);
+									        legendContainer.appendChild(legendItem);
+									    });
+									}
+
+									// Auto load data on page load
+									document.addEventListener('DOMContentLoaded', updateOverview);
+
+									// Update chart when time period changes
+									document.getElementById('timePeriod').addEventListener('change', updateOverview);
+	</script>
+
+				
+
+                <br>
+                <div class="card new-bookings">
+					<div class="overview-header">
+                    <h3>New Bookings</h3>
+					
+			    </div>
+			<div class="bookings-container" id="bookings-container"></div>
+			<script>
+			    // Fetch data from backend API
+			    fetch('/api/getTopCustomers-2')
+			        .then(response => response.json())
+			        .then(data => {
+			            const bookingsContainer = document.getElementById('bookings-container');
+			            
+			            // Clear previous data
+			            bookingsContainer.innerHTML = '';
+
+			            // Log the entire response data to check the structure
+			            console.log(data);
+
+			            // Check if data is not empty and only display the most recent booking
+			            if (data && data.length > 0) {
+			                // Sort the bookings by booking date in descending order
+			                data.sort((a, b) => new Date(b.bookingDate) - new Date(a.bookingDate));
+
+			                // Get the most recent booking (first item in the sorted array)
+			                const booking = data[0];
+
+			                const bookingDiv = document.createElement('div');
+			                bookingDiv.classList.add('booking');
+
+			                // Format the booking date in IST (without affecting time)
+			                const bookingDate = new Date(booking.bookingDate);
+			                const formattedDateTime = bookingDate.toLocaleString('en-IN', {
+			                    timeZone: 'Asia/Kolkata', // Indian Standard Time
+			                    weekday: 'short',         // Abbreviated weekday (e.g., "Thu")
+			                    month: 'short',           // Abbreviated month (e.g., "Jan")
+			                    day: '2-digit',           // Day of the month (e.g., "01")
+			                    year: 'numeric'          // Full year (e.g., "2025")
+			                });
+
+			                // Show the exact booking time stored in the backend without any default time being added
+			                let bookingTimeDisplay = '';
+			                if (booking.bookingTime && booking.bookingTime.trim() !== '') {
+			                    // Only show the stored time if present
+			                    bookingTimeDisplay = ` at ${booking.bookingTime}`;
+			                }
+
+			                // Build HTML dynamically for the most recent booking
+			                bookingDiv.innerHTML = `
+			                    <img src="${booking.imageUrl}" alt="Customer" style="width: 90px; height: 90px; border-radius: 50%;">
+			                    <div>
+			                        <p>${booking.name}</p>
+			                        <p><small>${formattedDateTime}${bookingTimeDisplay}</small></p>
+			                        <p>${booking.bookingServiceName}</p>
+			                    </div>
+			                    <button>Reply</button>
+			                `;
+
+			                // Append the most recent booking to the container
+			                bookingsContainer.appendChild(bookingDiv);
+			            } else {
+			                // If no booking found, show a message
+			                bookingsContainer.innerHTML = 'No recent booking found';
+			            }
+			        })
+			        .catch(error => {
+			            console.error('Error fetching data:', error);
+			        });
+			</script>
+
+
+
+
+															
+                </div>
+            </div>
+			
+
+            <!-- Right Column -->
+            <div>
+				<div class="card popular-services">
+				    <div class="overview-header">
+				        <h3>Top Rating Services</h3>
+				       
+				    </div>
+				    <ul id="service-list"></ul> <!-- Dynamic list will be inserted here -->
+				</div>
+
+				<script>
+				    // Function to fetch services from the API and populate the list
+				    async function fetchServiceData() {
+				        try {
+				            // Making a GET request to your API
+				            const response = await fetch('/api/services-details');
+
+				            // Check if the response is successful (status code 200)
+				            if (response.ok) {
+				                const data = await response.json();
+
+				                // Check if the data is empty
+				                if (data.length === 0) {
+				                    document.getElementById("service-list").innerHTML = "<li>No services found</li>";
+				                    return;
+				                }
+
+				                // Sort the services by rating in descending order
+				                data.sort((a, b) => b.rating - a.rating);  // Assuming rating is a number
+
+				                // Call the function to render services
+				                renderServices(data);
+				            } else {
+				                console.error('Error fetching data:', response.status);
+				                document.getElementById("service-list").innerHTML = "<li>Failed to load services</li>";
+				            }
+				        } catch (error) {
+				            console.error('Error:', error);
+				            document.getElementById("service-list").innerHTML = "<li>Error occurred while fetching data</li>";
+				        }
+				    }
+
+				    // Function to dynamically render the services list on the page
+				    function renderServices(services) {
+				        const serviceList = document.getElementById("service-list");
+
+				        // Clear any existing content in the list
+				        serviceList.innerHTML = '';
+
+				        // Limit the number of services to 3
+				        const servicesToDisplay = services.slice(0, 3);
+
+				        // Loop through the selected services and create list items
+				        servicesToDisplay.forEach(service => {
+				            const li = document.createElement("li");
+
+				            // Create the image element
+				            const img = document.createElement("img");
+				            img.src = service.image;
+				            img.alt = "Service Image";
+
+				            // Create the rating stars based on the rating value
+				            const rating = document.createElement("p");
+				            rating.classList.add("rating");
+
+				            // Generate the rating stars dynamically
+				            const totalStars = 5;  // Total number of stars to show
+				            const ratingValue = service.rating;  // Actual rating value (e.g., 4 or 3.5)
+				            let stars = '';
+
+				            // Add full stars
+				            for (let i = 0; i < Math.floor(ratingValue); i++) {
+				                stars += '★';
+				            }
+
+				            // Add half star if the rating has a decimal part
+				            if (ratingValue % 0.5 >= 0.5) {
+				                stars += '⯪';  // You can modify this to display a half star (if needed)
+				            }
+
+				            // Add empty stars
+				            for (let i = Math.floor(ratingValue); i < totalStars; i++) {
+				                stars += '☆';
+				            }
+
+				            rating.innerHTML = `${stars}`;  // Display only the stars
+
+				            // Create the service name
+							// Create the service name element
+							const name = document.createElement("p");
+
+							// Set the text of the service name
+							name.innerText = service.serviceName;
+
+							// Adjust the style of the service name
+							name.style.fontSize = "16px";    // Set font size to 16px (you can adjust this as needed)
+							name.style.fontWeight = "bold";  // Make the service name bold
+							name.style.color = "#333";       // Set color to dark grey (#333) or any other color
+							name.style.marginTop = "8px";    // Add top margin for spacing between rating and name
+							name.style.marginBottom = "4px"; // Add bottom margin for spacing between name and price
+							name.style.lineHeight = "1.5";   // Adjust line height for better spacing if needed
+							name.style.marginLeft = "20px";
+                              
+				            // Create the price
+				            const price = document.createElement("span");
+				            price.innerText = `₹${service.amount}`;
+							
+
+				            // Create the rating count and display alongside the stars
+							const ratingCount = document.createElement("span");
+							ratingCount.classList.add("rating-count");
+
+							// Display the rating count next to the stars
+							ratingCount.innerText = `(${service.ratingCount})`;  // Showing rating count inside parentheses
+
+							// Optional: Style it to adjust position, font size, and color
+							ratingCount.style.marginLeft = "1px";  // Adds space between the stars and the rating count
+							ratingCount.style.fontSize = "18px";    // Adjusts font size of the count text
+							ratingCount.style.color = "#888";    //splay the rating count next to the stars
+							ratingCount.style.marginTop = "px";    // Add top margin for spacing between rating and name
+				            ratingCount.style.marginBottom = "4px"; // Add bottom margin for spacing between name and price
+														
+														
+				            // Append all the elements to the list item in the order: image, rating, name, price, and rating count
+				            li.appendChild(img);
+				            li.appendChild(rating);  // Rating (stars) above the service name
+				            li.appendChild(ratingCount); // Display the rating count next to the stars
+				            li.appendChild(name);    // Service name is under the rating
+				            li.appendChild(price);   // Price under the service name
+
+				            // Add the list item to the service list
+				            serviceList.appendChild(li);
+				        });
+				    }
+
+				    // Call the fetchServiceData function to load the services when the page loads
+				    fetchServiceData();
+				</script>
+
+
+
+                <br>
+				
+				<div class="card">
+								    <div class="overview-header">
+								        <h3>Top Customers</h3>
+								        
+								    </div>
+								    <div class="customers" id="customerList">
+								        <!-- Dynamically generated customer data will go here -->
+								    </div>
+								</div>
+
+								<script>
+									function updateOverview() {
+									    const timePeriod = document.getElementById("timePeriod").value;
+									    const url = `/api/getTopCustomers?timePeriod=${timePeriod}`;
+
+									    fetch(url)
+									        .then(response => {
+									            if (!response.ok) {
+									                throw new Error('Failed to fetch data');
+									            }
+									            return response.json();
+									        })
+									        .then(data => {
+									            console.log('Fetched data:', data);
+
+									            if (!Array.isArray(data) || data.length === 0) {
+									                console.error("No customers data available or invalid data format.");
+									                document.getElementById("customerList").innerHTML = "<p>No data available.</p>";
+									                return;
+									            }
+
+									            const customerList = document.getElementById("customerList");
+									            customerList.innerHTML = "";
+
+									            // Limit to only 5 customers
+									            data.slice(0, 5).forEach(customer => {
+									                const customerDiv = document.createElement("div");
+									                customerDiv.classList.add("customer");
+
+									                const img = document.createElement("img");
+									                img.src = customer.imageUrl.startsWith("http") ? customer.imageUrl : "/images/" + customer.imageUrl;
+									                img.alt = customer.name;
+									                customerDiv.appendChild(img);
+
+									                const nameParagraph = document.createElement("p");
+									                nameParagraph.textContent = customer.name;
+									                customerDiv.appendChild(nameParagraph);
+
+									                customerList.appendChild(customerDiv);
+									            });
+									        })
+									        .catch(error => {
+									            console.error('Error fetching data:', error);
+									            document.getElementById("customerList").innerHTML = "<p>Error loading data. Please try again later.</p>";
+									        });
+									}
+
+									// Initial load
+									updateOverview();
+
+									// Update customer list when the time period changes
+									document.getElementById("timePeriod").addEventListener("change", updateOverview);
+					
+								
+									// Function to apply dark mode on profile page
+									    function applyDarkMode() {
+									        if (localStorage.getItem("darkMode") === "enabled") {
+									            document.body.classList.add("dark-mode");
+									        } else {
+									            document.body.classList.remove("dark-mode");
+									        }
+									    }
+
+									    // Apply dark mode on page load
+									    applyDarkMode();
+
+									    // Listen for changes from the settings page
+									    window.addEventListener("storage", function(event) {
+									        if (event.key === "darkModeUpdated") {
+									            applyDarkMode(); // Apply change immediately
+									        }
+									    });	
+								
+								
+								
+								
+								
+								
+								</script>
+					
+					<br>
+
+					
+
+				
+				
+
+				
+            </div>
+        </div>
+    </div>
+</body>
+</html>
