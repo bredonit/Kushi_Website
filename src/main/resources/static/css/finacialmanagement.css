@@ -162,3 +162,69 @@ tr:hover td {
     font-weight: bold;
 }
 
+
+
+
+/* ✅ Large Tablets & Small Laptops (max-width: 1024px) */
+@media (max-width: 1024px) {
+    .main-content {
+        margin-left: 10px;
+        width: calc(100% - 50px);
+        padding: 15px;
+    }
+
+    .sidebar .logo img {
+        height: 130px; /* Slightly smaller */
+        padding-left: 30px;
+    }
+}
+
+/* ✅ Tablets & Large Phones (max-width: 768px) */
+@media (max-width: 768px) {
+    .main-content {
+        margin-left: 0;
+        width: 100%;
+        padding: 15px;
+    }
+
+    .sidebar .logo img {
+        height: 110px; /* Reduce height */
+        padding-left: 20px;
+    }
+
+    h1 {
+        font-size: 22px;
+    }
+
+    h2 {
+        font-size: 22px;
+        padding-bottom: 10px;
+    }
+}
+
+/* ✅ Mobile Screens (max-width: 480px) */
+@media (max-width: 480px) {
+    .main-content {
+        margin-left: 0;
+        width: 100%;
+        padding: 10px;
+    }
+
+    .sidebar .logo img {
+        height: 90px; /* Further reduce height */
+        padding-left: 10px;
+    }
+
+    h1 {
+        font-size: 18px;
+        text-align: center;
+    }
+
+    h2 {
+        font-size: 16px;
+        text-align: center;
+    }
+}
+
+
+

@@ -248,7 +248,6 @@ tbody tr:hover {
     font-weight: bold;
 }
 
-
 /* ✅ Large Tablets & Small Laptops (max-width: 1024px) */
 @media (max-width: 1024px) {
     .content {
@@ -277,6 +276,11 @@ tbody tr:hover {
     .table-scroll {
         max-height: 450px;
     }
+
+    .sidebar .logo img {
+        height: 130px; /* Slightly smaller */
+        padding-left: 30px;
+    }
 }
 
 /* ✅ Tablets & Large Phones (max-width: 768px) */
@@ -292,10 +296,10 @@ tbody tr:hover {
     h1 {
         font-size: 22px;
     }
-	h2 {
-	           font-size: 22px;
-			   padding-bottom: 10px;
-	       }
+    h2 {
+        font-size: 22px;
+        padding-bottom: 10px;
+    }
 
     .summary-box {
         width: 90px;
@@ -327,6 +331,11 @@ tbody tr:hover {
 
     th, td {
         padding: 8px;
+    }
+
+    .sidebar .logo img {
+        height: 110px; /* Reduce height */
+        padding-left: 20px;
     }
 }
 
@@ -388,30 +397,10 @@ tbody tr:hover {
     th, td {
         padding: 6px;
     }
-}
 
-
-
-/* ✅ Large Tablets & Small Laptops (max-width: 1024px) */
-@media (max-width: 1024px) {
-    .sidebar .logo img {
-        height: 130px; /* Slightly smaller */
-        padding-left: 30px;
-    }
-}
-
-/* ✅ Tablets & Large Phones (max-width: 768px) */
-@media (max-width: 768px) {
-    .sidebar .logo img {
-        height: 110px; /* Reduce height */
-        padding-left: 20px;
-    }
-}
-
-/* ✅ Mobile Screens (max-width: 480px) */
-@media (max-width: 480px) {
     .sidebar .logo img {
         height: 90px; /* Further reduce height */
         padding-left: 10px;
     }
+}
 }

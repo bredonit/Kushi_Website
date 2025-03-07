@@ -13,27 +13,35 @@
 </head>
 <body>
   
-   <div class="sidebar">
-    <div class="logo">
-        <img src="https://kushiservices.com/wp-content/uploads/2024/01/cropped-Crimson-1.png" alt="Kushi Hygiene Services">
-    </div>
-    <nav>
-		<ul>
-		               <li><a href="/guru">Dashboard</a></li>
-		               <li><a href="/1">Customers</a></li>
-		               <li><a href="/Bookingss">Bookings</a></li>
-		               <li><a href="/Invoices">Invoices</a></li>
-		               <li><a href="/addservice">Add New Service</a></li>
-		               <li><a href="/financialmanagement">Financial Management</a></li>
-		            
-		               <li><a href="/settings">Settings</a></li>
-					<li><a href="/viset">Viset List</a></li><br><hr>
-					
-					<li><a href="/Logout">Sign Out</a></li>
-					 
-		           </ul>
-    </nav>
-</div>
+	<div class="menu-icon" onclick="toggleSidebar()">&#9776;</div>
+
+		    <!-- ✅ Updated Sidebar with ID for JavaScript -->
+		    <div class="sidebar" id="sidebar">
+		        <div class="logo">
+		            <img src="https://kushiservices.com/wp-content/uploads/2024/01/cropped-Crimson-1.png" alt="Kushi Hygiene Services">
+		        </div>
+		        <nav>
+		            <ul>
+		                <li><a href="/guru">Dashboard</a></li>
+		                <li><a href="/1">Customers</a></li>
+		                <li><a href="/Bookingss">Bookings</a></li>
+		                <li><a href="/Invoices">Invoices</a></li>
+		                <li><a href="/addservice">Add New Service</a></li>
+		                <li><a href="/financialmanagement">Financial Management</a></li>
+		                <li><a href="/settings">Settings</a></li>
+		                <li><a href="/viset">Visit List</a></li>
+		                <br><hr>
+		                <li><a href="/Logout">Sign Out</a></li>
+		            </ul>
+		        </nav>
+		    </div>
+		
+		<script>
+		function toggleSidebar() {
+		    document.getElementById("sidebar").classList.toggle("active");
+		}
+		</script>
+
 
 
 <div class="main-content">
@@ -129,45 +137,44 @@
         }
     }
 
-    async function updateBookingStatus(bookingId, newStatus) {
-        try {
-            const response = await fetch(`/api/bookings/${bookingId}/status`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ status: newStatus })
-            });
-            if (!response.ok) throw new Error("Failed to update booking status");
+	async function updateBookingStatus(bookingId, newStatus) {
+	    try {
+	        const response = await fetch(`/api/bookings/${bookingId}`, { // ✅ Fixed fetch syntax
+	            method: "PUT",
+	            headers: { "Content-Type": "application/json" },
+	            body: JSON.stringify({ booking_STATUS: newStatus }) // ✅ Correct request body
+	        });
 
-            // Update the status in the UI dynamically without refreshing
-            const row = document.querySelector(`tr[data-id="${bookingId}"]`);
-            if (row) {
-                row.setAttribute("data-status", newStatus);
-                row.querySelector("td:last-child").textContent = newStatus;
+	        if (!response.ok) throw new Error("Failed to update booking status");
 
-                // Move the row to the correct tab dynamically
-                if (newStatus === "Confirmed") {
-                    document.getElementById("confirmedBookings").textContent++;
-                    document.getElementById("pendingBookings").textContent--;
-                } else if (newStatus === "Completed") {
-                    document.getElementById("completedBookings").textContent++;
-                    document.getElementById("confirmedBookings").textContent--;
-                    document.getElementById("totalBookings").textContent++;
-                }
+	        const row = document.querySelector(`tr[data-id="${bookingId}"]`); // ✅ Fixed selector
+	        if (row) {
+	            row.setAttribute("data-status", newStatus);
+	            row.querySelector("td:last-child").textContent = newStatus;
 
-                // Remove row from the current tab if it doesn't belong there anymore
-                const currentTab = document.querySelector(".tab.active").id;
-                if ((currentTab === "pendingTab" && newStatus !== "Pending") ||
-                    (currentTab === "confirmedTab" && newStatus !== "Confirmed") ||
-                    (currentTab === "completedTab" && newStatus !== "Completed")) {
-                    row.remove();
-                }
-            }
-        } catch (error) {
-            console.error("Error updating booking status:", error);
-        }
-    }
+	            // ✅ Update Booking Counters
+	            if (newStatus === "Confirmed") {
+	                document.getElementById("confirmedBookings").textContent++;
+	                document.getElementById("pendingBookings").textContent--;
+	            } else if (newStatus === "Completed") {
+	                document.getElementById("completedBookings").textContent++;
+	                document.getElementById("confirmedBookings").textContent--;
+	                document.getElementById("totalBookings").textContent++;
+	            }
+
+	            // ✅ Remove Row if It Doesn't Belong to the Current Tab
+	            const currentTab = document.querySelector(".tab.active").id;
+	            if ((currentTab === "pendingTab" && newStatus !== "Pending") ||
+	                (currentTab === "confirmedTab" && newStatus !== "Confirmed") ||
+	                (currentTab === "completedTab" && newStatus !== "Completed")) {
+	                row.remove();
+	            }
+	        }
+	    } catch (error) {
+	        console.error("Error updating booking status:", error);
+	    }
+	}
+
 
     function showPopup(bookingId, selectedTeam) {
         if (!document.querySelector(`tr[data-status='New']`)) {

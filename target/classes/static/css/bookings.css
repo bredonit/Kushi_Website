@@ -48,10 +48,29 @@ body {
     white-space: nowrap;
 }
 
-/* Table styling */
-table {
+
+
+
+
+/* Table styling with fixed header */
+.bookings-container {
+    max-height: 400px; /* Adjust the height as needed */
+    overflow-y: auto;  /* Enables vertical scrolling */
+    border: 1px solid #ccc; /* Optional: Adds a border to distinguish the table */
+    position: relative;
+}
+
+.bookings-container table {
     width: 100%;
     border-collapse: collapse;
+    position: relative;
+}
+
+.bookings-container thead {
+    position: sticky;
+    top: 0;
+    background-color: white; /* Gray background for visibility */
+    z-index: 10;
 }
 
 th, td {
@@ -61,8 +80,9 @@ th, td {
 }
 
 tr:nth-child(even) {
-    background-color: #f2f2f2;
+    background-color: #f2f2f2;
 }
+
 
 .search-container input {
     width: 300px;
@@ -167,12 +187,13 @@ tr[data-status="Completed"] {
         z-index: 1000; /* Ensure it stays above other elements */
     }
 
-    /* Adjust main content */
-    .main-content {
-        margin-left: 190px; /* Adjusted to fit smaller sidebar */
-        width: calc(100% - 190px);
-        padding: 15px;
-    }
+	/* Adjust main content */
+	    .main-content {
+	        margin-left: 10px; /* Adjusted to fit smaller sidebar */
+	        width: calc(100% - 50px);
+	        padding: 15px;
+	    }
+
 
     /* Improve header alignment */
     header {

@@ -230,7 +230,7 @@ input:checked + .slider:before {
 
     .settings-container {
         width: 250px;
-        left: 200px;
+        left: 50px;
         top: 40px;
     }
 

@@ -9,24 +9,35 @@
     <link rel="stylesheet" type="text/css" href="css/viset.css"> 
 </head>
 <body>
-    <div class="sidebar">
-        <div class="logo">
-            <img src="https://kushiservices.com/wp-content/uploads/2024/01/cropped-Crimson-1.png" alt="Kushi Hygiene Services">
-        </div>
-        <nav>
-            <ul>
-                <li><a href="/guru">Dashboard</a></li>
-                <li><a href="/1">Customers</a></li>
-                <li><a href="/Bookingss">Bookings</a></li>
-                <li><a href="/Invoices">Invoices</a></li>
-                <li><a href="/addservice">Add New Service</a></li>
-                <li><a href="/financialmanagement">Financial Management</a></li>
-                <li><a href="/settings">Settings</a></li>
-				<li><a href="/viset" class="active">Visit List</a></li><br><hr>
-                <li><a href="/Logout">Sign Out</a></li>
-            </ul>
-        </nav>
-    </div>
+	<div class="menu-icon" onclick="toggleSidebar()">&#9776;</div>
+
+		    <!-- ✅ Updated Sidebar with ID for JavaScript -->
+		    <div class="sidebar" id="sidebar">
+		        <div class="logo">
+		            <img src="https://kushiservices.com/wp-content/uploads/2024/01/cropped-Crimson-1.png" alt="Kushi Hygiene Services">
+		        </div>
+		        <nav>
+		            <ul>
+		                <li><a href="/guru">Dashboard</a></li>
+		                <li><a href="/1">Customers</a></li>
+		                <li><a href="/Bookingss">Bookings</a></li>
+		                <li><a href="/Invoices">Invoices</a></li>
+		                <li><a href="/addservice">Add New Service</a></li>
+		                <li><a href="/financialmanagement">Financial Management</a></li>
+		                <li><a href="/settings">Settings</a></li>
+		                <li><a href="/viset">Visit List</a></li>
+		                <br><hr>
+		                <li><a href="/Logout">Sign Out</a></li>
+		            </ul>
+		        </nav>
+		    </div>
+		
+		<script>
+		function toggleSidebar() {
+		    document.getElementById("sidebar").classList.toggle("active");
+		}
+		</script>
+
     
 	
 

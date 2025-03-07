@@ -7,28 +7,35 @@
     <link rel="stylesheet" type="text/css" href="css/admin.css">
 </head>
 <body>
-    <div class="sidebar">
-        <div class="logo">
-            <img src="https://kushiservices.com/wp-content/uploads/2024/01/cropped-Crimson-1.png" alt="Kushi Hygiene Services">
-        </div>
-        <nav>
-            <ul>
-                <li><a href="/guru">Dashboard</a></li>
-                <li><a href="/1">Customers</a></li>
-                <li><a href="/Bookingss">Bookings</a></li>
-                <li><a href="/Invoices">Invoices</a></li>
-                <li><a href="/addservice">Add New Service</a></li>
-                <li><a href="/financialmanagement">Financial Management</a></li>
-             
-                <li><a href="/settings">Settings</a></li>
-				<li><a href="/viset">Viset List</a></li><br><hr>
-				
-				<li><a href="/Logout">Sign Out</a></li>
-				 
-            </ul>
-        </nav>
-        
-    </div>
+	<div class="menu-icon" onclick="toggleSidebar()">&#9776;</div>
+
+	    <!-- ✅ Updated Sidebar with ID for JavaScript -->
+	    <div class="sidebar" id="sidebar">
+	        <div class="logo">
+	            <img src="https://kushiservices.com/wp-content/uploads/2024/01/cropped-Crimson-1.png" alt="Kushi Hygiene Services">
+	        </div>
+	        <nav>
+	            <ul>
+	                <li><a href="/guru">Dashboard</a></li>
+	                <li><a href="/1">Customers</a></li>
+	                <li><a href="/Bookingss">Bookings</a></li>
+	                <li><a href="/Invoices">Invoices</a></li>
+	                <li><a href="/addservice">Add New Service</a></li>
+	                <li><a href="/financialmanagement">Financial Management</a></li>
+	                <li><a href="/settings">Settings</a></li>
+	                <li><a href="/viset">Visit List</a></li>
+	                <br><hr>
+	                <li><a href="/Logout">Sign Out</a></li>
+	            </ul>
+	        </nav>
+	    </div>
+	
+	<script>
+	function toggleSidebar() {
+	    document.getElementById("sidebar").classList.toggle("active");
+	}
+	</script>
+
 
     <div class="main-content">
         <header>
@@ -43,6 +50,8 @@
         <div class="grid">
             <!-- Left Column -->
             <div>
+				
+				
 				<div class="card overview">
 				    <div class="overview-header">
 				        <h3>Overview</h3>
@@ -53,6 +62,7 @@
 				            <option value="one-month">1 Month</option>
 				        </select>
 				    </div>
+					
 				    <div class="overview-container">
 				        <div class="overview-box" id="income-box">
 				            <h4>Booking Amount Total</h4>
@@ -262,12 +272,13 @@
 				
 
                 <br>
+				<a href="/Bookingss">
                 <div class="card new-bookings">
 					<div class="overview-header">
                     <h3>New Bookings</h3>
 					
 			    </div>
-			<div class="bookings-container" id="bookings-container"></div>
+			<div class="bookings-container" id="bookings-container"></div></a>
 			<script>
 			    // Fetch data from backend API
 			    fetch('/api/getTopCustomers-2')
@@ -342,13 +353,14 @@
 
             <!-- Right Column -->
             <div>
+				<a href="/addservice">
 				<div class="card popular-services">
 				    <div class="overview-header">
 				        <h3>Top Rating Services</h3>
 				       
 				    </div>
 				    <ul id="service-list"></ul> <!-- Dynamic list will be inserted here -->
-				</div>
+				</div></a>
 
 				<script>
 				    // Function to fetch services from the API and populate the list
@@ -482,6 +494,7 @@
 
 
                 <br>
+				<a href="/1">
 				
 				<div class="card">
 								    <div class="overview-header">
@@ -491,7 +504,7 @@
 								    <div class="customers" id="customerList">
 								        <!-- Dynamically generated customer data will go here -->
 								    </div>
-								</div>
+								</div></a>
 
 								<script>
 									function updateOverview() {
