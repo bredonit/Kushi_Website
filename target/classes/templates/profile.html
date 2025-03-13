@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" type="text/css" href="css/admin.css">
+    <link rel="stylesheet" type="text/css" href="css/profile.css">
+
+    <style>
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 350px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            position: relative;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 18px;
+            cursor: pointer;
+            color: red;
+            border: none;
+            background: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+   <div class="profile-container">
+        <div class="profile-card">
+            <img id="profilePic" alt="Profile Picture" class="profile-pic">
+            <h2 id="adminName"></h2>
+            <p>Email: <span id="adminEmail"></span></p>
+            <p>Phone: <span id="adminPhone"></span></p>
+            <button type="button" onclick="showEditPopup()">Edit</button>
+        </div>
+    </div>
+
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <button type="button" class="close-btn" onclick="closeEditPopup()">X</button>
+            <h3>Edit Profile</h3>
+            <input type="text" id="editName" placeholder="Enter new name"><br><br>
+            <input type="email" id="editEmail" placeholder="Enter new email"><br><br>
+            <input type="text" id="editPhone" placeholder="Enter new phone"><br><br>
+            <input type="file" id="editProfilePic" accept="image/*"><br><br>
+            <button type="button" onclick="updateProfile()">Save Changes</button>
+        </div>
+    </div>
+
+    <script>
+        let userId;
+
+        function fetchProfile() {
+            fetch(`http://localhost:1235/log/me`)
+                .then(response => response.json())
+                .then(user => {
+                    userId = user.adminId;
+                    document.getElementById("profilePic").src = user.profilePicture || "https://via.placeholder.com/150";
+                    document.getElementById("adminName").textContent = user.adminUsername || "No Name Available";
+                    document.getElementById("adminEmail").textContent = user.email || "No Email Available";
+                    document.getElementById("adminPhone").textContent = user.phoneNumber || "No Phone Available";
+                })
+                .catch(error => {
+                    console.error("Error fetching user details:", error);
+                });
+        }
+
+        fetchProfile();
+
+        function showEditPopup() {
+            document.getElementById("editModal").style.display = "flex";
+            document.getElementById("editName").value = document.getElementById("adminName").textContent;
+            document.getElementById("editEmail").value = document.getElementById("adminEmail").textContent;
+            document.getElementById("editPhone").value = document.getElementById("adminPhone").textContent;
+			
+        }
+
+        function closeEditPopup() {
+            document.getElementById("editModal").style.display = "none";
+        }
+
+        function updateProfile() {
+            const formData = new FormData();
+            formData.append("adminId", userId);
+            formData.append("adminUsername", document.getElementById("editName").value);
+            formData.append("email", document.getElementById("editEmail").value);
+            formData.append("phoneNumber", document.getElementById("editPhone").value);
+            const fileInput = document.getElementById("editProfilePic");
+            if (fileInput.files.length > 0) {
+                formData.append("profilePicture", fileInput.files[0]);
+            }
+
+            fetch(`http://localhost:1235/log/update`, {
+                method: "PUT",
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                closeEditPopup();
+                window.location.href = "/profile";
+            })
+            .catch(error => {
+                console.error("Error updating profile:", error);
+            });
+        }
+    </script>
+</body>
+</html>

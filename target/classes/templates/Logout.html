@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Out</title>
+    <link rel="stylesheet" type="text/css" href="css/admin.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            height: 100vh;
+            margin: 0;
+        }
+        .content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .logout-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+        .logout-container h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .logout-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #d9534f;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .logout-container button:hover {
+            background-color: #c9302c;
+        }
+        #logoutMessage {
+            color: green;
+            display: none;
+            margin-top: 10px;
+        }
+        .back-to-login {
+            margin-top: 15px;
+            text-decoration: none;
+            color: #007bff;
+            font-weight: bold;
+        }
+        .back-to-login:hover {
+            text-decoration: underline;
+        }
+        /* ✅ Popup Styling */
+        .popup-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+        .popup-content {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            width: 300px;
+        }
+        .popup-buttons {
+            margin-top: 20px;
+        }
+        .popup-buttons button {
+            margin: 5px;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .confirm {
+            background-color: #d9534f;
+            color: white;
+        }
+        .confirm:hover {
+            background-color: #c9302c;
+        }
+        .cancel {
+            background-color: #ccc;
+        }
+        .cancel:hover {
+            background-color: #aaa;
+        }
+		
+		/* Dark Mode Styles */
+		.dark-mode {
+		    background-color: #121212;
+		    color: white;
+		}
+
+		/* Dark mode table */
+		.dark-mode table th {
+		    background-color: #333;
+		    color: #fff;
+		}
+
+		.dark-mode table td {
+		    background-color: #444;
+		    color: #fff;
+		}
+
+		.dark-mode table, .dark-mode th, .dark-mode td {
+		    border-color: #555;
+		}
+
+		/* Dark mode sidebar */
+		.dark-mode .left-side {
+		    background: #222;
+		    color: white;
+		}
+
+		/* Dark mode sidebar links */
+		.dark-mode .sidebar ul li a {
+		    color: #ddd;
+		}
+
+		/* Dark mode settings */
+		.dark-mode .setting {
+		    background: #444;
+		}
+
+		/* Default sidebar styles */
+		.sidebar ul li a {
+		    color: black;
+		    transition: color 0.3s ease;
+		}
+
+		/* Dark mode sidebar background */
+		.dark-mode .sidebar {
+		    background: #222;
+		}
+
+		/* Dark mode sidebar text */
+		.dark-mode .sidebar ul li a {
+		    color: white;
+		    font-weight: bold;
+		}
+
+		/* Highlight active link in dark mode */
+		.dark-mode .sidebar ul li a.active {
+		    color: #4caf50;
+		}
+		/* Optional: Keep active link slightly different but NOT green */
+		.dark-mode .sidebar ul li a.active {
+		    color: #f1f1f1; /* Light grey instead of green */
+		    font-weight: bold;
+		}
+
+    </style>
+</head>
+<body>
+    <div class="content">
+        <div class="logout-container">
+            <h2>Are you sure you want to logout?</h2>
+            <button id="logoutButton">Logout</button>
+        </div>
+    </div>
+
+    <!-- ✅ Logout Confirmation Popup -->
+    <div id="popup" class="popup-container">
+        <div class="popup-content">
+            <h3>Confirm Logout</h3>
+            <p>Are you sure you want to log out?</p>
+            <div class="popup-buttons">
+                <button class="confirm" id="confirmLogout">Yes, Logout</button>
+                <button class="cancel" id="cancelLogout">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const logoutButton = document.getElementById('logoutButton');
+        const popup = document.getElementById('popup');
+        const confirmLogout = document.getElementById('confirmLogout');
+        const cancelLogout = document.getElementById('cancelLogout');
+
+        // ✅ Show popup when "Logout" is clicked
+        logoutButton.addEventListener('click', function () {
+            popup.style.display = "flex";
+        });
+
+        // ✅ Cancel logout
+        cancelLogout.addEventListener('click', function () {
+            popup.style.display = "none";
+        });
+
+        // ✅ Confirm Logout - Clear session and redirect
+        confirmLogout.addEventListener('click', async function () {
+            popup.style.display = "none"; // Hide popup
+
+            // ✅ Send logout request to backend
+            await fetch('/log/logout', { method: 'POST' });
+
+            // ✅ Clear session data
+            localStorage.clear();
+
+            // ✅ Redirect to login page
+            window.location.href = "/kushi-login";
+        });
+		
+		
+
+		// Function to apply dark mode on profile page
+		function applyDarkMode() {
+		    if (localStorage.getItem("darkMode") === "enabled") {
+		        document.body.classList.add("dark-mode");
+		    } else {
+		        document.body.classList.remove("dark-mode");
+		    }
+		}
+
+		// Apply dark mode on page load
+		applyDarkMode();
+
+		// Listen for changes from the settings page
+		window.addEventListener("storage", function(event) {
+		    if (event.key === "darkModeUpdated") {
+		        applyDarkMode(); // Apply change immediately
+		    }
+		});
+    </script>
+</body>
+</html>

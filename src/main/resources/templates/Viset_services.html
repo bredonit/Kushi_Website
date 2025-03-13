@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking List</title>
+    <link rel="stylesheet" type="text/css" href="css/admin.css">
+    <link rel="stylesheet" type="text/css" href="css/customer.css"> 
+    <link rel="stylesheet" type="text/css" href="css/viset.css"> 
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            <img src="https://kushiservices.com/wp-content/uploads/2024/01/cropped-Crimson-1.png" alt="Kushi Hygiene Services">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="/guru">Dashboard</a></li>
+                <li><a href="/1">Customers</a></li>
+                <li><a href="/Bookingss">Bookings</a></li>
+                <li><a href="/Invoices">Invoices</a></li>
+                <li><a href="/addservice">Add New Service</a></li>
+                <li><a href="/financialmanagement">Financial Management</a></li>
+                <li><a href="/settings">Settings</a></li>
+				<li><a href="/viset" class="active">Visit List</a></li><br><hr>
+                <li><a href="/Logout">Sign Out</a></li>
+            </ul>
+        </nav>
+    </div>
+    
+	
+
+	<div class="content">
+	    <h1>Visit Management Dashboard</h1>
+	    <h2>All Bookings</h2>
+
+	    <div class="search-container">
+	        <input type="text" id="searchInput" onkeyup="searchBookings()" placeholder="Search for bookings...">
+	    </div>
+
+	    <div class="filter-buttons">
+	        <button onclick="showNewBookings()">Show New</button>
+	        <button onclick="showCompletedBookings()">Show Completed</button>
+	        <button onclick="fetchBookings()">Show All</button>
+	    </div>
+
+	    <!-- Scrollable Table Wrapper -->
+	    <div class="table-container">
+	        <div class="table-scroll">
+	            <table>
+	                <thead>
+	                    <tr>
+	                        <th>ID</th>
+	                        <th>Name</th>
+	                        <th>Phone</th>
+	                        <th>WhatsApp</th>
+	                        <th>Email</th>
+	                        <th>Booking Status</th>
+	                        <th>Service Name</th>
+	                        <th>Booking Date</th>
+	                        <th>Booking Time</th>
+	                        <th>Total Amount</th>
+	                        <th>Payment Status</th>
+	                        <th>City</th>
+	                        <th>Address</th>
+	                        <th>ZIP Code</th>
+	                        <th>Remarks</th>
+	                        <th>Worker Assigned</th>
+	                        <th>Reference Name</th>
+	                        <th>Reference Details</th>
+	                        <th>Confirmation Date</th>
+	                        <th>Created By</th>
+	                        <th>Created Date</th>
+	                        <th>Updated By</th>
+	                        <th>Updated Date</th>
+	                        <th>Visit Completed</th>
+	                    </tr>
+	                </thead>
+	                <tbody id="bookingsTableBody"></tbody>
+	            </table>
+	        </div>
+	    </div>
+	</div>
+
+
+
+	<script>
+		// ✅ Define the three allowed service names
+		const allowedServices = ["Window Cleaning", "Matress Cleaning", "Balcony Cleaning"];
+
+		async function fetchBookings() {
+		    try {
+		        const response = await fetch('/api/bookings');
+		        if (!response.ok) throw new Error('Failed to fetch bookings');
+
+		        let bookings = await response.json();
+
+		        // ✅ Filter bookings to include only the allowed services
+		        bookings = bookings.filter(booking => allowedServices.includes(booking.booking_SERVICE_NAME));
+
+		        renderBookings(bookings);
+		        filterBookings(['new', 'completed']); // ✅ Show all by default
+		    } catch (error) {
+		        console.error('Error:', error);
+		    }
+		}
+
+		function renderBookings(bookings) {
+		    const tableBody = document.getElementById('bookingsTableBody');
+		    tableBody.innerHTML = '';
+
+		    let completedBookings = JSON.parse(localStorage.getItem('completedBookings')) || [];
+
+		    bookings.forEach(booking => {
+		        const whatsappLink = booking.customer_NUMBER
+		            ? `<a href='https://wa.me/${booking.customer_NUMBER}' target='_blank'>📲</a>`
+		            : 'N/A';
+
+		        let isCompleted = completedBookings.includes(booking.booking_ID) || 
+		                          booking.booking_STATUS?.toLowerCase() === 'completed';
+
+		        let visitButton = isCompleted 
+		            ? `<button onclick="markVisitUncompleted(${booking.booking_ID})">Unvisit</button>` 
+		            : `<button onclick="markVisitCompleted(${booking.booking_ID})">Visit</button>`;
+
+		        const row = document.createElement('tr');
+		        row.setAttribute('data-booking-id', booking.booking_ID);
+		        row.setAttribute('data-status', isCompleted ? 'completed' : 'new');
+		        row.innerHTML = `
+		            <td>${booking.booking_ID ?? 'N/A'}</td>
+		            <td>${booking.customer_NAME ?? 'N/A'}</td>
+		            <td>${booking.customer_NUMBER ?? 'N/A'}</td>
+		            <td>${whatsappLink}</td>
+		            <td>${booking.customer_EMAIL ?? 'N/A'}</td>
+		            <td class="booking-status">${isCompleted ? 'Completed' : 'New'}</td>
+		            <td>${booking.booking_SERVICE_NAME ?? 'N/A'}</td>
+		            <td>${booking.booking_DATE ?? 'N/A'}</td>
+		            <td>${booking.booking_TIME ?? 'N/A'}</td>
+		            <td>${booking.total_AMOUNT ?? '0.00'}</td>
+		            <td>${booking.payment_STATUS ?? 'N/A'}</td>
+		            <td>${booking.city ?? 'N/A'}</td>
+		            <td>${(booking.address_LINE_1 || '') + ', ' + (booking.address_LINE_2 || '') + ', ' + (booking.address_LINE_3 || '')}</td>
+		            <td>${booking.zip_CODE ?? 'N/A'}</td>
+		            <td>${booking.remarks ?? 'N/A'}</td>
+		            <td>${booking.worker_ASSIGN ?? 'N/A'}</td>
+		            <td>${booking.reference_NAME ?? 'N/A'}</td>
+		            <td>${booking.reference_DETAILS ?? 'N/A'}</td>
+		            <td>${booking.confirmation_DATE ?? 'N/A'}</td>
+		            <td>${booking.created_BY ?? 'N/A'}</td>
+		            <td>${booking.created_DATE ?? 'N/A'}</td>
+		            <td>${booking.updated_BY ?? 'N/A'}</td>
+		            <td>${booking.updated_DATE ?? 'N/A'}</td>
+		            <td>${visitButton}</td>
+		        `;
+		        tableBody.appendChild(row);
+		    });
+		}
+
+		// ✅ Mark a visit as completed
+		function markVisitCompleted(bookingId) {
+		    const row = document.querySelector(`[data-booking-id="${bookingId}"]`);
+		    if (row) {
+		        row.querySelector('.booking-status').innerText = 'Completed';
+		        row.setAttribute('data-status', 'completed');
+		        row.querySelector('td:last-child').innerHTML = 
+		            `<button onclick="markVisitUncompleted(${bookingId})">Unvisit</button>`; 
+
+		        let completedBookings = JSON.parse(localStorage.getItem('completedBookings')) || [];
+		        if (!completedBookings.includes(bookingId)) {
+		            completedBookings.push(bookingId);
+		        }
+		        localStorage.setItem('completedBookings', JSON.stringify(completedBookings));
+		    }
+		}
+
+		// ✅ Mark a visit as uncompleted
+		function markVisitUncompleted(bookingId) {
+		    const row = document.querySelector(`[data-booking-id="${bookingId}"]`);
+		    if (row) {
+		        row.querySelector('.booking-status').innerText = 'New';
+		        row.setAttribute('data-status', 'new');
+		        row.querySelector('td:last-child').innerHTML = 
+		            `<button onclick="markVisitCompleted(${bookingId})">Visit</button>`; 
+
+		        let completedBookings = JSON.parse(localStorage.getItem('completedBookings')) || [];
+		        completedBookings = completedBookings.filter(id => id !== bookingId);
+		        localStorage.setItem('completedBookings', JSON.stringify(completedBookings));
+		    }
+		}
+
+		// ✅ Show only "New" bookings
+		function showNewBookings() {
+		    filterBookings(['new']);
+		}
+
+		// ✅ Show only "Completed" bookings
+		function showCompletedBookings() {
+		    filterBookings(['completed']);
+		}
+
+		// ✅ Show all bookings
+		function showAllBookings() {
+		    filterBookings(['new', 'completed']);
+		}
+
+		// ✅ Filter table rows based on status
+		function filterBookings(statuses) {
+		    const rows = document.querySelectorAll('#bookingsTableBody tr');
+		    rows.forEach(row => {
+		        const status = row.getAttribute('data-status');
+		        row.style.display = statuses.includes(status) ? '' : 'none';
+		    });
+		}
+
+		// ✅ Search functionality
+		function searchBookings() {
+		    const searchValue = document.getElementById('searchInput').value.toLowerCase();
+		    const rows = document.querySelectorAll('#bookingsTableBody tr');
+
+		    rows.forEach(row => {
+		        row.style.display = row.innerText.toLowerCase().includes(searchValue) ? '' : 'none';
+		    });
+		}
+
+		// ✅ Apply dark mode settings
+		function applyDarkMode() {
+		    if (localStorage.getItem("darkMode") === "enabled") {
+		        document.body.classList.add("dark-mode");
+		    } else {
+		        document.body.classList.remove("dark-mode");
+		    }
+		}
+
+		// ✅ Listen for changes in dark mode settings
+		window.addEventListener("storage", function(event) {
+		    if (event.key === "darkModeUpdated") {
+		        applyDarkMode();
+		    }
+		});
+
+		// ✅ Load bookings on page load
+		window.onload = fetchBookings;
+		applyDarkMode();
+
+		
+	</script>
+
+</body>
+</html>

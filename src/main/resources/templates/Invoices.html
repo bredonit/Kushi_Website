@@ -3,184 +3,303 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kushi Dashboard</title>
+    <title>Invoice Management</title>
     <link rel="stylesheet" type="text/css" href="css/admin.css">
+    <link rel="stylesheet" type="text/css" href="css/invoices.css">
+
+    
 </head>
 <body>
-    <div class="sidebar">
-        <div class="logo">
-            <img src="https://kushiservices.com/wp-content/uploads/2024/01/cropped-Crimson-1.png" alt="Kushi Hygiene Services">
+
+<div class="sidebar">
+    <div class="logo">
+        <img src="https://kushiservices.com/wp-content/uploads/2024/01/cropped-Crimson-1.png" alt="Kushi Hygiene Services">
+    </div>
+    <nav>
+        <ul>
+            <li><a href="/guru">Dashboard</a></li>
+            <li><a href="/1">Customers</a></li>
+            <li><a href="/Bookingss">Bookings</a></li>
+            <li><a href="/Invoices" class="active">Invoices</a></li>
+            <li><a href="/addservice">Add New Service</a></li>
+            <li><a href="/financialmanagement">Financial Management</a></li>
+            <li><a href="/settings">Settings</a></li>
+			<li><a href="/viset">Viset List</a></li>
+ <br><hr>
+            <li><a href="/Logout">Sign Out</a></li>
+            
+        </ul>
+    </nav>
+</div>
+
+<div class="main-content">
+    <div class="container">
+        <h2>Invoice Management</h2>
+  
+         <div class="filter-container">
+            <select id="date-filter" onchange="applyDateFilter()">
+                <option value="all">All</option>
+                <option value="day">Today</option>
+                <option value="week">This Week</option>
+                <option value="month">This Month</option>
+                <option value="custom">Custom</option>
+            </select>
+            <input type="date" id="start-date" onchange="applyDateFilter()">
+            <input type="date" id="end-date" onchange="applyDateFilter()">
         </div>
-        <nav>
-            <ul>
-                <li><a href="/guru">Dashboard</a></li>
-                <li><a href="/1">Customers</a></li>
-                <li><a href="/Bookingss">Bookings</a></li>
-                <li><a href="#">Invoices</a></li>
-                <li><a href="/addservice">Add New Service</a></li>
-                <li><a href="/financialmanagement">Financial Management</a></li>
-                <li><a href="#">Reports & Analytics</a></li>
-                <li><a href="#">Settings</a></li><br><hr>
-				<li><a href="#">Sign Out</a></li>
-				 <li><a href="#">Help</a></li>
-            </ul>
-        </nav>
         
+        
+        <input type="text" id="search-bar" placeholder="Search invoices..." onkeyup="searchInvoices()">
+        <h3>Invoices</h3>
+        <button onclick="downloadSelectedPDFs()">Download Selected</button>
+        <table border="1">
+            <thead>
+            <tr>
+            <th><input type="checkbox" id="select-all" onclick="toggleSelectAll()"></th>
+               
+                <th>ID</th>
+                <th>Customer Name</th>
+                <th>Customer Email</th>
+                <th>Customer Phone Number</th>
+                <th>Total Amount</th>
+                <th>Discount</th>
+                <th>Service Name</th>
+                <th>Invoice ID</th>
+                <th>Generate PDF</th>
+            </tr>
+            </thead>
+            <tbody id="invoice"></tbody>
+        </table>
+
+        <h3>Downloaded Documents</h3>
+        <table border="1">
+            <thead>
+            <tr>
+                <th>Invoice ID</th>
+                <th>Customer Name</th>
+                <th>Total Amount</th>
+                <th>Discount</th>
+                <th>Service Name</th>
+                <th>Share</th>
+            </tr>
+            </thead>
+            <tbody id="downloaded-docs"></tbody>
+        </table>
     </div>
-	<!DOCTYPE html>
-	<html lang="en">
-	<head>
-	    <meta charset="UTF-8">
-	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	    <title>Invoice Management</title>
-	    <link rel="stylesheet" type="text/css" href="css/admin.css">
-	    <style>
-	        .share-icons { display: flex; gap: 10px; justify-content: center; }
-	        .share-icons a img { width: 24px; height: 24px; cursor: pointer; }
-	    </style>
-	</head>
-	<body>
+</div>
 
-	<div class="sidebar">
-	    <div class="logo">
-	        <img src="https://kushiservices.com/wp-content/uploads/2024/01/cropped-Crimson-1.png" alt="Kushi Hygiene Services">
-	    </div>
-	    <nav>
-	        <ul>
-	            <li><a href="#">Dashboard</a></li>
-	            <li><a href="#">Customer</a></li>
-	            <li><a href="#">Bookings</a></li>
-	            <li><a href="/invoice" class="active">Invoices</a></li>
-	            <li><a href="#">Google Analytics</a></li>
-	            <li><a href="#">Financial Management</a></li>
-	            <li><a href="#">Reports & Analytics</a></li>
-	            <li><a href="#">Settings</a></li><br><hr>
-	            <li><a href="#">Sign Out</a></li>
-	            <li><a href="#">Help</a></li>
-	        </ul>
-	    </nav>
-	</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        fetchInvoices();
+        loadDownloadedDocs(); // Load previously downloaded documents
+    });
 
-	<div class="main-content">
-	    <div class="container">
-	        <h2>Invoice Management</h2>
-	        <button onclick="fetchInvoices()">Refresh Invoice</button>
-	        <h3>Invoices</h3>
-	        <table border="1">
-	            <thead>
-	            <tr>
-	                <th>ID</th>
-	                <th>Invoice Number</th>
-	                <th>Customer Name</th>
-	                <th>Total Amount</th>
-	                <th>Discount</th>
-	                <th>Tax</th>
-	                <th>Service Name</th>
-	                <th>Service Type</th>
-	                <th>Booking ID</th>
-	                <th>Generate PDF</th>
-	                <th>Share</th>
-	            </tr>
-	            </thead>
-	            <tbody id="invoice"></tbody>
-	        </table>
-	    </div>
-	</div>
+    async function fetchInvoices() {
+        try {
+            const response = await fetch("/api/invoices");   ////////////////////////////////
+            if (!response.ok) throw new Error("Failed to fetch invoice info.");
+            const bookings = await response.json();
+            displayInvoices(bookings);
+        } catch (error) {
+            console.error("Error fetching invoices:", error);
+        }
+    }
 
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
-	<script>
-	    async function fetchInvoices() {
-	        try {
-	            const response = await fetch("http://localhost:1235/invoices");
-	            if (!response.ok) throw new Error("Failed to fetch invoices.");
-	            const invoices = await response.json();
-	            displayInvoices(invoices);
-	        } catch (error) {
-	            console.error("Error fetching invoices:", error);
-	            alert("Could not fetch invoices. Check backend.");
-	        }
-	    }
+    function displayInvoices(bookings) {
+        const tableBody = document.getElementById("invoice");
+        tableBody.innerHTML = "";
+        bookings.forEach(booking => {
+            const invoiceId = `INV-${booking.id}`;
+            const row = `<tr id="invoice-${booking.id}">
+                <td><input type="checkbox" class="invoice-checkbox" data-id="${booking.id}"></td>
+                <td>${booking.id}</td>
+                <td>${booking.customerName}</td>
+                <td>${booking.customerEmail}</td>
+                <td>${booking.customerPhone}</td>
+                <td>₹${booking.totalAmount}</td>
+                <td>${booking.discount || "N/A"}%</td>
+                <td>${booking.serviceName}</td>
+                <td>${invoiceId}</td>
+                <td>
+                  <button onclick="generatePDF(${booking.id})">
+                    Download PDF
+                  </button>
+                </td>
+            </tr>`;
+            tableBody.innerHTML += row;
+        });
+    }
+    function searchInvoices() {
+        let input = document.getElementById("search-bar").value.toLowerCase();
+        let rows = document.querySelectorAll("#invoice tr");
 
-	    function displayInvoices(invoices) {
-	        const tableBody = document.getElementById("invoice");
-	        tableBody.innerHTML = "";
-	        if (invoices.length === 0) {
-	            tableBody.innerHTML = "<tr><td colspan='11'>No invoices available</td></tr>";
-	            return;
-	        }
-	        invoices.forEach(invoice => {
-	            const row = `<tr>
-	                <td>${invoice.id || "N/A"}</td>
-	                <td>${invoice.invoiceNumber || "N/A"}</td>
-	                <td>${invoice.customerName || "N/A"}</td>
-	                <td>₹${invoice.totalAmount || "0.00"}</td>
-	                <td>${invoice.discount || "0"}%</td>
-	                <td>${invoice.tax || "0"}%</td>
-	                <td>${invoice.serviceName || "N/A"}</td>
-	                <td>${invoice.serviceType || "N/A"}</td>
-	                <td>${invoice.bookingId || "N/A"}</td>
-	                <td>
-	                  <button onclick="generatePDF(${invoice.id}, '${invoice.invoiceNumber}', '${invoice.customerName}', ${invoice.totalAmount}, ${invoice.discount}, ${invoice.tax}, '${invoice.serviceName}', '${invoice.serviceType}', '${invoice.bookingId}')">
-	                    Download PDF
-	                  </button>
-	                </td>
-	                <td>
-	                  <div class="share-icons">
-	                    <a href="https://wa.me/?text=Invoice%20Number:%20${invoice.invoiceNumber}%0ACustomer:%20${invoice.customerName}%0ATotal%20Amount:%20₹${invoice.totalAmount}" target="_blank">
-	                      <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
-	                    </a>
-	                    <a href="mailto:?subject=Invoice%20Details&body=Invoice%20Number:%20${invoice.invoiceNumber}%0ACustomer:%20${invoice.customerName}%0ATotal%20Amount:%20₹${invoice.totalAmount}">
-	                      <img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Mail_%28iOS%29.svg" alt="Email">
-	                    </a>
-	                  </div>
-	                </td>
-	            </tr>`;
-	            tableBody.innerHTML += row;
-	        });
-	    }
+        rows.forEach(row => {
+            let text = row.innerText.toLowerCase();
+            if (text.includes(input)) {
+                row.style.display = "";
+            } else {
+                row.style.display = "none";
+            }
+        });
+    }
 
-	    function generatePDF(id, invoiceNumber, customerName, totalAmount, discount, tax, serviceName, serviceType, bookingId) {
-	        const { jsPDF } = window.jspdf;
-	        const doc = new jsPDF();
+    
+    function applyDateFilter() {
+        const filterValue = document.getElementById("date-filter").value;
+        
+        startDateInput.style.display = "none";
+        endDateInput.style.display = "none";
+        
+        let startDate, endDate;
+        const today = new Date();
 
-	        // Draw border
-	        doc.rect(5, 5, 200, 287);
+        if (filterValue === "day") {
+            startDate = endDate = today;
+        } else if (filterValue === "week") {
+            startDate = new Date(today.setDate(today.getDate() - today.getDay()));
+            endDate = new Date();
+        } else if (filterValue === "month") {
+            startDate = new Date(today.getFullYear(), today.getMonth(), 1);
+            endDate = new Date();
+        } else if (filterValue === "custom") {
+            startDateInput.style.display = "inline-block";
+            endDateInput.style.display = "inline-block";
+            startDate = new Date(startDateInput.value);
+            endDate = new Date(endDateInput.value);
+        }
+        
+        filterInvoices(startDate, endDate);
+    }
 
-	        // Header
-	        doc.setFontSize(18);
-	        doc.text("Kushi Hygienic Cleaning Services", 105, 20, { align: "center" });
+    function filterInvoices(startDate, endDate) {
+        const rows = document.querySelectorAll("#invoice tr");
+        rows.forEach(row => {
+            const invoiceDate = new Date(row.dataset.date);
+            if (invoiceDate >= startDate && invoiceDate <= endDate) {
+                row.style.display = "";
+            } else {
+                row.style.display = "none";
+            }
+        });
+    }
 
-	        doc.setFontSize(14);
-	        doc.text("Invoice", 105, 30, { align: "center" });
+    function downloadSelectedPDFs() {
+        const checkboxes = document.querySelectorAll(".invoice-checkbox:checked");
 
-	        let y = 50;
-	        doc.setFontSize(12);
-	        doc.text(Invoice ID: ${id}, 20, y);
-	        doc.text(Invoice Number: ${invoiceNumber}, 20, y + 10);
-	        doc.text(Customer Name: ${customerName}, 20, y + 20);
-	        doc.text(Total Amount: ₹${totalAmount}, 20, y + 30);
-	        doc.text(Discount: ${discount}%, 20, y + 40);
-	        doc.text(Tax: ${tax}%, 20, y + 50);
-	        doc.text(Booking ID: ${bookingId}, 20, y + 60);
+        if (checkboxes.length === 0) {
+            alert("Please select at least one invoice.");
+            return;
+        }
 
-	        // Footer
-	        doc.setFontSize(10);
-	        doc.text("Contact Us:", 20, 270);
-	        doc.text("WhatsApp: +91XXXXXXXXXX", 20, 275);
-	        doc.text("Email: support@kushiservices.com", 20, 280);
-	        doc.text("Instagram: @kushi_services", 20, 285);
+        checkboxes.forEach(checkbox => {
+            const invoiceId = checkbox.dataset.id;
+            generatePDF(invoiceId);
+        });
+    }
 
-	        doc.save(invoice_${invoiceNumber}.pdf);
-	    }
+    function generatePDF(id) {
+        const row = document.getElementById(`invoice-${id}`);
+        if (!row) return;
 
-	    document.addEventListener("DOMContentLoaded", fetchInvoices);
-	</script>
+        const invoiceNumber = row.cells[8].textContent; // Fetch Invoice ID from table
+        const customerName = row.cells[2].textContent;
+        const totalAmount = row.cells[5].textContent;
+        const discount = row.cells[6].textContent;
+        const serviceName = row.cells[7].textContent;
 
-	</body>
-	</html>
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        doc.rect(5, 5, 200, 287);
+        doc.setFontSize(18);
+        doc.text("Kushi Hygienic Cleaning Services", 105, 20, { align: "center" });
+        doc.setFontSize(14);
+        doc.text("Invoice", 105, 30, { align: "center" });
 
-   
-        </div>
-    </div>
+        let y = 50;
+        doc.setFontSize(12);
+        doc.text(`Invoice ID: ${invoiceNumber}`, 20, y);
+        doc.text(`Customer Name: ${customerName}`, 20, y + 10);
+        doc.text(`Total Amount: ${totalAmount}`, 20, y + 20);
+        doc.text(`Discount: ${discount}`, 20, y + 30);
+        doc.text(`Service Name: ${serviceName}`, 20, y + 40);
+        doc.save(`${invoiceNumber}.pdf`);
+
+        row.remove(); // Remove from invoice table
+        addToDownloadedDocs(invoiceNumber, customerName, totalAmount, discount, serviceName);
+    }
+
+    function addToDownloadedDocs(invoiceNumber, customerName, totalAmount, discount, serviceName) {
+        const downloadedDocs = JSON.parse(localStorage.getItem("downloadedDocs")) || [];
+
+        // Add new downloaded invoice to the array
+        downloadedDocs.push({ invoiceNumber, customerName, totalAmount, discount, serviceName });
+
+        // Save updated array to localStorage
+        localStorage.setItem("downloadedDocs", JSON.stringify(downloadedDocs));
+
+        // Refresh table
+        loadDownloadedDocs();
+    }
+
+    function loadDownloadedDocs() {
+        const tableBody = document.getElementById("downloaded-docs");
+        tableBody.innerHTML = ""; // Clear table before loading
+
+        const downloadedDocs = JSON.parse(localStorage.getItem("downloadedDocs")) || [];
+
+        downloadedDocs.forEach(doc => {
+            const row = `<tr>
+                <td>${doc.invoiceNumber}</td>
+                <td>${doc.customerName}</td>
+                <td>${doc.totalAmount}</td>
+                <td>${doc.discount}</td>
+                <td>${doc.serviceName}</td>
+                <td class="share-icons">
+                    <a href="https://api.whatsapp.com/send?text=Invoice%20Details:%20${doc.invoiceNumber}" target="_blank">
+                        <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WhatsApp">
+                    </a>
+                    <a href="mailto:?subject=Invoice%20Details&body=Invoice%20Number:%20${doc.invoiceNumber}%0ACustomer%20Name:%20${doc.customerName}%0ATotal%20Amount:%20${doc.totalAmount}" target="_blank">
+                        <img src="https://cdn-icons-png.flaticon.com/512/732/732200.png" alt="Email">
+                    </a>
+                </td>
+            </tr>`;
+            tableBody.innerHTML += row;
+        });
+    }
+    function toggleSelectAll() {
+        const selectAllCheckbox = document.getElementById("select-all");
+        const checkboxes = document.querySelectorAll(".invoice-checkbox");
+        checkboxes.forEach(checkbox => {
+            checkbox.checked = selectAllCheckbox.checked;
+        });
+    }
+	
+</script>
+
+  <script>
+		
+		
+    // Function to apply dark mode on profile page
+    function applyDarkMode() {
+        if (localStorage.getItem("darkMode") === "enabled") {
+            document.body.classList.add("dark-mode");
+        } else {
+            document.body.classList.remove("dark-mode");
+        }
+    }
+
+    // Apply dark mode on page load
+    applyDarkMode();
+
+    // Listen for changes from the settings page
+    window.addEventListener("storage", function(event) {
+        if (event.key === "darkModeUpdated") {
+            applyDarkMode(); // Apply change immediately
+        }
+    });
+</script>
+
+
 </body>
 </html>

@@ -1,9 +1,131 @@
 body {
-           font-family: Arial, sans-serif;
-           margin: 0;
-           padding: 0;
-           display: flex;
-       }
+
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.content {
+    margin-left: 300px;
+    padding: 20px;
+    width: 100%;
+}
+
+h2 {
+    text-align: center;
+}
+
+/* Table Styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+    color: #333;
+}
+
+img {
+    display: block;
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.sidebar .logo img {
+    width: 120px;
+    height: 150px;
+    margin-bottom: 0px;
+    padding-left: 60px;
+    border-radius: 0%;
+}
+
+.search-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.search-container input {
+    padding: 8px;
+    width: 300px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.highlight {
+    background-color: yellow;
+}
+
+/* Dark Mode Styles */
+.dark-mode {
+    background-color: #121212;
+    color: white;
+}
+
+/* Dark mode table */
+.dark-mode table th {
+    background-color: #333;
+    color: #fff;
+}
+
+.dark-mode table td {
+    background-color: #444;
+    color: #fff;
+}
+
+.dark-mode table, .dark-mode th, .dark-mode td {
+    border-color: #555;
+}
+
+/* Dark mode sidebar */
+.dark-mode .left-side {
+    background: #222;
+    color: white;
+}
+
+/* Dark mode sidebar links */
+.dark-mode .sidebar ul li a {
+    color: #ddd;
+}
+
+/* Dark mode settings */
+.dark-mode .setting {
+    background: #444;
+}
+
+/* Default sidebar styles */
+.sidebar ul li a {
+    color: black;
+    transition: color 0.3s ease;
+}
+
+/* Dark mode sidebar background */
+.dark-mode .sidebar {
+    background: #222;
+}
+
+/* Dark mode sidebar text */
+.dark-mode .sidebar ul li a {
+    color: white;
+    font-weight: bold;
+}
+
+/* Highlight active link in dark mode */
+.dark-mode .sidebar ul li a.active {
+    color: #4caf50;
+}
+
+
        .content {
            margin-left: 300px;
            padding: 20px;
@@ -32,14 +154,6 @@ body {
            object-fit: cover;
            border-radius: 50%;
        }
-	   
-	   .sidebar .logo img {
-	       width: 120px;
-	       height: 150px;
-	       margin-bottom: 0px;
-	   	padding-left: 60px;
-		border-radius: 0%;
-	   }
        .search-container {
            text-align: center;
            margin-bottom: 20px;
@@ -52,4 +166,12 @@ body {
        }
        .highlight {
            background-color: yellow;
+
        }
+	   
+	   /* Optional: Keep active link slightly different but NOT green */
+	   .dark-mode .sidebar ul li a.active {
+	       color: #f1f1f1; /* Light grey instead of green */
+	       font-weight: bold;
+	   }
+

@@ -14,7 +14,7 @@
 	        font-weight: bold;
 	    }
 	</style>
->
+
 </head>
 <body>
     <div class="sidebar">
@@ -27,13 +27,19 @@
                 <li><a href="/1">Customers</a></li>
                 <li><a href="/Bookingss">Bookings</a></li>
                 <li><a href="/Invoices">Invoices</a></li>
-                <li><a href="#">Add New Service</a></li>
+                <li><a href="#" class="active">Add New Service</a></li>
                 <li><a href="/financialmanagement">Financial Management</a></li>
-                <li><a href="#">Reports & Analytics</a></li>
-                <li><a href="#">Settings</a></li>
+
+
+
+                <li><a href="/settings">Settings</a></li>
+				<li><a href="/viset">Viset List</a></li>
+
                 <hr>
-                <li><a href="#">Sign Out</a></li>
-                <li><a href="#">Help</a></li>
+                <li><a href="/Logout">Sign Out</a></li>
+
+
+                
             </ul>
         </nav>
     </div>
@@ -146,7 +152,7 @@
 		<script>
 		    async function fetchServices() {
 		        try {
-		            const response = await fetch("http://localhost:1235/service");
+		            const response = await fetch("/service");
 
 		            console.log("Response Status:", response.status); // Debugging
 
@@ -206,7 +212,7 @@
 
 		    async function deleteService(serviceId) {
 		        try {
-					const response = await fetch(`http://localhost:1235/service/${serviceId}`, {
+					const response = await fetch(`/service/${serviceId}`, {
 					    method: "DELETE"
 					});
 
@@ -263,7 +269,7 @@
 		    };
 
 		    try {
-		        const response = await fetch("http://localhost:1235/add-service", {
+		        const response = await fetch("/add-service", {
 		            method: "POST",
 		            headers: { "Content-Type": "application/json" },
 		            body: JSON.stringify(serviceData)
@@ -283,6 +289,32 @@
 		        console.error("Error details:", error);
 		    }
 		}
+
+
+
+
+		
+		 // Function to apply dark mode on Customers  page
+    function applyDarkMode() {
+        if (localStorage.getItem("darkMode") === "enabled") {
+            document.body.classList.add("dark-mode");
+        } else {
+            document.body.classList.remove("dark-mode");
+        }
+    }
+
+    // Apply dark mode on page load
+    applyDarkMode();
+
+    // Listen for changes from the settings page
+    window.addEventListener("storage", function(event) {
+        if (event.key === "darkModeUpdated") {
+            applyDarkMode(); // Apply change immediately
+        }
+    }); 
+
+
+
 
     </script>
 	

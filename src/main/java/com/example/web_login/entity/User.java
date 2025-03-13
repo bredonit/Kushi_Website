@@ -1,7 +1,12 @@
 	package com.example.web_login.entity;
 	
 	import jakarta.persistence.Entity;
+
 	import jakarta.persistence.GeneratedValue;
+
+import jakarta.persistence.EntityListeners;
+import jakarta.persistence.GeneratedValue;
+
 	import jakarta.persistence.GenerationType;
 	import jakarta.persistence.Id;
 import jakarta.persistence.PrePersist;
@@ -13,12 +18,16 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
+
+
+
 import jakarta.persistence.Column;
 	import lombok.*;
 	
 	@Data
 	@AllArgsConstructor
 	@NoArgsConstructor
+
 	@Entity
 	@Table(name = "TBL_BOOKING_INFO")
 	public class User {
@@ -36,13 +45,19 @@ import jakarta.persistence.Column;
 		    @Column(name = "CUSTOMER_NAME") 
 		    private String CUSTOMER_NAME;
 		 
-		
-	
-		 
+
 		 @NotNull(message = "Phone number is required")
 		    @Column(name = " CUSTOMER_NUMBER") 
 		    private String CUSTOMER_NUMBER;
 		 
+
+
+		 @NotNull(message = "Email is required")
+		    @Column(name = " CUSTOMER_EMAIL") 
+		    private String CUSTOMER_EMAIL;
+		 
+
+
 		 @NotNull(message = "Reference name is required")
 		    @Column(name = "REFERENCE_NAME")
 		    private String REFERENCE_NAME;
@@ -51,12 +66,17 @@ import jakarta.persistence.Column;
 		    @Column(name = " REFERENCE_DETAILS")
 		    private String  REFERENCE_DETAILS;
 	
-		  
-		
-	
+
+
 			@NotNull(message = "Booking service name is required")
 		    @Column(name = "BOOKING_SERVICE_NAME") 
 		    private String BOOKING_SERVICE_NAME;
+
+			@NotNull(message = "Assign is required")
+		    @Column(name = "WORKER_ASSIGN") 
+		    private String WORKER_ASSIGN;
+
+
 		    
 		    @NotNull(message = "Booking date is required")
 		    @Column(name = "BOOKING_DATE")
@@ -127,8 +147,25 @@ import jakarta.persistence.Column;
 		    @NotNull(message = "Postal code is required")
 		    @Column(name = " BOOKING_TIME ")
 		    private String BOOKING_TIME;
+
 	
-		    @PrePersist
+		   
+
+		    
+		    @Column(name = " VISET_LIST")
+		    private String VISET_LIST;
+	
+	
+		    public String getVISET_LIST() {
+				return VISET_LIST;
+			}
+
+			public void setVISET_LIST(String vISET_LIST) {
+				VISET_LIST = vISET_LIST;
+			}
+
+			@PrePersist
+
 		    public void autoGenerateBookingTime() {
 		        // Automatically set the booking time when the entity is persisted
 		        this.BOOKING_TIME = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
@@ -145,27 +182,34 @@ import jakarta.persistence.Column;
 			@Override
 			public String toString() {
 				return "User [BOOKING_ID=" + BOOKING_ID + ", CUSTOMER_ID=" + CUSTOMER_ID + ", CUSTOMER_NAME="
-						+ CUSTOMER_NAME + ", CUSTOMER_NUMBER=" + CUSTOMER_NUMBER + ", REFERENCE_NAME=" + REFERENCE_NAME
-						+ ", REFERENCE_DETAILS=" + REFERENCE_DETAILS + ", BOOKING_SERVICE_NAME=" + BOOKING_SERVICE_NAME
+				+ CUSTOMER_NAME + ", CUSTOMER_NUMBER=" + CUSTOMER_NUMBER + ", CUSTOMER_EMAIL=" + CUSTOMER_EMAIL
+						+ ", REFERENCE_NAME=" + REFERENCE_NAME + ", REFERENCE_DETAILS=" + REFERENCE_DETAILS
+						+ ", BOOKING_SERVICE_NAME=" + BOOKING_SERVICE_NAME + ", WORKER_ASSIGN=" + WORKER_ASSIGN
 						+ ", BOOKING_DATE=" + BOOKING_DATE + ", CONFIRMATION_DATE=" + CONFIRMATION_DATE
-						+ ", BOOKING_STATUS=" + BOOKING_STATUS + ", PAYMENT_STATUS=" + PAYMENT_STATUS + ", BOOKING_AMOUNT="
-						+ BOOKING_AMOUNT + ", TOTAL_AMOUNT=" + TOTAL_AMOUNT + ", ADDRESS_LINE_1=" + ADDRESS_LINE_1
-						+ ", ADDRESS_LINE_2=" + ADDRESS_LINE_2 + ", ADDRESS_LINE_3=" + ADDRESS_LINE_3 + ", CITY=" + CITY
-						+ ", ZIP_CODE=" + ZIP_CODE + ", REMARKS=" + REMARKS + ", CREATED_BY=" + CREATED_BY
-						+ ", CREATED_DATE=" + CREATED_DATE + ", UPDATED_BY=" + UPDATED_BY + ", UPDATED_DATE=" + UPDATED_DATE
-						+ ", getBOOKING_ID()=" + getBOOKING_ID() + ", getCUSTOMER_ID()=" + getCUSTOMER_ID()
-						+ ", getCUSTOMER_NAME()=" + getCUSTOMER_NAME() + ", getCUSTOMER_NUMBER()=" + getCUSTOMER_NUMBER()
-						+ ", getREFERENCE_NAME()=" + getREFERENCE_NAME() + ", getREFERENCE_DETAILS()="
-						+ getREFERENCE_DETAILS() + ", getBOOKING_SERVICE_NAME()=" + getBOOKING_SERVICE_NAME()
-						+ ", getBOOKING_DATE()=" + getBOOKING_DATE() + ", getCONFIRMATION_DATE()=" + getCONFIRMATION_DATE()
-						+ ", getBOOKING_STATUS()=" + getBOOKING_STATUS() + ", getPAYMENT_STATUS()=" + getPAYMENT_STATUS()
+						+ ", BOOKING_STATUS=" + BOOKING_STATUS + ", PAYMENT_STATUS=" + PAYMENT_STATUS
+						+ ", BOOKING_AMOUNT=" + BOOKING_AMOUNT + ", TOTAL_AMOUNT=" + TOTAL_AMOUNT + ", ADDRESS_LINE_1="
+						+ ADDRESS_LINE_1 + ", ADDRESS_LINE_2=" + ADDRESS_LINE_2 + ", ADDRESS_LINE_3=" + ADDRESS_LINE_3
+						+ ", CITY=" + CITY + ", ZIP_CODE=" + ZIP_CODE + ", REMARKS=" + REMARKS + ", CREATED_BY="
+						+ CREATED_BY + ", CREATED_DATE=" + CREATED_DATE + ", UPDATED_BY=" + UPDATED_BY
+						+ ", UPDATED_DATE=" + UPDATED_DATE + ", BOOKING_TIME=" + BOOKING_TIME + ", VISET_LIST="
+						+ VISET_LIST + ", getVISET_LIST()=" + getVISET_LIST() + ", getBOOKING_TIME()="
+						+ getBOOKING_TIME() + ", getBOOKING_ID()=" + getBOOKING_ID() + ", getCUSTOMER_ID()="
+						+ getCUSTOMER_ID() + ", getCUSTOMER_NAME()=" + getCUSTOMER_NAME() + ", getCUSTOMER_NUMBER()="
+						+ getCUSTOMER_NUMBER() + ", getREFERENCE_NAME()=" + getREFERENCE_NAME()
+						+ ", getREFERENCE_DETAILS()=" + getREFERENCE_DETAILS() + ", getBOOKING_SERVICE_NAME()="
+						+ getBOOKING_SERVICE_NAME() + ", getBOOKING_DATE()=" + getBOOKING_DATE()
+						+ ", getCONFIRMATION_DATE()=" + getCONFIRMATION_DATE() + ", getBOOKING_STATUS()="
+						+ getBOOKING_STATUS() + ", getPAYMENT_STATUS()=" + getPAYMENT_STATUS()
 						+ ", getBOOKING_AMOUNT()=" + getBOOKING_AMOUNT() + ", getTOTAL_AMOUNT()=" + getTOTAL_AMOUNT()
-						+ ", getADDRESS_LINE_1()=" + getADDRESS_LINE_1() + ", getADDRESS_LINE_2()=" + getADDRESS_LINE_2()
-						+ ", getADDRESS_LINE_3()=" + getADDRESS_LINE_3() + ", getCITY()=" + getCITY() + ", getZIP_CODE()="
-						+ getZIP_CODE() + ", getREMARKS()=" + getREMARKS() + ", getCREATED_BY()=" + getCREATED_BY()
-						+ ", getCREATED_DATE()=" + getCREATED_DATE() + ", getUPDATED_BY()=" + getUPDATED_BY()
-						+ ", getUPDATED_DATE()=" + getUPDATED_DATE() + ", getClass()=" + getClass() + ", hashCode()="
-						+ hashCode() + ", toString()=" + super.toString() + "]";
+						+ ", getADDRESS_LINE_1()=" + getADDRESS_LINE_1() + ", getADDRESS_LINE_2()="
+						+ getADDRESS_LINE_2() + ", getADDRESS_LINE_3()=" + getADDRESS_LINE_3() + ", getCITY()="
+						+ getCITY() + ", getZIP_CODE()=" + getZIP_CODE() + ", getREMARKS()=" + getREMARKS()
+						+ ", getCREATED_BY()=" + getCREATED_BY() + ", getCREATED_DATE()=" + getCREATED_DATE()
+						+ ", getUPDATED_BY()=" + getUPDATED_BY() + ", getUPDATED_DATE()=" + getUPDATED_DATE()
+						+ ", getCUSTOMER_EMAIL()=" + getCUSTOMER_EMAIL() + ", getWORKER_ASSIGN()=" + getWORKER_ASSIGN()
+						+ ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()="
+						+ super.toString() + "]";
+
 			}
 	
 			public Long getBOOKING_ID() {
@@ -352,10 +396,24 @@ import jakarta.persistence.Column;
 			public void setUPDATED_DATE(String uPDATED_DATE) {
 				UPDATED_DATE = uPDATED_DATE;
 			}
-	
-			
-		   
-	
+
+
+			public String getCUSTOMER_EMAIL() {
+				return CUSTOMER_EMAIL;
+			}
+
+			public void setCUSTOMER_EMAIL(String cUSTOMER_EMAIL) {
+				CUSTOMER_EMAIL = cUSTOMER_EMAIL;
+			}
+
+			public String getWORKER_ASSIGN() {
+				return WORKER_ASSIGN;
+			}
+
+			public void setWORKER_ASSIGN(String wORKER_ASSIGN) {
+				WORKER_ASSIGN = wORKER_ASSIGN;
+			}
+
 	}
-	
-	    
+
+

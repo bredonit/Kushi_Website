@@ -1,0 +1,62 @@
+.share-icons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.share-icons a img {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+}
+
+
+/* Dark Mode - Global Styles */
+.dark-mode {
+    background-color: #121212;
+    color: white;
+}
+
+/* Dark mode for settings box */
+.dark-mode .settings-container {
+    background: #333;
+    color: white;
+}
+
+/* Dark mode for profile page */
+.dark-mode .profile-container {
+    background: #333;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+/* Dark mode for sidebar */
+.dark-mode .left-side {
+    background: #222;
+    color: white;
+}
+
+/* Dark mode for sidebar links */
+.dark-mode .sidebar ul li a {
+    color: #ddd;
+}
+
+/* Dark mode for settings items */
+.dark-mode .setting {
+    background: #444;
+}
+/* Keep sidebar links white in dark mode */
+.dark-mode .sidebar ul li a {
+    color: white; /* Ensures all links remain white */
+}
+
+/* Optional: Keep active link slightly different but NOT green */
+.dark-mode .sidebar ul li a.active {
+    color: #f1f1f1; /* Light grey instead of green */
+    font-weight: bold;
+}
+
+
+
+
