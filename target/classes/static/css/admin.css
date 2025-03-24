@@ -56,6 +56,10 @@ nav ul {
     padding: 0;
 }
 
+a {
+    text-decoration: none; /* Removes underline */
+}
+
 nav ul li a {
     text-decoration: none;
 
@@ -518,7 +522,7 @@ header input[type="text"] {
 	  }
 	}
 
-<<<<<<< HEAD
+
 	/* Dark Mode - Global Styles */
 	.dark-mode {
 	    background-color: #121212;
@@ -565,6 +569,186 @@ header input[type="text"] {
 	    font-weight: bold;
 	}
 
-=======
->>>>>>> 782c6e4 (all updated code)
 
+	
+	
+	/* ✅ Enhanced Media Query for Small Screens (max-width: 768px) */
+	@media (max-width: 768px) {
+	    /* Adjust sidebar */
+	    .sidebar {
+	        width: 180px; /* Slightly smaller for better fit */
+	        height: 100%;
+	        position: fixed;
+	        padding: 10px;
+	        z-index: 1000; /* Ensure it stays above other elements */
+	    }
+
+	    /* Adjust main content */
+	    .main-content {
+	        margin-left: 10px; /* Adjusted to fit smaller sidebar */
+	        width: calc(100% - 50px);
+	        padding: 15px;
+	    }
+
+	    /* Improve header alignment */
+	    header {
+	        flex-direction: column;
+	        align-items: flex-start;
+	        gap: 10px;
+	    }
+
+	    header input[type="text"] {
+	        width: 100%;
+	        margin-top: 10px;
+	    }
+
+	    /* Responsive grid layout */
+	    .grid {
+	        grid-template-columns: 1fr;
+	        gap: 15px;
+	    }
+
+	    /* Improve card layout */
+	    .card {
+	        padding: 20px;
+	        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+	        border-radius: 10px;
+	    }
+
+	    /* Make overview section more readable */
+	    .overview-container {
+	        flex-direction: column;
+	        height: auto;
+	        gap: 15px;
+	    }
+
+	    .overview-box {
+	        padding: 15px;
+	        border-radius: 8px;
+	        text-align: center;
+	        width: 100%; /* Ensure full width */
+	    }
+
+	    /* Improve customer section */
+	    .customers {
+	        flex-direction: column;
+	        gap: 15px;
+	        align-items: center;
+	    }
+
+	    .customers img {
+	        width: 50px;
+	        height: 50px;
+	    }
+
+	    /* Fix new bookings layout */
+	    .new-bookings .booking {
+	        flex-direction: column;
+	        gap: 15px;
+	        height: auto;
+	        align-items: center;
+	    }
+
+	    /* Improve service list */
+	    .popular-services li {
+	        flex-direction: column;
+	        align-items: flex-start;
+	        height: auto;
+	        padding: 15px;
+	        text-align: center;
+	    }
+
+	    .popular-services li img {
+	        width: 50px;
+	        height: 50px;
+	        margin-bottom: 5px;
+	    }
+
+	    .popular-services li span {
+	        margin-top: 8px;
+	        font-size: 16px;
+	    }
+
+	    /* Adjust popup modal */
+	    .popup-container {
+	        padding: 15px;
+	        display: flex;
+	        justify-content: center;
+	        align-items: center;
+	    }
+
+	    .popup-content {
+	        width: 85%;
+	        max-width: 350px;
+	        padding: 20px;
+	        text-align: center;
+	        border-radius: 10px;
+	        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+	    }
+
+	    /* Responsive buttons */
+	    .popup-content button,
+	    .new-bookings button {
+	        width: 100%;
+	        padding: 12px;
+	        font-size: 16px;
+	    }
+	}
+	
+	
+	
+
+	/* ✅ Large Tablets & Small Laptops (max-width: 1024px) */
+	@media (max-width: 1024px) {
+	    .sidebar .logo img {
+	        height: 130px; /* Slightly smaller */
+	        padding-left: 30px;
+	    }
+	}
+
+	/* ✅ Tablets & Large Phones (max-width: 768px) */
+	@media (max-width: 768px) {
+	    .sidebar .logo img {
+	        height: 110px; /* Reduce height */
+	        padding-left: 20px;
+	    }
+	}
+
+	/* ✅ Mobile Screens (max-width: 480px) */
+	@media (max-width: 480px) {
+	    .sidebar .logo img {
+	        height: 90px; /* Further reduce height */
+	        padding-left: 10px;
+	    }
+	}
+	/* ✅ Hide Sidebar and Show Menu Icon on Small Screens */
+	@media (max-width: 768px) {
+	    .sidebar {
+	        position: fixed;
+	        left: -250px; /* Hide sidebar initially */
+	        width: 180px;
+	        height: 100%;
+	        background-color: #ffff;
+	        transition: 0.3s ease-in-out;
+	        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+	    }
+
+	    .menu-icon {
+	        display: block;
+	        position: fixed;
+	        top: 1px;
+	        left: 1px;
+	        font-size: 15px;
+	        cursor: pointer;
+	        background: #ffff;
+	        color: black;
+	        padding: 8px 12px;
+	        border-radius: 5px;
+	        z-index: 1001;
+	    }
+
+	    /* ✅ When sidebar is active */
+	    .sidebar.active {
+	        left: 0;
+	    }
+	}

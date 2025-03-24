@@ -52,7 +52,6 @@ public class User_login {
 				+ ", profilePicture=" + profilePicture + ", getUserId()=" + getUserId() + ", getFirstName()="
 				+ getFirstName() + ", getLastName()=" + getLastName() + ", getPhoneNumber()=" + getPhoneNumber()
 				+ ", getEmail()=" + getEmail() + ", getGender()=" + getGender() + ", getLastLogin()=" + getLastLogin()
-
 				+ ", getProfilePicture()=" + getProfilePicture() + ", getClass()=" + getClass() + ", hashCode()="
 				+ hashCode() + ", toString()=" + super.toString() + "]";
 	}

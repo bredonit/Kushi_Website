@@ -9,6 +9,19 @@ body {
     padding: 20px;
 }
 
+/* Keep the tabs fixed at the top */
+.tabs-container {
+    position: sticky;
+    top: 0;
+    background: #808080; /* Updated to gray */
+    z-index: 1000;
+    padding: 10px;
+    display: flex;
+    gap: 10px;
+    border-bottom: 2px solid #ddd;
+}
+
+/* Ensure filters remain at the top */
 .filters {
     margin-bottom: 20px;
 }
@@ -17,7 +30,6 @@ body {
     padding: 10px 15px;
     margin: 5px;
     border: none;
-
     background: #28a745; /* Green */
     color: white;
     border-radius: 5px;
@@ -25,10 +37,68 @@ body {
 }
 
 .filters button:hover {
-
     background: #218838; /* Darker Green */
 }
 
+/* Container to enable horizontal scrolling for the booking table */
+.bookings-table-wrapper {
+    overflow-x: auto;
+    width: 100%;
+    max-width: 100%;
+    white-space: nowrap;
+}
+
+
+
+
+
+/* Table styling with fixed header */
+.bookings-container {
+    max-height: 400px; /* Adjust the height as needed */
+    overflow-y: auto;  /* Enables vertical scrolling */
+    border: 1px solid #ccc; /* Optional: Adds a border to distinguish the table */
+    position: relative;
+}
+
+.bookings-container table {
+    width: 100%;
+    border-collapse: collapse;
+    position: relative;
+}
+
+.bookings-container thead {
+    position: sticky;
+    top: 0;
+    background-color: white; /* Gray background for visibility */
+    z-index: 10;
+}
+
+th, td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: center;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+
+.search-container input {
+    width: 300px;
+    padding: 10px;
+    font-size: 16px;
+    padding-left: 10px;
+}
+
+.no-data {
+    text-align: center;
+    font-size: 18px;
+    color: red;
+    display: none;
+}
+
+/* Cards and overview section */
 .bookings-overview {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -37,7 +107,7 @@ body {
 }
 
 .card {
-    background: #f4f4f4;
+    background: #c0c0c0;
     padding: 20px;
     border-radius: 8px;
     text-align: center;
@@ -60,117 +130,7 @@ body {
     margin: 0;
 }
 
-table {
-           width: 100%;
-           border-collapse: collapse;
-       }
-       th, td {
-           border: 1px solid black;
-           padding: 8px;
-           text-align: center;
-       }
-       tr:nth-child(even) {
-           background-color: #f2f2f2;
-       }
-       select {
-           padding: 5px;
-           font-size: 14px;
-       }
-       button {
-           padding: 5px 10px;
-           background-color: #007bff;
-           color: red;
-           border: none;
-           cursor: pointer;
-       }
-       button:hover {
-           background-color: #0056b3;
-       }
-       tr[data-status="Pending"] {
-           background-color: yellow;
-       }
-       tr[data-status="Confirmed"] {
-           background-color: green;
-           color: white;
-       }
-       tr[data-status="Completed"] {
-           background-color: blue;
-           color: white;
-
-
-
-       }
-       /* Dark Mode - Global Styles */
-.dark-mode {
-    background-color: #121212;
-    color: white;
-}
-
-/* Dark mode for all containers */
-
-.dark-mode .bookings-container {
-    background: #333;
-    color: white;
-    padding: 20px;
-    border-radius: 10px;
-}
-
-/* Dark mode for sidebar */
-.dark-mode .left-side {
-    background: #222;
-    color: white;
-}
-
-/* Dark mode for sidebar links */
-.dark-mode .sidebar ul li a {
-    color: #ddd;
-}
-
-/* Dark mode for settings items */
-.dark-mode .setting {
-    background: #444;
-}
-
-/* Default sidebar styles */
-.sidebar ul li a {
-    color: black; /* Default color in light mode */
-    transition: color 0.3s ease; /* Smooth transition */
-}
-
-/* Dark mode sidebar background */
-.dark-mode .sidebar {
-    background: #222; /* Dark background */
-}
-
-/* Dark mode sidebar text (Make it clearly visible) */
-.dark-mode .sidebar ul li a {
-    color: white; /* Change text to white */
-    font-weight: bold; /* Make it stand out */
-}
-
-/* Optional: Improve visibility of active link in dark mode */
-.dark-mode .sidebar ul li a.active {
-    color: #4caf50; /* Light green for active link */
-}
-
-
-
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-th, td {
-    border: 1px solid black;
-    padding: 8px;
-    text-align: center;
-}
-
-tr:nth-child(even) {
-    background-color: #f2f2f2;
-}
-
+/* Select dropdown and button styling */
 select {
     padding: 5px;
     font-size: 14px;
@@ -179,7 +139,7 @@ select {
 button {
     padding: 5px 10px;
     background-color: #28a745; /* Green */
-    color: Black;
+    color: black;
     border: none;
     cursor: pointer;
 }
@@ -188,27 +148,217 @@ button:hover {
     background-color: #218838; /* Darker Green */
 }
 
+/* Row color based on status */
 tr[data-status="Pending"] {
-    background-color: yellow;
+    background-color: #84C5C0;
+    color: white;
 }
 
 tr[data-status="Confirmed"] {
-    background-color: green;
+    background-color: #759EB8;
     color: white;
 }
 
 tr[data-status="Completed"] {
-    background-color: blue; /* Changed from blue to green */
+    background-color: #76B29A; 
     color: white;
 }
 
-.card.active {
-	background-color : green !important; color:white;
+/* Active tab styling */
+.active-tab {
+    background-color: #606060 !important; /* Dark Gray */
+    color: white !important;
 }
 
+.bookings-container {
+    max-height: 400px; /* Adjust the height as needed */
+    overflow-y: auto;  /* Enables vertical scrolling */
+    border: 1px solid #ccc; /* Optional: Adds a border to distinguish the table */
+}
 
-/* Optional: Keep active link slightly different but NOT green */
-.dark-mode .sidebar ul li a.active {
-    color: #f1f1f1; /* Light grey instead of green */
-    font-weight: bold;
+/* ✅ Enhanced Media Query for Small Screens (max-width: 768px) */
+@media (max-width: 768px) {
+    /* Adjust sidebar */
+    .sidebar {
+        width: 180px; /* Slightly smaller for better fit */
+        height: 100%;
+        position: fixed;
+        padding: 10px;
+        z-index: 1000; /* Ensure it stays above other elements */
+    }
+
+	/* Adjust main content */
+	    .main-content {
+	        margin-left: 10px; /* Adjusted to fit smaller sidebar */
+	        width: calc(100% - 50px);
+	        padding: 15px;
+	    }
+
+
+    /* Improve header alignment */
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    header input[type="text"] {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    /* Responsive grid layout */
+    .grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    /* Improve card layout */
+    .card {
+        padding: 20px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+        border-radius: 10px;
+    }
+
+    /* Make overview section more readable */
+    .overview-container {
+        flex-direction: column;
+        height: auto;
+        gap: 15px;
+    }
+
+    .overview-box {
+        padding: 15px;
+        border-radius: 8px;
+        text-align: center;
+        width: 100%; /* Ensure full width */
+    }
+
+    /* Improve customer section */
+    .customers {
+        flex-direction: column;
+        gap: 15px;
+        align-items: center;
+    }
+
+    .customers img {
+        width: 50px;
+        height: 50px;
+    }
+
+    /* Fix new bookings layout */
+    .new-bookings .booking {
+        flex-direction: column;
+        gap: 15px;
+        height: auto;
+        align-items: center;
+    }
+
+    /* Improve service list */
+    .popular-services li {
+        flex-direction: column;
+        align-items: flex-start;
+        height: auto;
+        padding: 15px;
+        text-align: center;
+    }
+
+    .popular-services li img {
+        width: 50px;
+        height: 50px;
+        margin-bottom: 5px;
+    }
+
+    .popular-services li span {
+        margin-top: 8px;
+        font-size: 16px;
+    }
+
+    /* Adjust popup modal */
+    .popup-container {
+        padding: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .popup-content {
+        width: 85%;
+        max-width: 350px;
+        padding: 20px;
+        text-align: center;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Responsive buttons */
+    .popup-content button,
+    .new-bookings button {
+        width: 100%;
+        padding: 12px;
+        font-size: 16px;
+    }
+}
+/* ✅ Large Tablets & Small Laptops (max-width: 1024px) */
+@media (max-width: 1024px) {
+    .sidebar .logo img {
+        height: 130px; /* Slightly smaller */
+        padding-left: 30px;
+    }
+    
+    .main-content h2.raju {
+        padding-top: 100px; /* Adjust padding-top for h2 */
+    }
+}
+
+/* ✅ Tablets & Large Phones (max-width: 768px) */
+@media (max-width: 768px) {
+    .sidebar .logo img {
+        height: 110px; /* Reduce height */
+        padding-left: 20px;
+    }
+
+    .main-content h2.raju {
+        padding-top: 100px; /* Adjust padding-top for h2 */
+    }
+
+    .main-content {
+        gap: 15px; /* Reduced gap between sections */
+    }
+
+    .bookings-overview {
+        grid-template-columns: 1fr; /* Stack cards vertically */
+    }
+
+    .bookings-container {
+        max-height: 300px;
+        padding-top: 40px; /* Adjust height for smaller screens */
+    }
+
+    .search-container {
+        margin: 0 auto 10px; /* Center search bar with smaller margin */
+    }
+
+    .search-container input {
+        width: 100%; /* Full width for small screens */
+    }
+}
+
+/* ✅ Mobile Screens (max-width: 480px) */
+@media (max-width: 480px) {
+    .main-content h2.raju {
+        padding-top: 100px; /* Adjust padding-top for h2 */
+    }
+
+    .main-content {
+        gap: 10px; /* Even smaller gap for very small screens */
+    }
+
+    .bookings-overview {
+        grid-template-columns: 1fr; /* Stack cards vertically */
+    }
+
+    .search-container input {
+        width: 100%; /* Full width for smaller screens */
+    }
 }

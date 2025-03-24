@@ -9,5 +9,4 @@ public interface LoginRepository extends JpaRepository<Login, Long> {
 	Login findByAdminUsername(String adminUsername);
     // Query to find user by email
     Login findByEmail(String email); // Corrected parameter type to String
-
 }

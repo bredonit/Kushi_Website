@@ -42,6 +42,7 @@ import org.springframework.ui.Model;
 
 
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -74,9 +75,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 
-
+@CrossOrigin(origins = "*")
 
 @Controller
+
 
 public class UserController {
 	
@@ -719,34 +721,34 @@ public class UserController {
 
 //Invoice Management 
 
-    @GetMapping("/api/invoices")
-    public ResponseEntity<List<Map<String, Object>>> getAllBooking() {
-        try {
-            List<User> bookings = userRepo.findAll(); // Fetch bookings from the database
+// Invoice Management  
+   @GetMapping("/api/invoices")
+   public ResponseEntity<?> getInvoices() {
+       List<Map<String, Object>> invoiceData = new ArrayList<>();
+       try {
+           List<User> bookings = userRepo.findAll();
+           System.out.println("Total Bookings Found: " + bookings.size());
 
-            if (bookings.isEmpty()) {
-                return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-            }
+           if (bookings.isEmpty()) {
+               return ResponseEntity.status(HttpStatus.NO_CONTENT).body("No bookings found");
+           }
 
-            // Map bookings to relevant invoice data (customize as needed)
-            List<Map<String, Object>> invoiceData = bookings.stream().map(booking -> {
-                Map<String, Object> bookingInfo = new HashMap<>();
-                bookingInfo.put("id", booking.getBOOKING_ID());
-                bookingInfo.put("customerName", booking.getCUSTOMER_NAME());
-                bookingInfo.put("customerEmail", booking.getCUSTOMER_EMAIL());
-                bookingInfo.put("customerPhone", booking.getCUSTOMER_NUMBER());
-                bookingInfo.put("totalAmount", booking.getTOTAL_AMOUNT());
-                bookingInfo.put("serviceName", booking.getBOOKING_SERVICE_NAME());
+           for (User booking : bookings) {
+               Map<String, Object> bookingInfo = new HashMap<>();
+               bookingInfo.put("id", booking.getBOOKING_ID());
+               bookingInfo.put("customerName", booking.getCUSTOMER_NAME());
+               bookingInfo.put("customerEmail", booking.getCUSTOMER_EMAIL());
+               bookingInfo.put("customerPhone", booking.getCUSTOMER_NUMBER());
+               bookingInfo.put("totalAmount", booking.getTOTAL_AMOUNT());
 
-                // No invoiceId generation here
-                // Simply return the data without invoiceId
-                return bookingInfo;
-            }).collect(Collectors.toList());
+               invoiceData.add(bookingInfo);
+           }
+       } catch (Exception e) {
+           e.printStackTrace();
+           return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error fetching invoices");
+       }
+       return ResponseEntity.ok(invoiceData);
+   }
 
-            return ResponseEntity.ok(invoiceData);  // Return invoice data as JSON
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-        }
-    }
 }
 

@@ -178,5 +178,128 @@ input:checked + .slider:before {
 }
 
 
+/* ✅ Large Tablets & Small Laptops (max-width: 1024px) */
+@media (max-width: 1024px) {
+    .left-side {
+        width: 220px;
+        padding: 15px;
+    }
+
+    .settings-text {
+        left: 250px; /* Adjust position to match sidebar */
+        font-size: 22px; 
+    }
+
+    .settings-container {
+        width: 320px;
+        left: 240px; /* Adjust settings box position */
+        top: 75px;
+    }
+
+    .setting {
+        font-size: 16px;
+    }
+
+    .toggle-switch {
+        width: 35px;
+        height: 18px;
+    }
+
+    .slider:before {
+        height: 12px;
+        width: 12px;
+    }
+
+    input:checked + .slider:before {
+        transform: translateX(17px);
+    }
+}
+
+/* ✅ Tablets & Large Phones (max-width: 768px) */
+@media (max-width: 768px) {
+    .left-side {
+        width: 200px;
+        padding: 10px;
+        height: auto;
+    }
+
+    .settings-text {
+        left: 200px;
+        font-size: 20px;
+    }
+
+    .settings-container {
+        width: 250px;
+        left: 50px;
+        top: 40px;
+    }
+
+    .setting {
+        font-size: 15px;
+        padding: 12px;
+    }
+
+    .toggle-switch {
+        width: 32px;
+        height: 16px;
+    }
+
+    .slider:before {
+        height: 10px;
+        width: 10px;
+    }
+
+    input:checked + .slider:before {
+        transform: translateX(15px);
+    }
+}
+
+/* ✅ Mobile Screens (max-width: 480px) */
+@media (max-width: 480px) {
+    .left-side {
+        width: 100%;
+        height: auto;
+        text-align: center;
+        padding: 8px;
+        position: relative;
+    }
+
+    .settings-text {
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 18px;
+        top: 15px;
+        text-align: center;
+        width: 100%;
+    }
+
+    .settings-container {
+        width: 90%;
+        left: 50%;
+        transform: translateX(-50%);
+        top: 65px;
+    }
+
+    .setting {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .toggle-switch {
+        width: 30px;
+        height: 14px;
+    }
+
+    .slider:before {
+        height: 8px;
+        width: 8px;
+    }
+
+    input:checked + .slider:before {
+        transform: translateX(13px);
+    }
+}
+
+
 
 

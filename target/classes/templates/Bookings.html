@@ -6,75 +6,77 @@
     <title>Kushi Dashboard</title>
     <link rel="stylesheet" type="text/css" href="css/admin.css">
     <link rel="stylesheet" type="text/css" href="css/bookings.css">
-
+    
+    <style>
+        .card.active { background-color: green !important; color: white; }
+    </style>
 </head>
 <body>
-    <div class="sidebar">
-        <div class="logo">
-            <img src="https://kushiservices.com/wp-content/uploads/2024/01/cropped-Crimson-1.png" alt="Kushi Hygiene Services">
-        </div>
-        <nav>
-            <ul>
-                <li><a href="/guru">Dashboard</a></li>
-                <li><a href="/1">Customers</a></li>
-                <li><a href="/Bookingss" class="active">Bookings</a></li>
-                <li><a href="/Invoices">Invoices</a></li>
-                <li><a href="/addservice">Add New Service</a></li>
-                <li><a href="/financialmanagement">Financial Management</a></li>
-            
+  
+	<div class="menu-icon" onclick="toggleSidebar()">&#9776;</div>
+
+		    <!-- ✅ Updated Sidebar with ID for JavaScript -->
+		    <div class="sidebar" id="sidebar">
+		        <div class="logo">
+		            <img src="https://kushiservices.com/wp-content/uploads/2024/01/cropped-Crimson-1.png" alt="Kushi Hygiene Services">
+		        </div>
+		        <nav>
+		            <ul>
+		                <li><a href="/guru">Dashboard</a></li>
+		                <li><a href="/1">Customers</a></li>
+		                <li><a href="/Bookingss">Bookings</a></li>
+		                <li><a href="/Invoices">Invoices</a></li>
+		                <li><a href="/addservice">Add New Service</a></li>
+		                <li><a href="/financialmanagement">Financial Management</a></li>
+		                <li><a href="/settings">Settings</a></li>
+		                <li><a href="/viset">Visit List</a></li>
+		                <br><hr>
+		                <li><a href="/Logout">Sign Out</a></li>
+		            </ul>
+		        </nav>
+		    </div>
+		
+		<script>
+		function toggleSidebar() {
+		    document.getElementById("sidebar").classList.toggle("active");
+		}
+		</script>
 
 
 
+<div class="main-content">
+<div class="search-container">
+        <input type="text" id="searchInput" placeholder="Search bookings..." onkeyup="searchBookings()">
+    </div>
+    <div class="no-data" id="noDataMessage">No data found</div>
+    <h1>Dashboard</h1>
 
-                <li><a href="/settings">Settings</a></li>
-				
-				<li><a href="/viset">Viset List</a></li>
-<br><hr>
-                
-
-               
-                <li><a href="/Logout">Sign Out</a></li>
-
-
-
-
-               
-            </ul>
-        </nav>
+    <!-- Tabs for booking status -->
+    <div class="bookings-overview">
+        <button class="card pending-bookings" onclick="showBookingsTable('Pending', this)">
+            <h2>New</h2>
+            <p id="pendingBookings">0</p>
+        </button>
+        <button class="card confirmed-bookings" onclick="showBookingsTable('Confirmed', this)">
+            <h2>Confirmed</h2>
+            <p id="confirmedBookings">0</p>
+        </button>
+        <button class="card completed-bookings" onclick="showBookingsTable('Completed', this)">
+            <h2>Completed</h2>
+            <p id="completedBookings">0</p>
+        </button>
+        <button class="card total-bookings" onclick="showBookingsTable('Completed', this)">
+            <h2>Total Bookings</h2>
+            <p id="totalBookings">0</p>
+        </button>
     </div>
 
-    <div class="main-content">
-        <h1>Dashboard</h1>
-
-        <div class="bookings-overview">
-
-            
-            <button class="card pending-bookings"  onclick="showBookingsTable('Pending')">
-                <h2>New</h2>
-                <p id="pendingBookings">0</p>
-            </button>
-            <button class="card confirmed-bookings" onclick="showBookingsTable('Confirmed')">
-                <h2>Confirmed</h2>
-                <p id="confirmedBookings">0</p>
-            </button>
-            <button class="card completed-bookings" onclick="showBookingsTable('Completed')">
-                <h2>Completed</h2>
-                <p id="completedBookings">0</p>
-            </button>
-
-            <button class="card total-bookings" onclick="showBookingsTable('Completed')">
-                <h2>Total Bookings</h2>
-                <p id="totalBookings">0</p>
-            </button>
-        </div>
-
-        <div id="bookingsTableContainer" style="display: none;">
-            <h2>All Bookings</h2>
+    <!-- Scrollable bookings table -->
+    <div id="bookingsTableContainer" style="display: none;">
+        <h2 class="raju">All Bookings</h2>
+        <div class="bookings-container">
             <table>
                 <thead>
-
-				
-
                     <tr>
                         <th>Booking ID</th>
                         <th>Customer Name</th>
@@ -88,7 +90,6 @@
                         <th>Address</th>
                         <th>City</th>
                         <th>ZIP Code</th>
-                        <th>Status</th>
                         <th>Booking Status</th>
                         <th>Payment Status</th>
                         <th>Booking Amount</th>
@@ -101,14 +102,16 @@
                         <th>Created Date</th>
                         <th>Updated Date</th>
                         <th>Customer Number</th>
+                        <th>Status</th>
                     </tr>
                 </thead>
                 <tbody id="bookingsTableBody"></tbody>
             </table>
         </div>
     </div>
+</div>
 
-    <script>
+<script>
     async function fetchBookingData() {
         try {
             const response = await fetch("/api/bookings");
@@ -134,46 +137,44 @@
         }
     }
 
-    async function updateBookingStatus(bookingId, newStatus) {
-        try {
-            const response = await fetch(`/api/bookings/${bookingId}`, {
-                method: "PUT",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ booking_STATUS: newStatus })
-            });
+	async function updateBookingStatus(bookingId, newStatus) {
+	    try {
+	        const response = await fetch(`/api/bookings/${bookingId}`, { // ✅ Fixed fetch syntax
+	            method: "PUT",
+	            headers: { "Content-Type": "application/json" },
+	            body: JSON.stringify({ booking_STATUS: newStatus }) // ✅ Correct request body
+	        });
 
-            if (!response.ok) throw new Error("Failed to update booking status");
+	        if (!response.ok) throw new Error("Failed to update booking status");
 
-            // Update the status in the UI dynamically without refreshing
-            const row = document.querySelector(`tr[data-id="${bookingId}"]`);
-            if (row) {
-                row.setAttribute("data-status", newStatus);
-                row.querySelector("td:last-child").textContent = newStatus;
+	        const row = document.querySelector(`tr[data-id="${bookingId}"]`); // ✅ Fixed selector
+	        if (row) {
+	            row.setAttribute("data-status", newStatus);
+	            row.querySelector("td:last-child").textContent = newStatus;
 
-                // Move the row to the correct tab dynamically
-                if (newStatus === "Confirmed") {
-                    document.getElementById("confirmedBookings").textContent++;
-                    document.getElementById("pendingBookings").textContent--;
-                } else if (newStatus === "Completed") {
-                    document.getElementById("completedBookings").textContent++;
-                    document.getElementById("confirmedBookings").textContent--;
-                    document.getElementById("totalBookings").textContent++;
-                }
+	            // ✅ Update Booking Counters
+	            if (newStatus === "Confirmed") {
+	                document.getElementById("confirmedBookings").textContent++;
+	                document.getElementById("pendingBookings").textContent--;
+	            } else if (newStatus === "Completed") {
+	                document.getElementById("completedBookings").textContent++;
+	                document.getElementById("confirmedBookings").textContent--;
+	                document.getElementById("totalBookings").textContent++;
+	            }
 
-                // Remove row from the current tab if it doesn't belong there anymore
-                const currentTab = document.querySelector(".tab.active").id;
-                if ((currentTab === "pendingTab" && newStatus !== "Pending") ||
-                    (currentTab === "confirmedTab" && newStatus !== "Confirmed") ||
-                    (currentTab === "completedTab" && newStatus !== "Completed")) {
-                    row.remove();
-                }
-            }
-        } catch (error) {
-            console.error("Error updating booking status:", error);
-        }
-    }
-	
-	
+	            // ✅ Remove Row if It Doesn't Belong to the Current Tab
+	            const currentTab = document.querySelector(".tab.active").id;
+	            if ((currentTab === "pendingTab" && newStatus !== "Pending") ||
+	                (currentTab === "confirmedTab" && newStatus !== "Confirmed") ||
+	                (currentTab === "completedTab" && newStatus !== "Completed")) {
+	                row.remove();
+	            }
+	        }
+	    } catch (error) {
+	        console.error("Error updating booking status:", error);
+	    }
+	}
+
 
     function showPopup(bookingId, selectedTeam) {
         if (!document.querySelector(`tr[data-status='New']`)) {
@@ -182,8 +183,13 @@
         alert(`Worker assignment for Booking ID ${bookingId} has been changed to ${selectedTeam}.`);
     }
 
-    async function showBookingsTable(statusFilter = "") {
+    async function showBookingsTable(statusFilter, clickedTab) {
         document.getElementById("bookingsTableContainer").style.display = "block";
+        
+        // Highlight the active tab
+        document.querySelectorAll(".card").forEach(tab => tab.classList.remove("active"));
+        clickedTab.classList.add("active");
+
         try {
             const response = await fetch("/api/bookings");
             if (!response.ok) throw new Error("Failed to fetch bookings");
@@ -197,6 +203,30 @@
             console.error("Error fetching booking table data:", error);
         }
     }
+    
+    function searchBookings() {
+        const searchInput = document.getElementById("searchInput").value.toLowerCase().trim();
+        const tableBody = document.getElementById("bookingsTableBody");
+        const rows = tableBody.getElementsByTagName("tr");
+        let found = false;
+
+        for (let row of rows) {
+            const bookingID = row.cells[0].textContent.toLowerCase(); // Booking ID
+            const customerName = row.cells[1].textContent.toLowerCase(); // Customer Name
+            const serviceName = row.cells[5].textContent.toLowerCase(); // Service Name
+
+            // Check if any of these values match the search input
+            if (bookingID.includes(searchInput) || customerName.includes(searchInput) || serviceName.includes(searchInput)) {
+                row.style.display = "";
+                found = true;
+            } else {
+                row.style.display = "none";
+            }
+        }
+
+        // Show "No data found" message if no matching rows are visible
+        document.getElementById("noDataMessage").style.display = found ? "none" : "block";
+    }
 
     function renderBookingTable(bookings) {
         const tableBody = document.getElementById("bookingsTableBody");
@@ -208,9 +238,22 @@
             row.setAttribute("data-id", user.booking_ID);
 
             const storedWorker = localStorage.getItem(`worker_${user.booking_ID}`) || user.worker_ASSIGN;
-            const workerAssignOptions = ['None','Team 1', 'Team 2', 'Team 3','Team 4','Team 5','Team 6','Team 7','Team 8'].map(team => {
+            const workerAssignOptions = ['None', 'Team 1', 'Team 2', 'Team 3', 'Team 4', 'Team 5', 'Team 6', 'Team 7', 'Team 8'].map(team => {
                 return `<option value="${team}" ${storedWorker === team ? 'selected' : ''}>${team}</option>`;
             }).join('');
+
+            let statusDropdown = '';
+            if (user.booking_STATUS === "Pending" || user.booking_STATUS === "Confirmed") {
+                statusDropdown = `
+                    <select onchange="updateBookingStatus('${user.booking_ID}', this.value)">
+                        <option value="Pending" ${user.booking_STATUS === 'Pending' ? 'selected' : ''}>Pending</option>
+                        <option value="Confirmed" ${user.booking_STATUS === 'Confirmed' ? 'selected' : ''}>Confirmed</option>
+                        <option value="Completed">Completed</option>
+                    </select>
+                `;
+            } else {
+                statusDropdown = user.booking_STATUS;
+            }
 
             row.innerHTML = `
                 <td>${user.booking_ID || '-'}</td>
@@ -229,13 +272,6 @@
                 <td>${user.address_LINE_1 || '-'}, ${user.address_LINE_2 || '-'}, ${user.address_LINE_3 || '-'}</td>
                 <td>${user.city || '-'}</td>
                 <td>${user.zip_CODE || '-'}</td>
-                <td>
-                    <select onchange="updateBookingStatus('${user.booking_ID}', this.value)">
-                        <option value="Pending" ${user.booking_STATUS === 'Pending' ? 'selected' : ''}>Pending</option>
-                        <option value="Confirmed" ${user.booking_STATUS === 'Confirmed' ? 'selected' : ''}>Confirmed</option>
-                        <option value="Completed" ${user.booking_STATUS === 'Completed' ? 'selected' : ''}>Completed</option>
-                    </select>
-                </td>
                 <td>${user.booking_STATUS || '-'}</td>
                 <td>${user.payment_STATUS || '-'}</td>
                 <td>${user.booking_AMOUNT || '-'}</td>
@@ -248,6 +284,7 @@
                 <td>${user.created_DATE || '-'}</td>
                 <td>${user.updated_DATE || '-'}</td>
                 <td>${user.customer_NUMBER || '-'}</td>
+                <td>${statusDropdown}</td>
             `;
 
             tableBody.appendChild(row);
@@ -256,29 +293,29 @@
 
     // Initial fetch
     fetchBookingData();
-</script>
+	
+	
+	// Function to apply dark mode on profile page
+									    function applyDarkMode() {
+									        if (localStorage.getItem("darkMode") === "enabled") {
+									            document.body.classList.add("dark-mode");
+									        } else {
+									            document.body.classList.remove("dark-mode");
+									        }
+									    }
 
-  <script>
-		
-		
-    // Function to apply dark mode on profile page
-    function applyDarkMode() {
-        if (localStorage.getItem("darkMode") === "enabled") {
-            document.body.classList.add("dark-mode");
-        } else {
-            document.body.classList.remove("dark-mode");
-        }
-    }
+									    // Apply dark mode on page load
+									    applyDarkMode();
 
-    // Apply dark mode on page load
-    applyDarkMode();
-
-    // Listen for changes from the settings page
-    window.addEventListener("storage", function(event) {
-        if (event.key === "darkModeUpdated") {
-            applyDarkMode(); // Apply change immediately
-        }
-    });
+									    // Listen for changes from the settings page
+									    window.addEventListener("storage", function(event) {
+									        if (event.key === "darkModeUpdated") {
+									            applyDarkMode(); // Apply change immediately
+									        }
+									    });	
+								
+								
+								
 </script>
 
 </body>

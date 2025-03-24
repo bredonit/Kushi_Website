@@ -1,62 +1,149 @@
-.share-icons {
+/* ✅ General Page Styling */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
     display: flex;
+}
+
+/* ✅ Fixed Sidebar */
+.sidebar {
+    position: fixed;
+    width: 300px;
+    height: 100vh;
+    background-color: #fff;
+    padding: 15px;
+    overflow-y: auto;
+    box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* ✅ Fixed Content Layout */
+.content {
+    margin-left: 300px;
+    padding: 0 20px; /* Removed top padding */
+    width: calc(100% - 300px);
+}
+
+/* ✅ Page Heading */
+h2 {
+    text-align: center;
+    margin-bottom: 10px;
+    margin-top: 0; /* Ensures no extra space */
+}
+
+/* ✅ Fixed Filters Container */
+.filters-container {
+    position: fixed;
+    top: 0;
+    left: 300px;
+    width: calc(100% - 300px);
+    background: #f5f5f5;
+    z-index: 1000;
+    padding: 8px 10px; /* Adjusted padding */
+    display: flex;
+    flex-wrap: wrap;
     gap: 10px;
-    justify-content: center;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.share-icons a img {
-    width: 24px;
-    height: 24px;
-    cursor: pointer;
+/* ✅ Prevent Filters from Pushing Content */
+.content {
+    margin-top: 50px; /* Just enough space for filters */
 }
 
+/* ✅ Table Container */
+.table-container {
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+    border: 2px solid #c3e6c3;
+    background: white;
+    margin-top: 0; /* Removed extra margin */
+}
 
-/* Dark Mode - Global Styles */
-.dark-mode {
-    background-color: #121212;
+/* ✅ Table Styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #e6f5e6;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* ✅ Sticky Table Headers */
+th {
+    position: sticky;
+    top: 0;
+    background: #1e7e34;
     color: white;
-}
-
-/* Dark mode for settings box */
-.dark-mode .settings-container {
-    background: #333;
-    color: white;
-}
-
-/* Dark mode for profile page */
-.dark-mode .profile-container {
-    background: #333;
-    color: white;
-    padding: 20px;
-    border-radius: 10px;
-}
-
-/* Dark mode for sidebar */
-.dark-mode .left-side {
-    background: #222;
-    color: white;
-}
-
-/* Dark mode for sidebar links */
-.dark-mode .sidebar ul li a {
-    color: #ddd;
-}
-
-/* Dark mode for settings items */
-.dark-mode .setting {
-    background: #444;
-}
-/* Keep sidebar links white in dark mode */
-.dark-mode .sidebar ul li a {
-    color: white; /* Ensures all links remain white */
-}
-
-/* Optional: Keep active link slightly different but NOT green */
-.dark-mode .sidebar ul li a.active {
-    color: #f1f1f1; /* Light grey instead of green */
     font-weight: bold;
+    padding: 14px;
+    border: 2px solid #155724;
+    z-index: 10;
 }
 
+/* ✅ Table Borders */
+table, th, td {
+    border: 1px solid #c3e6c3;
+}
 
+th, td {
+    padding: 12px;
+    text-align: center;
+}
 
+tr:nth-child(even) {
+    background: #d4edda;
+}
 
+tr:hover {
+    background: #c3e6c3;
+}
+
+/* ✅ Responsive Design */
+@media (max-width: 1024px) {
+    .sidebar {
+        width: 250px;
+    }
+    .content {
+        margin-left: 0px;
+        width: calc(100% - 260px);
+    }
+    .filters-container {
+        left: 250px;
+        width: calc(100% - 250px);
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: 180px;
+        padding: 10px;
+    }
+    .content {
+       
+        width: calc(100% - 50px);
+    }
+    .filters-container {
+        left: 190px;
+        width: calc(100% - 50px);
+    }
+}
+
+@media (max-width: 480px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        text-align: center;
+        padding: 8px;
+    }
+    .content {
+        margin-left: 0;
+        width: 100%;
+    }
+    .filters-container {
+        left: 0;
+        width: 100%;
+    }
+}
